@@ -1,0 +1,11 @@
+.categoryGrid{
+  
+  grid-row: 3/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 9998;
+   height: 64px;
+  width:100%;
+}

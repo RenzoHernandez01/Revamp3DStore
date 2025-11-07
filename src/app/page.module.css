@@ -126,16 +126,46 @@ a.secondary {
   .logo {
     filter: invert();
   }
-
   .page {
     --background: #000;
     --foreground: #000;
-
     --text-primary: #ededed;
     --text-secondary: #999;
-
     --button-primary-hover: #ccc;
     --button-secondary-hover: #1a1a1a;
     --button-secondary-border: #1a1a1a;
   }
+  
+.heroDiv {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-rows: 64px 345px 64px;
+  overflow: visible; 
+  z-index: 01;
+  background-color: #000;
+}
+
+.heroDiv::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761556742/headerImage_hxdnwz.jpg');
+  background-color: rgba(0, 0, 0, 0.4); 
+  background-blend-mode: darken;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+
+
+
+
 }

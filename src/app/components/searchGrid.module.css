@@ -1,0 +1,11 @@
+.searchGrid{
+  grid-row: 2/3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  overflow: visible;
+  z-index: 9998;
+  height: 100%;
+}
