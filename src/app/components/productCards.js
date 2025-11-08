@@ -10,7 +10,7 @@ import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
 import { ForkLeft } from '@mui/icons-material';
 export default function ProductCards() {
   return (
-    <Card className = {styles.cardInfo} sx={{ maxWidth: 325, height: 435}}>
+    <Card className = {styles.cardInfo} sx={{ maxWidth: 325, height: 435,margin:0}}>
     <div className={styles.productCardWrapper}>
      <div className = {styles.previewWrapper}>
         <CardMedia

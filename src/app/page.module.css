@@ -136,6 +136,8 @@ a.secondary {
     --button-secondary-border: #1a1a1a;
   }
   
+
+
 .heroDiv {
   position: relative;
   width: 100%;
@@ -164,8 +166,63 @@ a.secondary {
   z-index: 0;
 }
 
+.staffPicks{
+   width: 100%;
+  height: 609px;
+  display: grid;
+  grid-template-rows: 64px 474px 71px;
+}
 
+.staffCardsGrid{
+  grid-row: 2/3;
+  width: 100%;
+  height: auto;
+  align-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: center;
+  gap: 30px;
 
+}
+
+.viewPicksGrid{ 
+   grid-row: 3/3;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.trendingPicks{
+  width: 100%;
+  height: 1154px;
+  display: grid;
+  grid-template-rows: 104px 435px 43px 435px 137px;
+}
+
+.firstRowGrid{
+  grid-row: 2/3;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 30px;
+}
+
+.secondRowGrid{
+  grid-row: 4/5;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 30px;
+}
+
+.viewAllTrendingGrid{
+  grid-row: 5/6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 }
