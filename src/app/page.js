@@ -6,8 +6,10 @@ import Link from 'next/link';
 import CreatorGrid from "./components/creatorGrid.js";
 import SearchGrid from "./components/searchGrid.js";
 import ProductCards from "./components/productCards.js";
-import BannerPanels from "./components/bannerPanels";
+import BannerPanels from "./components/bannerPanels.js";
+import FooterPanel from "./components/footerPanel";
 import Button from '@mui/material/Button';
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"></link>
 export default function Home() {
   return (
 <div>
@@ -53,7 +55,9 @@ export default function Home() {
       </div>
     </div>
   </section>
-  
+  <section className = {styles.aboutSection}>
+    <FooterPanel/>
+  </section>
 </div>
   );
 }

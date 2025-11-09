@@ -1,0 +1,15 @@
+.aboutDiv{
+  margin-top: auto;
+  background-color: #7DA0CA;
+  width: 100%;
+  height: 209px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+}
+
+.listClass{
+  margin-top: 30px;
+  justify-self: center;
+  list-style: none;
+}
