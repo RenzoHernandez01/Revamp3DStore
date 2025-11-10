@@ -1,0 +1,76 @@
+.signUpContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  width: 100vw;  
+}
+
+.signInBlock,.signUpBlock{
+  display: grid;
+  grid-template-columns: 250px auto;
+  width: 725px;
+  height: 566px;
+  margin-bottom: max(20px, 10%);
+  overflow: hidden; 
+  position: relative;
+  border-radius: 10px;
+  background-color: antiquewhite;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signInImages,.signUpImages{
+  grid-column: 1 / 2;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+.signUpImages::before,.signInImages::before{
+  content: "";
+  top: 0;
+  left: 0;
+  width: 350%;
+  height: 350%;
+  background-image: url('https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761633434/1_msjwan.jpg'); 
+  background-color: #7da0ca4d;
+  background-blend-mode: lighten;
+  background-size:contain;
+  background-repeat: no-repeat;
+  transform: translate(-40%,-5%);
+  filter: blur(4px);
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.signUpInputs{
+  height: 100%;
+  background-color: white;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 50px;
+  z-index: 2;
+}
+
+.divider span {
+  font-size: 1.2rem;
+  color: black;
+  
+}
+
+.userNameContainer{
+  width: 100%;
+  max-width: 384px;
+  height: 50px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}

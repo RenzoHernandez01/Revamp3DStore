@@ -1,0 +1,42 @@
+.popularCategoryContainer{
+  height: 110px;
+  width: 100%;
+}
+
+.catalogMainAreaContainer{
+  height: auto; 
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  align-items: start;
+  margin-bottom: 50px;
+}
+
+.collapseArea{
+    margin-left:20px;
+    margin-top: 50px;
+    grid-row: 1;
+}
+
+.catalogCardsArea{
+  grid-column: 2/3;
+  width: 100%;
+  height: auto;
+}
+
+.catalogCards{
+ 
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: center;
+  gap: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  width:100%;
+  min-height: 100px;
+  box-sizing: border-box;
+  overflow: visible;
+
+}
