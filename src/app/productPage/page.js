@@ -34,6 +34,7 @@ export  default function productPage(){
                  
                 </div>
                 <div className={`imageCarousel ${styles.imageCarousel}`}>
+                     <div className= {`${styles.productImages}`}></div>
                 </div>   
                 <div className={`${styles.productDescriptionArea}`}>
 

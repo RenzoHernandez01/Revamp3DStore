@@ -1,5 +1,6 @@
 "use client";
 
+import styles from '../app/productPage/productPage.module.css';
 
 export function renderCarousel(product) {
   console.log(product.images);
@@ -16,12 +17,12 @@ console.log("isArray:", Array.isArray(product.images));
       const imageSrc = isFullUrl ? thumb : `/images/${thumb}`;
 
  
-
+console.log("Appending preview and heroImage for:", imageSrc);
       let preview = document.createElement('div');
       let heroImage = document.createElement('div');
 
-      preview.className = "productImages";
-      heroImage.className = "heroImages";
+      preview.className = styles.productImages;
+      heroImage.className = styles.heroImages;
 
    
       preview.style.backgroundImage = `url('${imageSrc}')`;
