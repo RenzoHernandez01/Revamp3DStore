@@ -8,32 +8,18 @@ export function renderCarousel(product) {
   let carouselContainer = document.querySelector(".imageCarousel");
  console.log(product?.images?.length);
   if (product) {
-    console.log("images:", product.images);
-console.log("isArray:", Array.isArray(product.images));
-
-    console.log("working")
     product.images.forEach((thumb, index) => {
       const isFullUrl = thumb.startsWith('http://') || thumb.startsWith('https://');
       const imageSrc = isFullUrl ? thumb : `/images/${thumb}`;
-
- 
-console.log("Appending preview and heroImage for:", imageSrc);
       let preview = document.createElement('div');
       let heroImage = document.createElement('div');
-
-      preview.className = styles.productImages;
-      heroImage.className = styles.heroImages;
-
-   
+      preview.className = `productImages", ${styles.productImages}`;
+      heroImage.className = `heroImages ${styles.heroImages}`;
       preview.style.backgroundImage = `url('${imageSrc}')`;
       heroImage.style.backgroundImage = `url('${imageSrc}')`;
-
-     
       carouselContainer.appendChild(preview);
-      heroImagesContainer.appendChild(heroImage);
-
-   
-      preview.addEventListener("click", () => {
+      heroImagesContainer.appendChild(heroImage);   
+        preview.addEventListener("click", () => {
         let heroImages = document.querySelectorAll(".heroImages");
         heroImages.forEach(hero => hero.classList.remove("activeHero"));
         if (heroImages[index + 1]) {
@@ -41,6 +27,7 @@ console.log("Appending preview and heroImage for:", imageSrc);
           heroImages[index + 1].scrollIntoView({ behavior: "smooth", block: "center" });
         }
       });
+    
     });
   }
 }

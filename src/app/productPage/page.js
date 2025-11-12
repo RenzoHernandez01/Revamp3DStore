@@ -6,6 +6,16 @@ import Typography from '@mui/material/Typography';
 import OtherButtonGrid from "../components/otherButtonGrid"
 import styles from "./productPage.module.css";
 import { renderCarousel } from '../../utils/renderCarousel.js';
+import { modelViewer } from '../../utils/3dViewer';
+import AddToCartCard from "../components/addToCartCard";
+import SellerProfileCard from "../components/sellerProfileCard";
+import ProductRatingCard from "../components/productRatingCard";
+import DimensionCard from "../components/dimensionCard";
+import FooterPanel from "../components/footerPanel";
+import ProductDescription from "../components/productDescription";
+import RenderMoreCarousel from "../../utils/carouselMore";
+import ProductCards from "../components/productCards";
+
 export  default function productPage(){
 
     let mockImages ={
@@ -15,6 +25,7 @@ export  default function productPage(){
             "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761633435/3_iufuz1.jpg"]
     }
     useEffect(() => {renderCarousel(mockImages);}, []);
+    useEffect(() => {modelViewer();}, []);
     return(
     <div>
         <OtherButtonGrid/>
@@ -27,20 +38,48 @@ export  default function productPage(){
                      <Typography variant='h3' color="black">Product name</Typography>
                 </div>
                 <div className={`mainProductImage ${styles.mainProductImage}`}>
-                    <div className="heroImages" id="threeDViewContainer">
-                    </div>
+                    <div className = {`heroImages ${styles.heroImages}`} id="threeDViewContainer"></div>
                 </div>
                  <div className={`${styles.productActionWrapper}`}>
-                 
+                    <AddToCartCard/>
+                    <SellerProfileCard/>
+                    <ProductRatingCard/>
+                    <DimensionCard/>
                 </div>
                 <div className={`imageCarousel ${styles.imageCarousel}`}>
                      <div className= {`${styles.productImages}`}></div>
                 </div>   
                 <div className={`${styles.productDescriptionArea}`}>
-
+                    <ProductDescription/>
                 </div>
             </div>
         </div>  
+        <div className ={`${styles.moreProductsWrapper}`}>
+            <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>More from Author</Typography>
+            <div className = {`moreFromAuthor`}>
+                <RenderMoreCarousel>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                </RenderMoreCarousel>
+            </div>
+            <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>Trending Products</Typography>
+            <div className = {`moreFromTrending`}>
+                <RenderMoreCarousel>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                   <ProductCards/>
+                </RenderMoreCarousel>
+            </div>
+            
+        </div>
+        <FooterPanel/>
     </div>
     );
 }
