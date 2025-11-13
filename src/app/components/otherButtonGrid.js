@@ -11,6 +11,12 @@ import styles from './button.module.css';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import CartOverLay from './cartOverlay.js';
+import style from "../components/cartOverlay.module.css";
+import { useEffect, useState } from 'react';
+
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,9 +54,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [showCart, setShowCart] = React.useState(false);
+  const handleOpenCart = () => setShowCart(true);
+  const handleCloseCart = () => setShowCart(false);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseUserMenu = () => setAnchorElUser(null);
+
+
+useEffect(() => {
+  document.body.style.overflow = showCart ? 'hidden' : 'auto';
+}, [showCart]);
+
 
   return (
     <div className={styles.buttonGrid}>
@@ -64,9 +78,22 @@ export default function ResponsiveAppBar() {
             inputProps={{ 'aria-label': 'search' }}
         />
         </Search>
-      <button className={styles.cartBtnHomeMain}>
-        <ShoppingCartIcon sx={{ fontSize: 30 }} />
+      <button className={styles.cartBtnHomeMain}    onClick={() => {
+        handleOpenCart();
+      }}>
+        <ShoppingCartIcon sx={{ fontSize: 30 }}/>
       </button>
+     
+
+      {showCart && ( <><div className= {style.cartBackdrop} onClick={handleCloseCart} />
+        <CartOverLay onClose={handleCloseCart} />
+    
+    
+  </>
+)}
+
+
+
 
       <Link href="/login" className={`${styles.signInButtonHome} ${styles.signInButton}`}>
         Sign In

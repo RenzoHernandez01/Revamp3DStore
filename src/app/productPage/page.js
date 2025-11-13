@@ -15,6 +15,7 @@ import FooterPanel from "../components/footerPanel";
 import ProductDescription from "../components/productDescription";
 import RenderMoreCarousel from "../../utils/carouselMore";
 import ProductCards from "../components/productCards";
+import Stack from '@mui/material/Stack';
 
 export  default function productPage(){
 
@@ -35,7 +36,7 @@ export  default function productPage(){
             </div>
             <div className={`${styles.productArea}`}>
                 <div className={`${styles.productNamePlace}`}>
-                     <Typography variant='h3' color="black">Product name</Typography>
+                     <Typography variant='h4' color="black">Product name</Typography>
                 </div>
                 <div className={`mainProductImage ${styles.mainProductImage}`}>
                     <div className = {`heroImages ${styles.heroImages}`} id="threeDViewContainer"></div>
@@ -55,7 +56,10 @@ export  default function productPage(){
             </div>
         </div>  
         <div className ={`${styles.moreProductsWrapper}`}>
-            <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>More from Author</Typography>
+            <Stack direction="row" sx={{display:"flex", width:"100%",alignItems:"center"}}>
+                <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>More from Author</Typography>
+                <Button variant="outlined" sx={{width:160,height:30,marginLeft:"auto"}}>More Product</Button>
+            </Stack>
             <div className = {`moreFromAuthor`}>
                 <RenderMoreCarousel>
                    <ProductCards/>
@@ -66,7 +70,10 @@ export  default function productPage(){
                    <ProductCards/>
                 </RenderMoreCarousel>
             </div>
-            <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>Trending Products</Typography>
+             <Stack direction="row" sx={{display:"flex", width:"100%",alignItems:"center"}}>
+                 <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>Trending Products</Typography>
+                <Button variant="outlined" sx={{width:160,height:30,marginLeft:"auto"}}>More Product</Button>
+            </Stack>
             <div className = {`moreFromTrending`}>
                 <RenderMoreCarousel>
                    <ProductCards/>

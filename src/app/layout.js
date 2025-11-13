@@ -28,6 +28,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable} ${geistMono.variable}`}>
         {children}
+        <div id="overlay-root"></div>
+
       </body>
     </html>
   );

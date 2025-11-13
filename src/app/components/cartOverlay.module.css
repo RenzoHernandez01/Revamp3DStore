@@ -1,0 +1,112 @@
+.cartContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  display: flex;
+  width: 1000px;
+  height: 850px;
+  margin: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 9999;
+  flex-direction: column;
+}
+
+.productSlot{
+  background-color: rgb(32, 32, 32);
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 230px;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+.totalAmmountArea{
+  position: relative;
+  display:flex;
+  width: 100%;
+  min-height: 115px;
+  height: auto;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+}
+
+.checkOutButtonWrapper{
+    margin-left: auto;
+}
+
+.checkOutArea{
+  position: relative;
+  display:flex;
+  width: 100%;
+  min-height: 115px;
+  height: auto;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+
+}
+
+.fieldStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  height: 100px;
+  width: 400px;
+  padding: 20;
+  margin: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a8a8a8;
+
+}
+
+.fieldStyle legend {
+  margin: 0 auto;
+  padding: 0 8px;
+  font-weight: bold;
+  color:black;
+  font-weight: lighter;
+}
+
+.moreProductsArea{
+  width: 100%;
+  height: 260px;
+  padding:10px;
+}
+
+.moreCartProductsWrapper{
+  height:100%;
+  display: flex;
+  justify-content:center;
+  gap: 30px;
+  z-index: 1;
+}
+
+.cartBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 9998; 
+  transition: opacity 0.3s ease;
+}
+.cartBackdrop.hidden {
+  display: none;
+  pointer-events: none;
+
+}
+
+

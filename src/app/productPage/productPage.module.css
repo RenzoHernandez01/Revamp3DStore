@@ -44,7 +44,7 @@
   padding: 20px;
   display: grid;
   border-radius: 30px;
-  grid-template-rows:150px 1fr 0.8fr 0.5fr auto auto auto;
+  grid-template-rows:50px 1fr 0.8fr 0.5fr auto auto auto;
   grid-template-columns: auto auto;
   row-gap: 10px;
   column-gap: 50px;
@@ -58,8 +58,12 @@
   left: 0;
   right: 0;
   grid-column: span 3;
-  margin-left:50px;
-  margin-top: 10px;
+  margin-left:53px;
+  display: flex;
+
+ 
+
+
 }
 
 .mainProductImage{
@@ -178,8 +182,6 @@
 
   padding: 0;
 }
-
-
 .carouselWrapper {
   margin: 0;
   padding: 0;
