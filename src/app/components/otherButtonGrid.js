@@ -14,7 +14,8 @@ import InputBase from '@mui/material/InputBase';
 import CartOverLay from './cartOverlay.js';
 import style from "../components/cartOverlay.module.css";
 import { useEffect, useState } from 'react';
-
+import Button from '@mui/material/Button';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 
 
@@ -69,11 +70,12 @@ useEffect(() => {
   return (
     <div className={styles.buttonGrid}>
       <button className={styles.logoHome}>LOGO</button>
-        <Search sx= {{marginRight:"auto"}}>
+        <Search sx= {{marginRight:"auto",border:1}}>
         <SearchIconWrapper  >
-            <SearchIcon />
+            <SearchIcon sx={{color:"black"}}/>
         </SearchIconWrapper>
         <StyledInputBase
+            sx={{color:"black"}}
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search' }}
         />
@@ -81,28 +83,26 @@ useEffect(() => {
       <button className={styles.cartBtnHomeMain}    onClick={() => {
         handleOpenCart();
       }}>
-        <ShoppingCartIcon sx={{ fontSize: 30 }}/>
+        <ShoppingCartOutlinedIcon sx={{ fontSize: 30,color:"black" }}/>
       </button>
      
 
       {showCart && ( <><div className= {style.cartBackdrop} onClick={handleCloseCart} />
-        <CartOverLay onClose={handleCloseCart} />
-    
-    
-  </>
-)}
+        <CartOverLay onClose={handleCloseCart} /> 
+      </>
+      )}
 
-
-
-
-      <Link href="/login" className={`${styles.signInButtonHome} ${styles.signInButton}`}>
+      <Link href="/authPage" className={`${styles.signInButtonHome} ${styles.signInButton}`}>
         Sign In
       </Link>
 
       <div className={styles.signUpWrapperHome}>
-        <Link href="/signup" className={`${styles.signUpButtonHome} ${styles.signUpButton}`}>
+        <Link href="/authPage" passHref>
+          <Button  variant='text' component="a">
           Sign Up
+          </Button>
         </Link>
+        
       </div>
 
       <Tooltip title="Open settings">
