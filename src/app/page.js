@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
 import ButtonGrid from "./components/buttonGrid.js";
@@ -30,11 +31,10 @@ export default function Home() {
         <ProductCards/>
         <ProductCards/>
         <ProductCards/>
-        
       </div>
       <div className = {styles.viewPicksGrid}>
-         <Button variant="contained" disableElevation>
-            Disable elevation
+         <Button variant="contained" disableElevation component={Link} href="/categoryPages/staffpicks"> 
+            View All Staff Picks
          </Button>
       </div>
     </div>

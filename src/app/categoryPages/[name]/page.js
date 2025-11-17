@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import styles from "./category.module.css";
 import CategoryGrid from "../../components/categoryGrid.js";
 import Link from 'next/link';
+import products from '../../../../data/Products.json';
 import ProductCards from "../../components/productCards.js";
 import BannerPanels from "../../components/bannerPanels.js";
 import FooterPanel from "../../components/footerPanel";
@@ -20,7 +22,66 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Slider from '@mui/material/Slider';
+import { useParams } from 'next/navigation';
+import { useState } from "react";
+
 export default function CategoryPage() {
+  let [selectedCategory, setSelectedCategory] = useState(null);
+  let [onSaleOnly, setOnSaleOnly] = useState(false);
+  let [staffPickOnly, setStaffPickOnly] = useState(false);
+  let [sortMode, setSortMode] = useState(null);
+  let{ name } = useParams(); 
+  let normalized = name?.toLowerCase();
+ 
+
+  let filtered = products.filter(product => {
+  let matchesCategory = selectedCategory
+    ? product.category.toLowerCase() === selectedCategory.toLowerCase()
+    : normalized === "all" || product.category.toLowerCase() === normalized;
+  let matchesOnSale = onSaleOnly ? product.onSale === true : true;
+  let matchesStaffPick = staffPickOnly ? product.staffPick === true : true;
+  return matchesCategory && matchesOnSale && matchesStaffPick;
+  });
+
+let sortedFiltered = [...filtered];
+
+if (sortMode === "bestSelling") {
+  sortedFiltered.sort((a, b) => {
+    let totalA = Object.values(a.ratingsBreakdown || {}).reduce((sum, count) => sum + count, 0);
+    let totalB = Object.values(b.ratingsBreakdown || {}).reduce((sum, count) => sum + count, 0);
+    return totalB - totalA;
+  });
+}
+
+if (sortMode === "trending") {
+  let getAverage = (ratings) => {
+    let entries = Object.entries(ratings || {});
+    let totalVotes = entries.reduce((sum, [star, count]) => sum + count, 0);
+    let weightedSum = entries.reduce((sum, [star, count]) => sum + Number(star) * count, 0);
+    return totalVotes > 0 ? weightedSum / totalVotes : 0;
+  };
+   sortedFiltered.sort((a, b) => {
+    let avgA = getAverage(a.ratingsBreakdown);
+    let avgB = getAverage(b.ratingsBreakdown);
+    return avgB - avgA;
+  });
+
+
+}
+
+  if (sortMode === "latest") {
+  sortedFiltered.sort((a, b) => {
+    const dateA = new Date(a.releaseDate);
+    const dateB = new Date(b.releaseDate);
+    return dateB - dateA;
+  });
+}
+
+
+ 
+
+let category = name?.charAt(0).toUpperCase() + name?.slice(1);
+
   return (
 <div>
    <OtherButtonGrid/>
@@ -28,15 +89,141 @@ export default function CategoryPage() {
    <CategoryGrid/>
    <section className={styles.popularCategory}>
     <Stack direction="row" spacing={2} sx={{marginLeft:1}}>
-      <Button>clear all filter</Button>
-      <Button>Trending</Button>
-      <Button>BestSelling</Button>
-      <Button>On Sale</Button>
-      <Button>Lates</Button>
-      <Button>StaffPicks</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur();
+        setSelectedCategory(null);
+        setOnSaleOnly(false);
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >clear all filter</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur(); 
+        setSortMode("trending");
+  
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >Trending</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur(); 
+        setSortMode("bestSelling");
+
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >BestSelling</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur();  
+        setOnSaleOnly(true)
+        setStaffPickOnly(false);
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >
+    On Sale</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur(); 
+        setSortMode("latest"); 
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >Latest</Button>
+    <Button  disableElevation disableRipple
+      onClick={(e) => {
+        e.currentTarget.blur(); 
+        setStaffPickOnly(true);
+        setOnSaleOnly(false);
+      }}
+      sx={{
+        '&:focus': {
+          outline: 'none',
+        },
+        '&:active': {
+          boxShadow: 'none',
+          backgroundColor: 'inherit', 
+        },
+        '&:hover':{
+          backgroundColor: 'inherit',
+          boxShadow: 'none',
+          color:"black"
+        },
+        color:"gray"
+      }}
+    >StaffPicks</Button>
     </Stack>
    </section>
-   <section class="catalogMainArea">
+   <section className="catalogMainArea">
       <div className={`${styles.catalogMainAreaContainer}`}>
         <div className={`${styles.collapseArea}`}>
           <Accordion>
@@ -53,28 +240,28 @@ export default function CategoryPage() {
                   <nav aria-label="secondary mailbox folders">
                     <List>
                       <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => setSelectedCategory("character")}>
                           <ListItemText primary="Character" />
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
-                        <ListItemButton>
-                          <ListItemText primary="Weapon" />
+                        <ListItemButton onClick={() => setSelectedCategory("terrain")}>
+                          <ListItemText primary="Terrain" />
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
-                        <ListItemButton>
-                          <ListItemText primary="Props" />
+                        <ListItemButton onClick={() => setSelectedCategory("vehicle")}>
+                          <ListItemText primary="Vehicle"/>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
-                        <ListItemButton>
-                          <ListItemText primary="Terrain"/>
+                        <ListItemButton onClick={() => setSelectedCategory("weapon")}>
+                          <ListItemText primary="Weapon"/>
                         </ListItemButton>
                       </ListItem>
                        <ListItem disablePadding>
-                        <ListItemButton>
-                          <ListItemText primary="Vehicles"/>
+                        <ListItemButton onClick={() => setSelectedCategory("props")}> 
+                          <ListItemText primary="Props"/>
                         </ListItemButton>
                       </ListItem>
                     </List>
@@ -99,7 +286,7 @@ export default function CategoryPage() {
         </div>
         <div className={`${styles.catalogCardsArea}`}>
           <div className={`${styles.catalogCards}`}>
-          <ProductCards/><ProductCards/><ProductCards/><ProductCards/><ProductCards/><ProductCards/><ProductCards/><ProductCards/>
+          <ProductCards products={sortedFiltered} filterMode={selectedCategory || category} />  
           </div>
         </div>
       </div>

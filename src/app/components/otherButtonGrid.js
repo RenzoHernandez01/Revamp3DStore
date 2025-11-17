@@ -97,12 +97,8 @@ useEffect(() => {
       </Link>
 
       <div className={styles.signUpWrapperHome}>
-        <Link href="/authPage" passHref>
-          <Button  variant='text' component="a">
-          Sign Up
-          </Button>
-        </Link>
-        
+          <Button  variant='text' component={Link} href="/authPage"/>
+          Sign Up        
       </div>
 
       <Tooltip title="Open settings">

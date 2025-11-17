@@ -1,0 +1,38 @@
+[
+  {
+    "id": "sellerOne",
+    "name": "Mads",
+    "rating": "4.8",
+    "profileImage": ["madlogo.png"]
+  },
+  {
+    "id": "sellerTwo",
+    "name": "NovaForge",
+    "rating": "4.5",
+    "profileImage": ["madlogo.png"]
+  },
+  {
+    "id": "sellerThree",
+    "name": "PixelSmith",
+    "rating": "4.9",
+    "profileImage": ["madlogo.png"]
+  },
+  {
+    "id": "sellerFour",
+    "name": "TerrainTech",
+    "rating": "4.6",
+    "profileImage": ["madlogo.png"]
+  },
+  {
+    "id": "sellerFive",
+    "name": "AssetAlchemy",
+    "rating": "4.7",
+    "profileImage": ["madlogo.png"]
+  },
+  {
+    "id": "sellerSix",
+    "name": "RenderRiot",
+    "rating": "4.4",
+    "profileImage": ["madlogo.png"]
+  }
+]
