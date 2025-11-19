@@ -1,4 +1,4 @@
-import styles from "../app/productPage/productPage.module.css";
+import styles from "../app/productPage/[id]/productPage.module.css";
 import React, { useEffect, useRef } from 'react';
 import ProductCards from '../app/components/productCards.js';
 

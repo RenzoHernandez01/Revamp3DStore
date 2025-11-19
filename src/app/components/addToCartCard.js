@@ -5,11 +5,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function addToCartCard() {
+export default function addToCartCard({ id, price }) {
   return (
     <Card sx={{ width: '100%',}} variant="outlined">
       <CardActions>
-        <Button variant="contained" fullWidth>$900</Button>
+        <Button variant="contained" fullWidth>${price}</Button>
       </CardActions>
     </Card>
   );

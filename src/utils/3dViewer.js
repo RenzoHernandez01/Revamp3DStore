@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-export function modelViewer(){
+export function modelViewer({modelLink}){
 console.log("beingcalled");
 let productWindow = document.getElementById('threeDViewContainer');
 let scene = new THREE.Scene();
@@ -39,15 +39,12 @@ let pmremGenerator = new THREE.PMREMGenerator(renderer);
 pmremGenerator.compileEquirectangularShader();
 
 window.load3DModel = function (modelUrl) {
-  /*const overlay = document.querySelector('.loadingOverlay');
-  const loadingWrapper = document.querySelector('.loadingWrapper');
-  const printerBed = document.querySelector('.printerBed');
-  overlay.style.display = 'flex';
-  overlay.style.opacity = '1';*/
-  /*loadingWrapper.style.transform = 'translateY(0px)';
-  printerBed.style.transform = 'translate(-50%, -50%) translateY(100px)';
-  const initialRect = printerBed.getBoundingClientRect();
-  console.log('Initial printerBed position:', initialRect);*/
+
+  console.log("aaa",{modelLink});
+  if (typeof modelUrl !== 'string') {
+  console.error('Invalid model URL:', modelUrl);
+  return;
+}
 
   loader.load(
     modelUrl,
@@ -77,10 +74,7 @@ window.load3DModel = function (modelUrl) {
       camera.lookAt(center);
       controls.target.copy(center);
       controls.update();
-      /*loadingWrapper.style.transform = 'translateY(-470px)';
-      printerBed.style.transform = 'translate(-50%, -50%) translateY(-470px)';*/
-      /*const finalRect = printerBed.getBoundingClientRect();*/
-      console.log('Final printerBed position:', finalRect);
+ 
       requestAnimationFrame(() => {
         overlay.style.opacity = '0';
         setTimeout(() => {
@@ -94,10 +88,7 @@ window.load3DModel = function (modelUrl) {
       const maxBedTranslate = 470;
       const currentHat = -((percent / 100) * maxHatTranslate);
       const currentBed = -((percent / 100) * maxBedTranslate);
-      /*loadingWrapper.style.transform = `translateY(${currentHat}px)`;
-      printerBed.style.transform = `translate(-50%, -50%) translateY(${currentBed}px)`;
-      const liveRect = printerBed.getBoundingClientRect();
-      console.log(`Progress: ${percent.toFixed(1)}%`, 'Bed Y:', currentBed, 'Rect:', liveRect);*/
+  
     },
     (error) => {
       console.error('Model load error:', error);
@@ -105,16 +96,9 @@ window.load3DModel = function (modelUrl) {
     }
   );
 };
-/*window.addEventListener('DOMContentLoaded', () => {
-  if (product.modelPath) {
-  window.load3DModel(product.modelPath);
-}
-  console.log("rendering");
-  window.load3DModel('https://storage.googleapis.com/3dwebstoreassets/pyramidHead.glb');
-});*/
 
 
- window.load3DModel('https://storage.googleapis.com/3dwebstoreassets/pyramidHead.glb');
+ window.load3DModel(modelLink);
   
 
 rgbeLoader.load('https://res.cloudinary.com/dxqj5g1ii/raw/upload/v1762045560/Studio-Automotive-Neutral_xglqyr.hdr', (texture) => {

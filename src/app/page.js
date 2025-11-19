@@ -57,7 +57,7 @@ export default function Home() {
       </div>
       <div className = {styles.viewPicksGrid}>
          <Button variant="contained" disableElevation 
-         onClick={() => router.push('/categoryPages/marketplace?staffPickOnly=true')}
+         onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
         >
             View All Staff Picks
          </Button>

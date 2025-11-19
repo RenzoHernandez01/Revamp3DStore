@@ -7,7 +7,10 @@ import Rating from '@mui/material/Rating';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
 import  LinearWithValueLabel  from '../components/progressBar.js';
 
-export default function ProductRatingCard() {
+
+
+
+export default function ProductRatingCard({totalRatingsBreakdown, rating,ratingsBreakdown}) {
   return (
     <Card sx={{ justifyContent:"center", alignItems:"center",width: '100%',  padding:1}} variant="outlined">
       <CardContent  sx={{ display: 'flex', justifyContent:"center", alignItems:"center",  flexDirection: 'column',}}>
@@ -17,15 +20,15 @@ export default function ProductRatingCard() {
         </Stack>
          <Stack direction={"row"} sx={{width: '100%', alignItems:"center",justifyContent:"flex-start",gap:.5}}>
             <StarPurple500OutlinedIcon/>
-            <Typography variant='subtitle2' sx={{fontWeight:"bold"}}>4.5</Typography>
-            <Typography variant='subtitle2' sx={{}}>(21 ratings)</Typography>
+            <Typography variant='subtitle2' sx={{fontWeight:"bold"}}>{rating}</Typography>
+            <Typography variant='subtitle2' sx={{}}>({totalRatingsBreakdown})</Typography>
         </Stack>
-        <Stack direction={"column"} sx={{width: '100%', alignItems:"center",justifyContent:"flex-start",gap:.5,marginTop:1}}>
+       {/*<Stack direction={"column"} sx={{width: '100%', alignItems:"center",justifyContent:"flex-start",gap:.5,marginTop:1}}>
             <Stack direction="row" sx={{ width: '100%', alignItems: 'center', gap: 1 }}>
                     <Typography variant="caption" sx={{ whiteSpace: 'nowrap' }}>
                         5 Stars
                     </Typography>
-                    <LinearWithValueLabel value={100} />
+                    <LinearWithValueLabel value={5} />
             </Stack>
             <Stack direction="row" sx={{ width: '100%', alignItems: 'center', gap: 1 }}>
                     <Typography variant="caption" sx={{ whiteSpace: 'nowrap' }}>
@@ -54,8 +57,27 @@ export default function ProductRatingCard() {
             
 
 
-        </Stack>
+        </Stack>*/}
+        <Stack direction="column" sx={{ width: '100%', alignItems: 'center', justifyContent: 'flex-start', gap: 0.5, marginTop: 1 }}>
+            {[5, 4, 3, 2, 1].map(star => {
+            const count = ratingsBreakdown[String(star)] || 0;
+            const percentage = totalRatingsBreakdown === 0 ? 0 : (count / totalRatingsBreakdown) * 100;
+            return (
+               <Stack key={star} direction="row" sx={{ width: '100%', alignItems: 'center', gap: 1 }}>
+               <Typography variant="caption" sx={{ whiteSpace: 'nowrap', width: 60 }}>
+                  {star} Stars
+               </Typography>
+               <LinearWithValueLabel value={Number(percentage)} />
+               <Typography variant="caption" sx={{ marginLeft: 'auto' }}>
+                  {count}
+               </Typography>
+               </Stack>
+            );
+         })}
+         </Stack>
       </CardContent>
     </Card>
   );
 }
+
+

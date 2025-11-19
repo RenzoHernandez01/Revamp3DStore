@@ -9,15 +9,20 @@ import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
 import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-
+import { useRouter } from 'next/navigation';
 
 export default function ProductCards({ products = [], creators = null, filterMode = null, limitStart, limitEnd }) {
-  
+    let  router = useRouter();
     let filtered = products .filter(product => !filterMode || product.category.toLowerCase() === filterMode.toLowerCase());
     let sliced = limitEnd ? filtered.slice(limitStart,limitEnd) : filtered.slice(0,filtered.length);
     return (
-    sliced.map((product,index) =>(
-    <Card  key={product.id}className = {styles.cardInfo} sx={{ maxWidth: 325, height: 435,margin:0,padding:2,borderRadius:3}}>
+    sliced.map((product,index) =>( 
+    <Card  key={product.id}className = {styles.cardInfo} sx={{ maxWidth: 325, height: 435,margin:0,padding:2,borderRadius:3, '&:hover': {
+    boxShadow: 4,
+    transform: 'scale(1.01)',
+    transition: 'all 0.2s ease-in-out',},}} 
+     onClick={() => router.push(`/productPage/${product.id}`)}>
+
     <div className={styles.productCardWrapper}> 
         <div className = {styles.previewWrapper}>
             <Box sx={{display:'flex',width:90,height:30,backgroundColor:"pink",zIndex:2,position:"absolute"

@@ -4,15 +4,25 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export function LinearProgressWithLabel(props) {
+export function LinearProgressWithLabel({ value }) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
       <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} sx ={{height:13, borderRadius:.5,backgroundColor: 'transparent',border: '1px solid #000000ff',}}/>
+        <LinearProgress
+          variant="determinate"
+          value={value}
+          sx={{
+            height: 13,
+            borderRadius: 0.5,
+            backgroundColor: 'transparent',
+      
+            border: '1px solid #000000ff',
+          }}
+        />
       </Box>
       <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {`${Math.round(props.value)}%`}
+        <Typography variant="body2" sx={{ color: 'text.secondary', }}>
+          {`${Math.round(value)}%`}
         </Typography>
       </Box>
     </Box>
@@ -20,29 +30,7 @@ export function LinearProgressWithLabel(props) {
 }
 
 LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
   value: PropTypes.number.isRequired,
 };
 
-export default function LinearWithValueLabel() {
-  const [progress, setProgress] = React.useState(10);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  return (
-    <Box sx={{ width: '100%', }}>
-      <LinearProgressWithLabel value={progress} />
-    </Box>
-  );
-}
-
+export default LinearProgressWithLabel;

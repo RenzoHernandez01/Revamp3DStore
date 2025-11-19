@@ -1,6 +1,6 @@
 "use client";
 
-import styles from '../app/productPage/productPage.module.css';
+import styles from '../app/productPage/[id]/productPage.module.css';
 
 export function renderCarousel(product) {
   console.log(product.images);
@@ -8,7 +8,7 @@ export function renderCarousel(product) {
   let carouselContainer = document.querySelector(".imageCarousel");
  console.log(product?.images?.length);
   if (product) {
-    product.images.forEach((thumb, index) => {
+    product.forEach((thumb, index) => {
       const isFullUrl = thumb.startsWith('http://') || thumb.startsWith('https://');
       const imageSrc = isFullUrl ? thumb : `/images/${thumb}`;
       let preview = document.createElement('div');
