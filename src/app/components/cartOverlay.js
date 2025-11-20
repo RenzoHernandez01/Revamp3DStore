@@ -2,23 +2,26 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import style from "../components/cartOverlay.module.css";
-import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import InCartProducts from './inCartProducts';
 import CartMoreProductCards from './cartMoreProductCards';
+
+
 export default function CartOverlay({ onClose }) {
   const [mounted, setMounted] = useState(false);
   const [overlayRoot, setOverlayRoot] = useState(null);
-  
+  let [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     setMounted(true);
+    let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(sortedCart);
     setOverlayRoot(document.getElementById('overlay-root'));
   }, []);
   if (!mounted || !overlayRoot) return null;
-
+  console.log(cartItems);
   return createPortal(
     <div className={`${style.cartContainer}`}>
       <Stack sx={{width:"100%", height:50,}}>
@@ -27,8 +30,9 @@ export default function CartOverlay({ onClose }) {
         </Button>
       </Stack>
       <div className={`${style.productSlot}`}>
-        <InCartProducts/>
-        <InCartProducts/>
+        {cartItems.map((item) => (
+          <InCartProducts product = {item}/>
+        ))}
       </div>
       <div className={`${style.totalAmmountArea}`}>
         <Typography variant='h5'color="black">Total (1 Items)</Typography>
@@ -42,7 +46,6 @@ export default function CartOverlay({ onClose }) {
               <Typography variant='body.2'color="black" sx={{marginLeft:"auto",marginRight:1}}>Sale Discount</Typography>
               <Typography variant='body.2'color="black" sx={{marginLeft:"auto",marginRight:1, color:"red"}}>$200</Typography>
             </Stack>
-          
           </Stack>
           <Typography variant='h4'color="black" sx={{marginLeft:"auto",marginRight:1}}>$200</Typography>
         </Stack>

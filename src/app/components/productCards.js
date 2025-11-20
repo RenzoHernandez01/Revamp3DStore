@@ -11,6 +11,8 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/navigation';
 
+
+
 export default function ProductCards({ products = [], creators = null, filterMode = null, limitStart, limitEnd }) {
     let  router = useRouter();
     let filtered = products .filter(product => !filterMode || product.category.toLowerCase() === filterMode.toLowerCase());

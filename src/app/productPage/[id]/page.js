@@ -68,7 +68,7 @@ export  default function productPage({params}){
                     <div className = {`heroImages ${styles.heroImages}`} id="threeDViewContainer"></div>
                 </div>
                  <div className={`${styles.productActionWrapper}`}>
-                    <AddToCartCard id={product.id} price={product.price}/>
+                    <AddToCartCard product={product}/>
                     <SellerProfileCard id={author.id} name={author.name} rating={author.rating} profileImage={author.prof} />
                     <ProductRatingCard totalRatingsBreakdown={totalRate} rating={averageRating} ratingsBreakdown={product.ratingsBreakdown}/>
                     <DimensionCard dimensions={product.dimensions}/>

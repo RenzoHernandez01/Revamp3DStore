@@ -16,10 +16,12 @@ import style from "../components/cartOverlay.module.css";
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { useRouter } from 'next/navigation';
 
 
 
-const Search = styled('div')(({ theme }) => ({
+let Search = styled('div')(({ theme }) => ({
+
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -31,7 +33,7 @@ const Search = styled('div')(({ theme }) => ({
   maxWidth: 300,
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+let SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -41,7 +43,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+let StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   width: '100%',
   '& .MuiInputBase-input': {
@@ -54,12 +56,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export default function ResponsiveAppBar() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [showCart, setShowCart] = React.useState(false);
-  const handleOpenCart = () => setShowCart(true);
-  const handleCloseCart = () => setShowCart(false);
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
+  let  router = useRouter();
+  let [anchorElUser, setAnchorElUser] = React.useState(null);
+  let [showCart, setShowCart] = React.useState(false);
+  let handleOpenCart = () => setShowCart(true);
+  let handleCloseCart = () => setShowCart(false);
+  let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  let handleCloseUserMenu = () => setAnchorElUser(null);
 
 
 useEffect(() => {
@@ -91,14 +94,19 @@ useEffect(() => {
         <CartOverLay onClose={handleCloseCart} /> 
       </>
       )}
-
-      <Link href="/authPage" className={`${styles.signInButtonHome} ${styles.signInButton}`}>
+     
+      <Button variant='text'
+      onClick={() => router.push('/authPage/signin')}
+      >
         Sign In
-      </Link>
+      </Button>
 
       <div className={styles.signUpWrapperHome}>
-          <Button  variant='text' component={Link} href="/authPage"/>
-          Sign Up        
+          <Button variant='text'
+            onClick={() => router.push('/authPage/signup')}
+            >
+            Sign Up
+          </Button>
       </div>
 
       <Tooltip title="Open settings">
