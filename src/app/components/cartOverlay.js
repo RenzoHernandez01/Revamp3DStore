@@ -8,12 +8,26 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import InCartProducts from './inCartProducts';
 import CartMoreProductCards from './cartMoreProductCards';
+import EmptyCart from './emptyCart';
+function getTotalDiscount(cartItems) {
+  let totalDiscount = 0;
+  cartItems.forEach(product => {
+    if (product.onSale) {
+      let discount = Math.round(product.price * (product.salePercentage / 100));
+      totalDiscount += discount;
+    }
+  });
+  return totalDiscount;
+}
+
 
 
 export default function CartOverlay({ onClose }) {
-  const [mounted, setMounted] = useState(false);
-  const [overlayRoot, setOverlayRoot] = useState(null);
+  let [mounted, setMounted] = useState(false);
+  let [overlayRoot, setOverlayRoot] = useState(null);
   let [cartItems, setCartItems] = useState([]);
+  let subtotalPrice = 0;
+  let totalDiscount = getTotalDiscount(cartItems);
   useEffect(() => {
     setMounted(true);
     let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -21,7 +35,16 @@ export default function CartOverlay({ onClose }) {
     setOverlayRoot(document.getElementById('overlay-root'));
   }, []);
   if (!mounted || !overlayRoot) return null;
-  console.log(cartItems);
+  let handleRemoveFromCart = (id) => {  
+  let updatedCart = cartItems.filter((item) => item.id !== id);
+  setCartItems(updatedCart);
+  localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  cartItems.forEach(productInCart =>{
+    subtotalPrice = productInCart.price + subtotalPrice;
+  })
+
   return createPortal(
     <div className={`${style.cartContainer}`}>
       <Stack sx={{width:"100%", height:50,}}>
@@ -29,25 +52,30 @@ export default function CartOverlay({ onClose }) {
           <CloseIcon sx={{color:"gray", fontSize: 40 }}/>
         </Button>
       </Stack>
+      {cartItems.length === 0 ? (<EmptyCart/>)  :
+      (<>
       <div className={`${style.productSlot}`}>
         {cartItems.map((item) => (
-          <InCartProducts product = {item}/>
+          <InCartProducts product = {item}  onRemove={handleRemoveFromCart}/>
         ))}
       </div>
       <div className={`${style.totalAmmountArea}`}>
-        <Typography variant='h5'color="black">Total (1 Items)</Typography>
+        <Typography variant='h5'color="black">Total ({cartItems.length} items) </Typography>
         <Stack sx={{flexDirection:"column",height:"auto", width:250,marginLeft:"auto",justifyContent:'flex-start'}}>
           <Stack sx={{flexDirection:"column",height:60, width:"100%",marginLeft:"auto",marginBottom:2,}}>
             <Stack sx={{flexDirection:"row",height:"auto", width:"100%",marginLeft:"auto",marginBottom:1}}>
-              <Typography variant='body.2'color="black" sx={{marginLeft:10,marginRight:1}}>Subtotal</Typography>
-              <Typography variant='body.2'color="black" sx={{marginLeft:"auto",marginRight:1}}>$200</Typography>
+              <Typography color="black" sx={{marginLeft:10,marginRight:1}}>Subtotal</Typography>
+              <Typography color="black" sx={{marginLeft:"auto",marginRight:1}}>${subtotalPrice}</Typography>
             </Stack>
             <Stack sx={{flexDirection:"row",height:"auto", width:"100%",marginLeft:"auto",}}>
-              <Typography variant='body.2'color="black" sx={{marginLeft:"auto",marginRight:1}}>Sale Discount</Typography>
-              <Typography variant='body.2'color="black" sx={{marginLeft:"auto",marginRight:1, color:"red"}}>$200</Typography>
+              <Typography color="black" sx={{marginLeft:"auto",marginRight:1}}>Sale Discount</Typography>
+              <Typography  sx={{ marginLeft: "auto", marginRight: 1, color: "red" }}>
+               -${totalDiscount}
+              </Typography>
+
             </Stack>
           </Stack>
-          <Typography variant='h4'color="black" sx={{marginLeft:"auto",marginRight:1}}>$200</Typography>
+          <Typography variant='h4'color="black" sx={{marginLeft:"auto",marginRight:1}}>${subtotalPrice-totalDiscount}</Typography>
         </Stack>
       </div>
       <div className={`${style.checkOutArea}`}>
@@ -64,7 +92,8 @@ export default function CartOverlay({ onClose }) {
         </fieldset>
         </div>
       </div>
-      <div className={`${style.moreProductsArea}`}>
+      </>   )}
+       <div className={`${style.moreProductsArea}`}>
          <Typography variant='h5'color="black">Products you may like</Typography>
          <div className={`${style.moreCartProductsWrapper}`}>
             <CartMoreProductCards/>
@@ -74,6 +103,7 @@ export default function CartOverlay({ onClose }) {
             <CartMoreProductCards/>
          </div>
       </div>
+    
     </div>,
     overlayRoot
   );
