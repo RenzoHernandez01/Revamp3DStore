@@ -1,33 +1,50 @@
-import styles from './button.module.css'; 
+import styles from './buttonMain.module.css'; 
 import Link from 'next/link';
 import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
-
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
+import CartOverLay from './cartOverlay.js';
+import { useRouter } from 'next/navigation';
+import style from "../components/cartOverlay.module.css";
 
 export default function ButtonGrid() {
+    let  router = useRouter();
+    let [showCart, setShowCart] = React.useState(false);
+    let handleOpenCart = () => setShowCart(true);
+    let handleCloseCart = () => setShowCart(false);
+  useEffect(() => {
+    document.body.style.overflow = showCart ? 'hidden' : 'auto';
+  }, [showCart]);
+      
   return (
     <div className={`${styles.buttonGrid}`}>
       <button className={`${styles.logoHome}`}>LOGO</button>
       
-      <button className={`${styles.cartBtnHomeMain}`}>
-        <ShoppingCartIcon sx={{ fontSize: 30}}/>
+      <button className={styles.cartBtnHomeMain}    onClick={() => {
+        handleOpenCart();
+      }}>
+        <ShoppingCartOutlinedIcon sx={{ fontSize: 30,color:"white" }}/>
       </button>
+     
 
-      <Link href="/login" className={`${styles.signInButtonHome} ${styles.signInButton}`}>
+      {showCart && ( <><div className= {style.cartBackdrop} onClick={handleCloseCart} />
+        <CartOverLay onClose={handleCloseCart} /> 
+      </>
+      )}
+
+     <Button variant='text'
+      onClick={() => router.push('/authPage/signin')}
+      >
         Sign In
-      </Link>
-
+      </Button>
       <div className={`${styles.signUpWrapperHome}`}>
-        <Link href="/signup" className={`${styles.signUpButtonHome} ${styles.signUpButton}`}>
-          Sign Up
-        </Link>
+          <Button variant='text'
+            onClick={() => router.push('/authPage/signup')}
+            >
+            Sign Up
+          </Button>
       </div>
-
-      {/*<Link href="/profile" className={`${styles.profileBtnHome} ${styles.profileBtn}`} style={{ display: 'none' }}>
-        Profile
-      </Link>*/}
-
       <Link href="/" className={`${styles.logOutBtnHome} ${styles.logOutBtn}`} style={{ display: 'none' }}>
         Log Out
       </Link>

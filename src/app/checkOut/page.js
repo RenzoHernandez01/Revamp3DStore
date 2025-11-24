@@ -3,43 +3,54 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import styles from "./checkOut.module.css";
 import CategoryGrid from "../components/categoryGrid";
-import OtherButtonGrid from "../components/otherButtonGrid"
+import OtherButtonGridSignedIn from "../components/otherButtonGridSignedIn"
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { CreditCard } from '@mui/icons-material';
+import CheckOutItems from '../components/checkOutItems';
 import Stack from '@mui/material/Stack';
 import countries from '../../../data/countries.json';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
+function getTotalDiscount(cartItems) {
+  let totalDiscount = 0;
+  cartItems.forEach(product => {
+    if (product.onSale) {
+      let discount = Math.round(product.price * (product.salePercentage / 100));
+      totalDiscount += discount;
+    }
+  });
+  return totalDiscount;
+}
+
 export  default function CheckOut(){
     const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
+    let [cartItems, setCartItems] = useState([]);
+    let subtotalPrice = 0;
+    let totalDiscount = getTotalDiscount(cartItems);
+    useEffect(() => {
+    let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCartItems(sortedCart);
+    }, []);
+    cartItems.forEach(productInCart =>{
+    subtotalPrice = productInCart.price + subtotalPrice;
+  })
+
   return (
 <div>
-    <OtherButtonGrid/>
+    <OtherButtonGridSignedIn/>
     <CategoryGrid/>
     <section>
         <div className = {`${styles.checkOutContainer}`}>
             <div className={`${styles.checkOutCart}`}>
                  <div className={`${styles.checkOutProductArea}`}>
-                    <Stack
-                        direction="row"
-                        spacing={2}
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        sx={{ width: '100%',backgroundColor:"#f1f1f1",marginTop:.1}}
-                    >
-                    <div className={`${styles.checkOutProductIcon}`}></div>  
-                    <Typography variant="h6" color = "black">
-                        Product Name
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }}/>
-                    <Typography variant="h6" color = "black">
-                        $1000
-                    </Typography>
-                    </Stack>
+                    {cartItems.map((item) => (
+                        <CheckOutItems product = {item}/>
+                    ))}
                 </div>
                 <div className={`${styles.subTotalArea}`}>
                     <div className={`${styles.subTotalWrapper}`}>
@@ -54,7 +65,7 @@ export  default function CheckOut(){
                             </Typography>
                             <Box sx={{ flexGrow: 1 }}/>
                             <Typography variant="h6" color = "black">
-                                $1000
+                                ${subtotalPrice}
                             </Typography>
                         </Stack>
                         <Stack
@@ -67,8 +78,8 @@ export  default function CheckOut(){
                                 Sale Discount
                             </Typography>
                             <Box sx={{ flexGrow: 1 }}/>
-                            <Typography variant="h6" color = "black">
-                                $1000
+                            <Typography variant="h6" color = "red">
+                                -${totalDiscount}   
                             </Typography>
                         </Stack>
                          <Stack
@@ -81,8 +92,8 @@ export  default function CheckOut(){
                                 Total Price
                             </Typography>
                             <Box sx={{ flexGrow: 1 }}/>
-                            <Typography variant="h6" color = "black">
-                                $1000
+                            <Typography variant="h5" color = "black">
+                                ${subtotalPrice-totalDiscount}
                             </Typography>
                         </Stack>
                     </div>
@@ -186,7 +197,7 @@ export  default function CheckOut(){
                 </div> 
             </div>
         </div>
-    </section>1
+    </section>
 </div>
   );
 }

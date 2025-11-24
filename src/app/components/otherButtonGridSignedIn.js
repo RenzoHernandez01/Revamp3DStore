@@ -1,6 +1,4 @@
 "use client";
-import Link from 'next/link';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -14,7 +12,6 @@ import InputBase from '@mui/material/InputBase';
 import CartOverLay from './cartOverlay.js';
 import style from "../components/cartOverlay.module.css";
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
 
@@ -57,9 +54,12 @@ let StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ResponsiveAppBar() {
   let  router = useRouter();
+  let [anchorElUser, setAnchorElUser] = React.useState(null);
   let [showCart, setShowCart] = React.useState(false);
   let handleOpenCart = () => setShowCart(true);
   let handleCloseCart = () => setShowCart(false);
+  let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  let handleCloseUserMenu = () => setAnchorElUser(null);
 
 
 useEffect(() => {
@@ -92,20 +92,28 @@ useEffect(() => {
       </>
       )}
      
-      <Button variant='text'
-      onClick={() => router.push('/authPage/signin')}
+  
+
+      <Tooltip title="Open settings">
+        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 ,marginRight:5}}>
+          <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+        </IconButton>
+      </Tooltip>
+
+      <Menu
+        anchorEl={anchorElUser}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{ mt: '45px' }}
       >
-        Sign In
-      </Button>
-
-      <div className={styles.signUpWrapperHome}>
-          <Button variant='text'
-            onClick={() => router.push('/authPage/signup')}
-            >
-            Sign Up
-          </Button>
-      </div>
-
+        {['Profile', 'Account', 'Dashboard', 'Logout'].map((setting) => (
+          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+            {setting}
+          </MenuItem>
+        ))}
+      </Menu>
     </div>
   );
 }

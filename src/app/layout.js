@@ -1,22 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import { Poppins } from 'next/font/google';
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import MSWProvider from "./MSWProvider";
+import { AuthProvider } from "./context/AuthContext"; // adjust path if needed
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '600'], 
-  variable: '--font-poppins',
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-poppins" });
 
 export const metadata = {
   title: "Create Next App",
@@ -26,10 +16,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${geistMono.variable}`}>
-        {children}
-        <div id="overlay-root"></div>
-
+      <body>
+        <AuthProvider>
+          {children}
+          <div id="overlay-root"></div>
+          <MSWProvider />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -9,6 +9,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import InCartProducts from './inCartProducts';
 import CartMoreProductCards from './cartMoreProductCards';
 import EmptyCart from './emptyCart';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from "next/navigation";
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -23,9 +25,11 @@ function getTotalDiscount(cartItems) {
 
 
 export default function CartOverlay({ onClose }) {
+   const router = useRouter();
   let [mounted, setMounted] = useState(false);
   let [overlayRoot, setOverlayRoot] = useState(null);
   let [cartItems, setCartItems] = useState([]);
+  let { isSignedIn, user, signOut } = useAuth();
   let subtotalPrice = 0;
   let totalDiscount = getTotalDiscount(cartItems);
   useEffect(() => {
@@ -56,7 +60,7 @@ export default function CartOverlay({ onClose }) {
       (<>
       <div className={`${style.productSlot}`}>
         {cartItems.map((item) => (
-          <InCartProducts product = {item}  onRemove={handleRemoveFromCart}/>
+          <InCartProducts   key={item.id}   product = {item}  onRemove={handleRemoveFromCart}/>
         ))}
       </div>
       <div className={`${style.totalAmmountArea}`}>
@@ -82,13 +86,26 @@ export default function CartOverlay({ onClose }) {
         <div >
            <fieldset className = {`${style.fieldStyle}`}>
           <legend>Add discount code</legend>
-          <Button variant='contained' sx={{width:"100%", height:50,}}>Checkout</Button>
+          <Button
+       
+          variant='contained' sx={{width:"100%", height:50,}}>
+            Checkout</Button>
         </fieldset>
         </div>
         <div className={`${style.checkOutButtonWrapper}`}>
            <fieldset className = {`${style.fieldStyle}`}>
           <legend>Continue to checkout</legend>
-          <Button variant='contained' sx={{width:"100%", height:50,}}>Checkout</Button>
+          <Button 
+              onClick={() => {
+              console.log("Checkout button clicked, isSignedIn:", isSignedIn);
+              if (isSignedIn) {
+                router.push("/checkOut");
+              } else {
+                router.push("/authPage/signin");
+              }
+            }}
+          
+          variant='contained' sx={{width:"100%", height:50,}}>Checkout</Button>
         </fieldset>
         </div>
       </div>
@@ -96,7 +113,7 @@ export default function CartOverlay({ onClose }) {
        <div className={`${style.moreProductsArea}`}>
          <Typography variant='h5'color="black">Products you may like</Typography>
          <div className={`${style.moreCartProductsWrapper}`}>
-            <CartMoreProductCards/>
+            <CartMoreProductCards />
             <CartMoreProductCards/>
             <CartMoreProductCards/>
             <CartMoreProductCards/>

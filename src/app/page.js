@@ -1,26 +1,24 @@
 "use client";
-import Image from "next/image";
 import styles from "./page.module.css";
 import ButtonGrid from "./components/buttonGrid.js";
 import CategoryGrid from "./components/categoryGrid.js";
-import Link from 'next/link';
-import products from '../../data/Products.json'
 import CreatorGrid from "./components/creatorGrid.js";
 import SearchGrid from "./components/searchGrid.js";
 import ProductCards from "./components/productCards.js";
 import BannerPanels from "./components/bannerPanels.js";
 import FooterPanel from "./components/footerPanel";
 import Button from '@mui/material/Button';
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"></link>
-import { useRouter } from 'next/navigation';
-
-
+import ButtonGridSignedIn from "./components/buttonGridSignedIn";
+import { useRouter, } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useAuth } from "./context/AuthContext";
 export default function Home() {
+  let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
+  let [products, setProducts] = useState([]);
   let handleClick = () => {
   router.push('/categoryPages/marketplace?staffPickOnly=true');
   };
-
   let homepageProducts = products.filter(p => p.staffPick);
   let handleViewStaffPicks = () => {
     navigate('/category/all', { state: { staffPickOnly: true } });
@@ -38,13 +36,26 @@ export default function Home() {
   };
   let trendingProducts = getTopRatedProducts(products, 10);
 
+useEffect(() => {
+  const runFetch = async () => {
+    try {
+      const res = await fetch('/api/products');
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+      const data = await res.json();
+      setProducts(data);
+    } catch (err) {
+      console.error('Failed to fetch products:', err);
+    }
+  };  
+  setTimeout(runFetch, 100);
+}, []);
   return (
 <div>
   <section className={styles.searchCategorySection}>       
     <div className ={styles.heroDiv}>
       <div className ={styles.heroOverlay}>
       </div>
-      <ButtonGrid/>
+      {isSignedIn ? <ButtonGridSignedIn/> : <ButtonGrid/>}
       <SearchGrid/>
       <CategoryGrid/>
     </div>
@@ -53,7 +64,7 @@ export default function Home() {
   <section className = {styles.staffPicksSection}>
     <div className = {styles.staffPicks}>
       <div className = {styles.staffCardsGrid}>
-        <ProductCards products={homepageProducts} limitEnd={5}/>  
+        <ProductCards products={homepageProducts} limitEnd={4}/>  
       </div>
       <div className = {styles.viewPicksGrid}>
          <Button variant="contained" disableElevation 
@@ -68,10 +79,10 @@ export default function Home() {
   <section className = {styles.trendingSection}>
     <div className = {styles.trendingPicks}>
       <div className = {styles.firstRowGrid}>
-      <ProductCards products={trendingProducts} limitEnd={5}/> 
+      <ProductCards products={trendingProducts} limitEnd={4}/> 
       </div>
       <div className = {styles.secondRowGrid}>
-      <ProductCards products={trendingProducts} limitStart={5} limitEnd={10}/> 
+      <ProductCards products={trendingProducts} limitStart={4} limitEnd={8}/> 
       </div>
       <div className = {styles.viewAllTrendingGrid}>
         <Button variant="contained" disableElevation 

@@ -1,0 +1,54 @@
+.buttonGrid{
+  grid-row: 1/2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  overflow: visible;
+  width:100%;
+  z-index: 9998;
+  position: relative;
+}
+
+.logoHome{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color:red;
+  height: 55px;
+  margin-left: 20px;
+  margin-right: auto;
+}
+
+.cartBtnHomeMain{
+  border-style: none;
+  background-color: transparent;
+}
+
+.cartBtnHomeMain:hover{
+    cursor: pointer;
+}
+
+.signUpWrapperHome{
+  margin-right: 20px;
+  height:40px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+}
+
+
+.signInButtonHome{
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color:black;
+}

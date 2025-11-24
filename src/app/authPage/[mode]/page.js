@@ -6,14 +6,16 @@ import OtherButtonGrid from "../../components/otherButtonGrid"
 import SignInForm from '@/app/components/signInForm';
 import SignUpForm from '@/app/components/signUpForm';
 import { useParams } from 'next/navigation';
+import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn"
+import { useAuth } from '@/app/context/AuthContext';
 
 export  default function AuthPage(){
  let {mode} = useParams();
   return (
-<div>
-   <OtherButtonGrid/>
-   <CategoryGrid/> 
+<div><OtherButtonGrid/>
+  <OtherButtonGridSignedIn/>
 
+   <CategoryGrid/> 
    {mode === 'signin' && <SignInForm/>}
    {mode === 'signup' && <SignUpForm/>}
    <FooterPanel/>
