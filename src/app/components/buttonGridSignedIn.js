@@ -58,7 +58,7 @@ export default function ButtonGridSignedIn() {
         handleCloseUserMenu();
         if (setting === "Logout") {
           signOut(); 
-          router.push("/");// clears localStorage + resets auth state
+          router.push("/");
           }
         }}
           >

@@ -19,11 +19,13 @@ import Stack from '@mui/material/Stack';
 import { use } from 'react';
 import products from '../../../../data/Products.json';
 import seller from '../../../../data/sellerProfiles.json';
-
+import { useAuth } from "@/app/context/AuthContext";
+import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 
 export  default function productPage({params}){
     let { id } = use(params);
     let product = products.find(p => p.id === id);
+    let { isSignedIn, user, signOut } = useAuth();
     let author = seller.find(s => s.id === product.sellerId);
     let authorProducts = products.filter(p => author.id === p.sellerId);
     console.log(authorProducts.length);
@@ -55,7 +57,8 @@ export  default function productPage({params}){
 
     return(
     <div>
-        <OtherButtonGrid/>
+        {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
+        
         <CategoryGrid/>
         <div className={`${styles.productWrapper}`}>
             <div className={`${styles.productBannerDiv}`}>  

@@ -76,6 +76,82 @@ http.post('/api/signin', async ({ request }) => {
       { status: 500 }
     );
   }
-})
+}),
+
+http.post('/api/storeCcInfo', async ({ request }) => {
+  try {
+    const body = await request.json();
+    console.log("[MSW] Store CC Info body:", body);
+    const user = users.find(u => u.email === body.email);
+    if (!user) {
+      console.warn("[MSW] Tried to store CC info for non-existent user:", body.email);
+      return HttpResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+    user.ccInfo = {
+      ccNumber: body.ccNumber,
+      ccDate: body.ccDate,
+      cvc: body.cvc,
+      ccName: body.ccName,
+      country: body.country,
+      address: body.address,
+    };
+    console.log("[MSW] Updated user with CC info:", user);
+    return HttpResponse.json({
+      message: "CC info stored successfully",
+      user,
+    });
+  } catch (err) {
+    console.error("[MSW] storeCCInfo handler crashed:", err);
+    return HttpResponse.json(
+      { error: "Internal server error in mock" },
+      { status: 500 }
+    );
+  }
+}),
+
+http.post('/api/purchase', async ({ request }) => {
+  try {
+    const body = await request.json();
+    console.log("[MSW] Purchase body:", body);
+
+    const user = users.find(u => u.email === body.email);
+    if (!user) {
+      return HttpResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const purchase = {
+      productId: body.productId,
+      purchaseDate: new Date().toISOString(), 
+      priceAtPurchase: body.priceAtPurchase,
+    };
+
+ 
+    if (!user.purchases) {
+      user.purchases = [];
+    }
+    user.purchases.push(purchase);
+
+    console.log("[MSW] Updated user with purchase:", user);
+
+    return HttpResponse.json({
+      message: "Purchase recorded successfully",
+      purchase,
+      user,
+    });
+  } catch (err) {
+    console.error("[MSW] purchase handler crashed:", err);
+    return HttpResponse.json(
+      { error: "Internal server error in mock" },
+      { status: 500 }
+    );
+  }
+}),
+
 
 ];

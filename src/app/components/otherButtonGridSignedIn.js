@@ -14,8 +14,8 @@ import style from "../components/cartOverlay.module.css";
 import { useEffect, useState } from 'react';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
-
-
+import Paper from '@mui/material/Paper';
+import { useAuth } from '../context/AuthContext';
 
 let Search = styled('div')(({ theme }) => ({
 
@@ -54,6 +54,7 @@ let StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ResponsiveAppBar() {
   let  router = useRouter();
+  let { signOut, user } = useAuth();
   let [anchorElUser, setAnchorElUser] = React.useState(null);
   let [showCart, setShowCart] = React.useState(false);
   let handleOpenCart = () => setShowCart(true);
@@ -100,20 +101,42 @@ useEffect(() => {
         </IconButton>
       </Tooltip>
 
-      <Menu
-        anchorEl={anchorElUser}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        sx={{ mt: '45px' }}
-      >
-        {['Profile', 'Account', 'Dashboard', 'Logout'].map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            {setting}
-          </MenuItem>
-        ))}
-      </Menu>
+ <Menu
+  anchorEl={anchorElUser}
+  open={Boolean(anchorElUser)}
+  onClose={handleCloseUserMenu}
+  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+  sx={{ mt: '45px' }}
+  PaperProps={{
+    sx: {
+      zIndex: 9999, // 👈 higher than your grid
+    },
+  }}
+>
+  {['My Library', 'Order History','Logout'].map((setting) => (
+    <MenuItem
+      key={setting}
+      onClick={() => {
+        handleCloseUserMenu();
+        if (setting === 'Logout') {
+          signOut();
+          router.push('/');
+        }
+         if (setting === 'My Library') {
+          router.push('/customerProfile?section=library');
+        }
+        if (setting === 'Order History') {
+          router.push('/customerProfile?section=orderHistory');
+        }
+
+      }}
+    >
+      {setting}
+    </MenuItem>
+  ))}
+</Menu>
+
     </div>
   );
 }

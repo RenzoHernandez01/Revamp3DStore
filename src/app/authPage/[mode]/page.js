@@ -10,12 +10,12 @@ import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn"
 import { useAuth } from '@/app/context/AuthContext';
 
 export  default function AuthPage(){
+let { isSignedIn, user, signOut } = useAuth();
  let {mode} = useParams();
   return (
-<div><OtherButtonGrid/>
-  <OtherButtonGridSignedIn/>
-
-   <CategoryGrid/> 
+<div>
+  {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
+  <CategoryGrid/>
    {mode === 'signin' && <SignInForm/>}
    {mode === 'signup' && <SignUpForm/>}
    <FooterPanel/>

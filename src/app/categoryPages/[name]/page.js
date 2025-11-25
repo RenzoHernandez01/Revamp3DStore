@@ -22,9 +22,11 @@ import Slider from '@mui/material/Slider';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams} from 'next/navigation';
-
+import { useAuth } from "@/app/context/AuthContext";
+import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 export default function CategoryPage() {
 let router = useRouter();
+let { isSignedIn, user, signOut } = useAuth();
 let searchParams = useSearchParams();
 let { name } = useParams(); 
 let normalized = name?.toLowerCase(); 
@@ -122,7 +124,7 @@ let shouldRenderAll = normalized === 'marketplace' && !isFiltered;
 
   return (
 <div>
-   <OtherButtonGrid/>
+   {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
    <BannerPanels/>
    <CategoryGrid/>
    <section className={styles.popularCategory}>

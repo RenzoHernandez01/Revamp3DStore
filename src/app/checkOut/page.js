@@ -1,11 +1,9 @@
 "use client";
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import styles from "./checkOut.module.css";
 import CategoryGrid from "../components/categoryGrid";
 import OtherButtonGridSignedIn from "../components/otherButtonGridSignedIn"
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { CreditCard } from '@mui/icons-material';
@@ -16,6 +14,7 @@ import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -28,13 +27,143 @@ function getTotalDiscount(cartItems) {
 }
 
 export  default function CheckOut(){
+    let  router = useRouter();
     const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
     let [cartItems, setCartItems] = useState([]);
     let subtotalPrice = 0;
     let totalDiscount = getTotalDiscount(cartItems);
+    let [errors, setErrors] = React.useState({});
+    let [ccForm, setCcForm] = React.useState({
+        email: '',
+        ccNumber: '',
+        ccDate: '',
+        cvc: '',
+        ccName: '',
+        country: '',
+        address: '',
+    })
+
+
+
+    let handleChange = (field) => (e) => {
+        setCcForm({...ccForm,  [field]: e.target.value});
+        setErrors(prev => ({ ...prev, [field]: '' }));
+    };
+
+    const handleCardNumberChange = (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.slice(0, 16);
+        const formatted = value.match(/.{1,4}/g)?.join(" ") || "";
+        setCcForm(prev => ({ ...prev, ccNumber: formatted }));
+        setErrors(prev => ({ ...prev, ccNumber: "" }));
+        };
+    
+    const handleDateChange = (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.slice(0, 4);
+        const formatted = value.match(/.{1,2}/g)?.join("/") || "";
+        setCcForm(prev => ({ ...prev, ccDate: formatted }));
+        setErrors(prev => ({ ...prev, ccDate: "" }));
+        };
+
+    const handleCvcChange = (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.slice(0, 4);
+        const formatted = value.match(/.{1,4}/g)?.join("") || "";
+        setCcForm(prev => ({ ...prev, cvc: formatted }));
+        setErrors(prev => ({ ...prev, cvc: "" }));
+        };
+
+    let validate = () => {
+        let newErrors = {};
+        if(!ccForm.ccNumber.trim()) newErrors.ccNumber = 'this field is required';
+        if(!ccForm.ccDate.trim()) newErrors.ccDate = 'this field is required';
+        if(!ccForm.cvc.trim()) newErrors.cvc = 'this field is required';
+        if(!ccForm.ccName.trim()) newErrors.ccName = 'this field is required';
+       if (!ccForm.country || !ccForm.country.label) {
+            newErrors.country = 'this field is required';
+            }
+        if(!ccForm.address.trim()) newErrors.address = 'this field is required';
+        return newErrors;
+    };
+
+const handleSubmit = async () => {
+  const newErrors = validate();
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
+
+  try {
+   
+    const res = await fetch('/api/storeCcInfo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ccForm),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      setErrors(prev => ({ ...prev, email: data.error }));
+      return;
+    }
+
+    console.log('payment response', data);
+    localStorage.setItem('user', JSON.stringify(data.user));
+
+    if (!cartItems || cartItems.length === 0) {
+      console.warn('No items in cart to purchase');
+      return;
+    }
+    let latestUser = data.user;
+  
+    for (const cartItem of cartItems) {
+      if (!cartItem?.id) {
+        console.warn('Cart item missing id:', cartItem);
+        continue;
+      }
+
+      const finalPrice = cartItem.onSale
+        ? cartItem.price - Math.round(cartItem.price * (cartItem.salePercentage / 100))
+        : cartItem.price;
+
+      const purchaseRes = await fetch('/api/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: latestUser.email,
+          productId: cartItem.id,
+          priceAtPurchase: finalPrice,   
+        }),
+      });
+
+
+      const purchaseData = await purchaseRes.json();
+
+      if (!purchaseRes.ok) {
+        console.error('Purchase failed:', purchaseData.error);
+        return;
+      }
+
+      console.log('purchase response', purchaseData);
+     
+      latestUser = purchaseData.user;
+      localStorage.setItem('user', JSON.stringify(latestUser));
+    }
+
+    router.push('/customerProfile');
+  } catch (err) {
+    console.log('payment failed:', err);
+  }
+};
+
+
     useEffect(() => {
     let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCartItems(sortedCart);
+    let storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser?.email) {
+      setCcForm(prev => ({ ...prev, email: storedUser.email }));
+    }
+    
     }, []);
     cartItems.forEach(productInCart =>{
     subtotalPrice = productInCart.price + subtotalPrice;
@@ -104,8 +233,8 @@ export  default function CheckOut(){
                     <Typography variant="h4" color = "black" sx={{marginTop:5,marginBottom:5}}>
                         Pay with Card
                     </Typography>
-                    <TextField id="outlined-basic" label="Email Address" variant="filled" size="medium" 
-                    sx={{width:550,marginBottom:2,boxShadow:5,borderRadius:2,marginBottom:2,
+                    <TextField id="outlined-basic" variant="filled" size="medium"  disabled value={ccForm.email} 
+                    sx={{width:550,marginBottom:2,boxShadow:5,borderRadius:2,marginBottom:2, justifyContent:"center",
                         '& .MuiFilledInput-root': {backgroundColor: 'transparent',borderBottom: 'none',},
                         '& .MuiFilledInput-underline:before': {
                             borderBottom: 'none',
@@ -121,8 +250,11 @@ export  default function CheckOut(){
                     </Typography>
                     <div className = {`${styles.cardInfoArea}`}> 
                         <TextField className={`${styles.ccNumberInfo}`} label="1234 1234 1234 1234" variant="filled" size="medium" 
+                         value={ccForm.ccNumber} onChange={handleCardNumberChange} error={!!errors.ccNumber} helperText=""   id="outlined-error"
                         sx={{width:`100%`,
-                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none',borderTopLeftRadius: '10px',borderTopRightRadius: '10px'},
+                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none', boxShadow:1,borderTopLeftRadius: '10px',borderTopRightRadius: '10px',
+                             border: (errors.ccNumber ? '2px solid red' : '1px solid #ccc'),},
+
                             '& .MuiFilledInput-underline:before': {
                                 borderBottom: 'none',
                             },
@@ -130,19 +262,22 @@ export  default function CheckOut(){
                                 borderBottom: 'none',
                             }}}/>
                         <TextField className={`${styles.ccDateInfo}`} label="MM / YY" variant="filled" size="medium" 
+                         value={ccForm.ccDate}  onChange={handleDateChange} error={!!errors.ccDate} helperText=""
                         sx={{width:`100%`,
-                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none',borderBottomLeftRadius: '10px',borderTopLeftRadius:0,borderTopRightRadius:0},
-
+                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none', boxShadow:1,borderBottomLeftRadius: '10px',borderTopLeftRadius:0,borderTopRightRadius:0
+                                , border: (errors.ccDate? '2px solid red' : '1px solid #ccc'),},
                             '& .MuiFilledInput-underline:before': {
                                 borderBottom: 'none',
-   
                             },
                             '& .MuiFilledInput-underline:after': {
                                 borderBottom: 'none',
                         }}}/>
                          <TextField className={`${styles.ccCvcInfo}`}label="CVC" variant="filled" size="medium" 
+                           value={ccForm.cvc}  onChange={handleCvcChange} error={!!errors.cvc} helperText=""
                         sx={{width:`100%`,
-                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none',borderBottomRightRadius: '10px',borderTopLeftRadius:0,borderTopRightRadius:0},
+                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none', boxShadow:1,borderBottomRightRadius: '10px',borderTopLeftRadius:0,borderTopRightRadius:0
+                                ,border: (errors.cvc? '2px solid red' : '1px solid #ccc'),},
+
                             '& .MuiFilledInput-underline:before': {
                                 borderBottom: 'none',
                             },
@@ -154,38 +289,82 @@ export  default function CheckOut(){
                         Cardholder name
                     </Typography>
                        <TextField id="outlined-basic" label="Cardname" variant="filled" size="medium" 
-                    sx={{width:588,marginBottom:2,boxShadow:5,borderRadius:2,marginBottom:5,
-                        '& .MuiFilledInput-root': {backgroundColor: 'transparent',borderBottom: 'none',},
-                        '& .MuiFilledInput-underline:before': {
-                            borderBottom: 'none',
+                         value={ccForm.ccName}  onChange={handleChange('ccName')} error={!!errors.ccName} helperText=""
+                    sx={{width:588,marginBottom:2,boxShadow:1,borderRadius:2,marginBottom:5, boxShadow:1,
+                        '& .MuiFilledInput-root': {backgroundColor: 'transparent',borderBottom: 'none',
+                            border: (errors.ccName? '2px solid red' : '1px solid #ccc'), backgroundColor: 'transparent', 
                         },
-                        '& .MuiFilledInput-underline:after': {
-                            borderBottom: 'none',
-                        }}}/>
+                        
+                           '& .MuiFilledInput-underline:before': {
+                                    borderBottom: 'none',  
+                                    },
+                                    '& .MuiFilledInput-underline:after': {
+                                    borderBottom: 'none', 
+                                    },}}/>
                     <Typography variant="h6" color = "black">
                         Billing address
                     </Typography>
                     <div className = {`${styles.billingAddressArea}`}>
-                        <Autocomplete
-                        options={countries}
-                        disableCloseOnSelect
-                        getOptionLabel={(option) =>
-                            `${option.label} (${option.code}) +${option.phone}`
-                        }
-                        renderInput={(params) => <TextField {...params} label="Choose a country"   variant="filled" />}
-                        sx={{width:`100%`,
-                            '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none',borderTopLeftRadius: '10px',borderTopRightRadius: '10px'}
-                        }}
-                        />
-                         <TextField id="outlined-basic" label="Cardname" variant="filled" size="medium" 
-                        sx={{width:`100%`,borderRadius:2,
-                        '& .MuiFilledInput-root': {backgroundColor: 'white',borderBottom: 'none',borderBottomLeftRadius: '10px',borderBottomRightRadius: '10px',borderTopLeftRadius:0,borderTopRightRadius:0,},
-                        '& .MuiFilledInput-underline:before': {
-                            borderBottom: 'none',
-                        },
-                        '& .MuiFilledInput-underline:after': {
-                            borderBottom: 'none',
-                        }}}/>   
+                       <Autocomplete
+                            options={countries}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) =>
+                                option ? `${option.label} (${option.code}) +${option.phone}` : ""
+                            }
+                            value={ccForm.country}
+                            onChange={(e, newValue) =>
+                                setCcForm(prev => ({ ...prev, country: newValue }))
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                {...params}
+                                label="Choose a country"
+                                variant="filled"
+                                error={!!errors.country}
+                                helperText=""
+                                />
+                            )}
+                            sx={{
+                                width: `100%`,
+                                boxShadow: 1,
+                                '& .MuiFilledInput-root': {
+                                backgroundColor: 'white',
+                                borderBottom: 'none',
+                                borderTopLeftRadius: '10px',
+                                borderTopRightRadius: '10px',
+                                border: (errors.ccName? '2px solid red' : '1px solid #ccc'),
+                                },
+                            }}
+                            />
+                        <TextField
+                                label="Address"
+                                variant="filled"
+                                size="medium"
+                                value={ccForm.address}
+                                onChange={handleChange('address')}
+                                error={!!errors.address}
+                                helperText=""
+                                sx={{
+                                    width: '100%',
+                                    borderRadius: 2,
+                                    boxShadow: 1,
+                                    '& .MuiFilledInput-root': {
+                                    backgroundColor: 'white',
+                                    border: errors.address ? '2px solid red' : '1px solid #ccc',
+                                    borderBottomLeftRadius: '10px',
+                                    borderBottomRightRadius: '10px',
+                                    borderTopLeftRadius: 0,
+                                    borderTopRightRadius: 0,
+                                    },
+                                    '& .MuiFilledInput-underline:before': {
+                                    borderBottom: 'none',  
+                                    },
+                                    '& .MuiFilledInput-underline:after': {
+                                    borderBottom: 'none', 
+                                    },
+                                }}
+                                />
+
                     </div>
                     <div className= {`${styles.storeCCInfoArea}`}>
                          <Checkbox {...label} />
@@ -193,7 +372,7 @@ export  default function CheckOut(){
                             Save my payment details for faster checkout next time
                         </Typography>
                     </div>
-                  <Button variant="contained" sx={{width:588,marginTop:2, marginBottom:2}}>Pay</Button> 
+                  <Button  onClick={handleSubmit} variant="contained" sx={{width:588,marginTop:2, marginBottom:2}}>Pay</Button> 
                 </div> 
             </div>
         </div>

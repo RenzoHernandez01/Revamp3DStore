@@ -73,15 +73,14 @@
 
 .cardInfoArea{
 
-  background-color: #afafaf;
+ /* background-color: #afafaf;*/
   display: grid;
   min-height: 100px;
   width: 588px;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.301);
-  gap:2px;
+ /* box-shadow: 0 2px 30px rgba(0, 0, 0, 0.066);*/
   margin-bottom: 50px;
 }
 
@@ -105,9 +104,7 @@
 .billingAddressArea{
   display: grid;
   grid-template-rows: 1fr 1fr;
-  background-color: #afafaf;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.301);
-  gap:2px;
+
   height: auto;
   width: 588px;
   border-radius: 10px;

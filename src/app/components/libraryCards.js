@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
 import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
 import { autocompleteClasses } from '@mui/material';
 
@@ -39,19 +40,22 @@ const ExpandMore = styled((props) => {
   ],
 }));
 
-export default function libraryCards() {
+export default function libraryCards({product}) {
   const [expanded, setExpanded] = React.useState(false);
+  const [rating, setRating] = useState(0);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  
+
   return (
     <div>
         <Card sx={{ maxWidth: 900}}>   
-     <CardContent>
+        <CardContent>
         <Stack direction="row">
           <CardMedia component="img"
-            image = "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761636528/Thumbnail_xahizu.jpg"
+            image = {product.images[0]}
             sx={{ 
             width:120,
             height:90,
@@ -59,13 +63,13 @@ export default function libraryCards() {
             overflow: 'hidden', 
             }}/>
           <Stack sx={{marginLeft:2}} direction="column" >
-            <Typography variant='h6' className="libraryProductName" sx={{marginBottom:1,fontWeight:"bold"}}>ProductName</Typography>
+            <Typography variant='h6' className="libraryProductName" sx={{marginBottom:1,fontWeight:"bold"}}>{product.name}</Typography>
             <Typography variant='overline'>Leave a rating:</Typography>
-             <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+             <Rating name="half-rating" value={rating}  precision={0.5} onChange={(event, newValue) => setRating(newValue)} />
           </Stack>
           <Stack sx={{marginLeft:"auto"}} direction="column">
             <Typography variant='h6' sx={{marginBottom:1, fontWeight:"bold"}}>Purchased</Typography>
-            <Typography variant='overlin    ' sx={{marginBottom:1}}>Oct 31,2025</Typography>
+            <Typography variant='overlin' sx={{marginBottom:1}}>{new Date(product.purchaseDate).toLocaleDateString()}</Typography>
           </Stack>
         </Stack>     
      </CardContent>
@@ -86,14 +90,21 @@ export default function libraryCards() {
         <CardContent sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             <FolderZipRoundedIcon/>
             <Stack sx={{marginLeft:2}} direction="column" >
-                <Typography variant='caption' sx={{fontWeight:"Bold"}}>ProductName.zip</Typography>
-                <Typography variant='caption'>ZIP 2GB</Typography>
+                <Typography variant='caption' sx={{fontWeight:"Bold"}}>{product.name}.zip</Typography>
+                <Typography variant='caption'>ZIP </Typography>
             </Stack>
-            <Button variant="contained" sx={{marginLeft:"auto"}}>Contained</Button>
+            <Button onClick={() => {
+                const link = document.createElement("a");
+                link.href = "https://storage.googleapis.com/3dwebstoreassets/cube.glb";
+                link.download = "cube.glb";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+          variant="contained" sx={{marginLeft:"auto"}}>download</Button>
         </CardContent>
       </Collapse>
     </Card>
-    </div>
-    
+    </div> 
   );
 }
