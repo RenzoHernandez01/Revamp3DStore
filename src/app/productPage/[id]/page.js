@@ -21,6 +21,7 @@ import products from '../../../../data/Products.json';
 import seller from '../../../../data/sellerProfiles.json';
 import { useAuth } from "@/app/context/AuthContext";
 import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
+import { ProductsContext } from "@/app/context/productContext";
 
 export  default function productPage({params}){
     let { id } = use(params);
@@ -57,8 +58,10 @@ export  default function productPage({params}){
 
     return(
     <div>
+        <ProductsContext.Provider value={products}>
         {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
-        
+        </ProductsContext.Provider>
+
         <CategoryGrid/>
         <div className={`${styles.productWrapper}`}>
             <div className={`${styles.productBannerDiv}`}>  

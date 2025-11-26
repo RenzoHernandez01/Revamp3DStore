@@ -10,6 +10,7 @@ export const handlers = [
     console.log('[MSW] Returning products:', products);
     return HttpResponse.json(products);
   }),
+  
   http.post('/api/signup', async ({ request }) => {
   try {
     const body = await request.json();

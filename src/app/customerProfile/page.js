@@ -49,7 +49,7 @@ export  default function CustomerProfile(){
         </div>
         {activeSection === "orderHistory" && 
        ( <div className={`${styles.orderHistoryWrapper}`}>
-            <Typography variant="h6" sx={{fontWeight:"bold"}} color="black">Order History</Typography>
+            <Typography variant="h4"  color="#BEBEBE" >Order History</Typography>
             {libraryItems.map((item, idx) => (
                 <OrderHistory key={idx} product={item}/>
               ))}

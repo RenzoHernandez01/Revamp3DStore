@@ -1,4 +1,4 @@
-
+// src/app/context/AuthContext.js
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
@@ -29,4 +29,11 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+// ✅ Option 1: Guard inside useAuth
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return ctx;
+};

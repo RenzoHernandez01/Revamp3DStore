@@ -56,7 +56,7 @@ useEffect(() => {
       <div className ={styles.heroOverlay}>
       </div>
       {isSignedIn ? <ButtonGridSignedIn/> : <ButtonGrid/>}
-      <SearchGrid/>
+      <SearchGrid products={products}/>
       <CategoryGrid/>
     </div>
   </section>

@@ -1,14 +1,23 @@
-.buttonGrid{
-  grid-row: 1/2;
+.buttonGrid {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.leftGroup {
+  display: flex;
   align-items: center;
   gap: 20px;
-  overflow: visible;
-  width:100%;
-  z-index: 9998;
-  position: relative;
+  margin-right: auto; 
 }
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 
 .logoHome{
   display: flex;

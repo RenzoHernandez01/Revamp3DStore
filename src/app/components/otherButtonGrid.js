@@ -1,111 +1,56 @@
 "use client";
-import Link from 'next/link';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import styles from './button.module.css'; 
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import CartOverLay from './cartOverlay.js';
 import style from "../components/cartOverlay.module.css";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
+import SearchBarComponent from './searchBarComponent';
 
+export default function ResponsiveAppBar({products}) {
+  const router = useRouter();
+  const [showCart, setShowCart] = React.useState(false);
+  const handleOpenCart = () => setShowCart(true);
+  const handleCloseCart = () => setShowCart(false);
 
-
-let Search = styled('div')(({ theme }) => ({
-
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: theme.spacing(2),
-  width: '100%',
-  maxWidth: 300,
-}));
-
-let SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-let StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-  },
-}));
-
-
-export default function ResponsiveAppBar() {
-  let  router = useRouter();
-  let [showCart, setShowCart] = React.useState(false);
-  let handleOpenCart = () => setShowCart(true);
-  let handleCloseCart = () => setShowCart(false);
-
-
-useEffect(() => {
-  document.body.style.overflow = showCart ? 'hidden' : 'auto';
-}, [showCart]);
-
+  useEffect(() => {
+    document.body.style.overflow = showCart ? 'hidden' : 'auto';
+  }, [showCart]);
 
   return (
     <div className={styles.buttonGrid}>
-      <button className={styles.logoHome}>LOGO</button>
-        <Search sx= {{marginRight:"auto",border:1}}>
-        <SearchIconWrapper  >
-            <SearchIcon sx={{color:"black"}}/>
-        </SearchIconWrapper>
-        <StyledInputBase
-            sx={{color:"black"}}
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-        />
-        </Search>
-      <button className={styles.cartBtnHomeMain}    onClick={() => {
-        handleOpenCart();
-      }}>
-        <ShoppingCartOutlinedIcon sx={{ fontSize: 30,color:"black" }}/>
-      </button>
-     
-
-      {showCart && ( <><div className= {style.cartBackdrop} onClick={handleCloseCart} />
-        <CartOverLay onClose={handleCloseCart} /> 
-      </>
-      )}
-     
-      <Button variant='text'
-      onClick={() => router.push('/authPage/signin')}
-      >
-        Sign In
-      </Button>
-
-      <div className={styles.signUpWrapperHome}>
-          <Button variant='text'
-            onClick={() => router.push('/authPage/signup')}
-            >
-            Sign Up
-          </Button>
+      <div className={styles.leftGroup}>
+        <button className={styles.logoHome}>LOGO</button>
+        <SearchBarComponent/>
       </div>
 
+      <div className={styles.rightGroup}>
+        <button
+          className={styles.cartBtnHomeMain}
+          onClick={handleOpenCart}
+        >
+          <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: "black" }} />
+        </button>
+
+        {showCart && (
+          <>
+            <div className={style.cartBackdrop} onClick={handleCloseCart} />
+            <CartOverLay onClose={handleCloseCart} />
+          </>
+        )}
+
+        <Button variant="text" onClick={() => router.push('/authPage/signin')}>
+          Sign In
+        </Button>
+
+        <div className={styles.signUpWrapperHome}>
+          <Button variant="text" onClick={() => router.push('/authPage/signup')}>
+            Sign Up
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

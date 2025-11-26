@@ -113,11 +113,8 @@ export default function CartOverlay({ onClose }) {
        <div className={`${style.moreProductsArea}`}>
          <Typography variant='h5'color="black">Products you may like</Typography>
          <div className={`${style.moreCartProductsWrapper}`}>
-            <CartMoreProductCards />
-            <CartMoreProductCards/>
-            <CartMoreProductCards/>
-            <CartMoreProductCards/>
-            <CartMoreProductCards/>
+            <CartMoreProductCards limitEnd={4}/>
+
          </div>
       </div>
     

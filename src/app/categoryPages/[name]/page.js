@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams} from 'next/navigation';
 import { useAuth } from "@/app/context/AuthContext";
 import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
+import {ProductsContext} from "../../context/productContext";
 export default function CategoryPage() {
 let router = useRouter();
 let { isSignedIn, user, signOut } = useAuth();
@@ -121,10 +122,15 @@ if (sortMode === "latest") {
 let category = name?.charAt(0).toUpperCase() + name?.slice(1);
 let isFiltered = tag !== null || priceFilterActive;
 let shouldRenderAll = normalized === 'marketplace' && !isFiltered;
+console.log("Products in CategoryPage before provider:", products);
+
 
   return (
-<div>
-   {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
+<div> 
+  <ProductsContext.Provider value={products}>
+    {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid />}
+  </ProductsContext.Provider>
+
    <BannerPanels/>
    <CategoryGrid/>
    <section className={styles.popularCategory}>

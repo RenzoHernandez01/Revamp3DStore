@@ -16,40 +16,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
 import Paper from '@mui/material/Paper';
 import { useAuth } from '../context/AuthContext';
+import SearchBarComponent from './searchBarComponent';
 
-let Search = styled('div')(({ theme }) => ({
-
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: theme.spacing(2),
-  width: '100%',
-  maxWidth: 300,
-}));
-
-let SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-let StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-  },
-}));
 
 
 export default function ResponsiveAppBar() {
@@ -70,17 +38,10 @@ useEffect(() => {
 
   return (
     <div className={styles.buttonGrid}>
+       <div className={styles.leftGroup}>
       <button className={styles.logoHome}>LOGO</button>
-        <Search sx= {{marginRight:"auto",border:1}}>
-        <SearchIconWrapper  >
-            <SearchIcon sx={{color:"black"}}/>
-        </SearchIconWrapper>
-        <StyledInputBase
-            sx={{color:"black"}}
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-        />
-        </Search>
+        <SearchBarComponent/>
+        </div>
       <button className={styles.cartBtnHomeMain}    onClick={() => {
         handleOpenCart();
       }}>

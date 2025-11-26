@@ -1,8 +1,8 @@
+// src/app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import MSWProvider from "./MSWProvider";
-import { AuthProvider } from "./context/AuthContext"; // adjust path if needed
+import Providers from "../app/providers"; 
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -17,11 +17,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
+        <Providers>
           {children}
-          <div id="overlay-root"></div>
-          <MSWProvider />
-        </AuthProvider>
+        </Providers>
       </body>
     </html>
   );
