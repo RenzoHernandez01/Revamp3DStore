@@ -5,7 +5,6 @@ import { ProductsContext } from "./productContext";
 
 export default function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
     fetch("/api/products")
       .then((res) => res.json())

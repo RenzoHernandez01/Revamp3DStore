@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import StarIcon from '@mui/icons-material/Star';
 import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/navigation';
+import { CheckForSaleCart } from '@/utils/checkForSaleCart';
 import { useProducts } from "../context/productContext"; 
 export default function CartMoreProductCards({limitEnd}) {
   let router = useRouter();
@@ -33,7 +34,8 @@ export default function CartMoreProductCards({limitEnd}) {
                       <Typography variant="body.2" >5</Typography>
                       <StarIcon/>
                       <Typography variant="body.2" >(23)</Typography>
-                      <Typography variant="body.2" sx={{marginLeft:"auto"}} >${product.price}</Typography>
+                      {/*<Typography variant="body.2" sx={{marginLeft:"auto"}} >${product.price}</Typography>*/}
+                      <CheckForSaleCart product={product}/>
                   </Stack>
                   <Button      onClick={(e) => {
                     e.stopPropagation(); 

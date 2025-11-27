@@ -25,6 +25,10 @@ import { useRouter, useSearchParams} from 'next/navigation';
 import { useAuth } from "@/app/context/AuthContext";
 import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 import {ProductsContext} from "../../context/productContext";
+import AuthorBannerPanels from "@/app/components/authorBannerPanel";
+import { useSellers } from "@/app/context/authorContext";
+import Toolbar from '@mui/material/Toolbar';
+
 export default function CategoryPage() {
 let router = useRouter();
 let { isSignedIn, user, signOut } = useAuth();
@@ -36,11 +40,18 @@ let priceFrom = Number(searchParams.get('price-from')) || 0;
 let priceTo = Number(searchParams.get('price-to')) || 1000;
 let [tempPriceTo, setTempPriceTo] = useState(priceTo);
 let [hasInteracted, setHasInteracted] = useState(false);
+let sellers = useSellers()
 let priceFilterActive = searchParams.has('maxPrice');
 let sortMode = ['trending', 'bestSelling', 'latest'].includes(tag) ? tag : null;
 let staffPickOnly = tag === 'staffPick';
 let onSaleOnly = tag === 'onSale';
 let [products, setProducts] = useState([]);
+let sellerFilterActive = sellers.some(s => s.id.toLowerCase().trim() === name.toLowerCase().trim());
+const currentSeller = sellers.find(  s => s.id?.toLowerCase().trim() === name?.toLowerCase().trim());
+
+
+
+
 let handleSliderChange = (e, newValue) => {
   setTempPriceTo(newValue);
   setHasInteracted(true);
@@ -55,12 +66,17 @@ let handleTextChange = (e) => {
 };
 
 useEffect(() => {
- 
- console.log('Fetching products...');
+  console.log('Fetching products...');
   fetch('/api/products')
     .then(res => res.json())
-    .then(setProducts);
+    .then(data => {
+      console.log("Fetched data:", data);
+      setProducts(Array.isArray(data) ? data : data.products);
+    });
+}, []);
 
+
+useEffect(() => {
   const timeout = setTimeout(() => {
     router.push(
       `/categoryPages/${name}?tag=${tag || ''}&price-to=${tempPriceTo}`,
@@ -74,15 +90,28 @@ useEffect(() => {
 
 
 
+console.log("Route param name:", name);
+console.log("sellerFilterActive:", sellerFilterActive);
+let test = products.filter(product => {
+  console.log("Comparing", product.sellerId, "to", name);
+  return product.sellerId?.toLowerCase().trim() === name?.toLowerCase().trim();
+});
+console.log("Seller filter result:", test);
+
+
+
+
+
 let filtered = products.filter(product => {
-  let matchesCategory =
+let matchesCategory =
     normalized === "all" || normalized === "marketplace"
       ? true
       : product.category.toLowerCase() === normalized;
   let matchesOnSale = onSaleOnly ? !!product.onSale : true;
   let matchesStaffPick = staffPickOnly ? !!product.staffPick : true;
   let matchesPrice = product.price >= priceFrom && product.price <= priceTo;
-  return matchesCategory && matchesOnSale && matchesStaffPick && matchesPrice;
+  let matchesSeller = !sellerFilterActive? true : product.sellerId?.toLowerCase().trim() === name?.toLowerCase().trim();
+  return matchesCategory && matchesOnSale && matchesStaffPick && matchesPrice && matchesSeller;
 });
 
 let sortedFiltered = [...filtered];
@@ -130,9 +159,16 @@ console.log("Products in CategoryPage before provider:", products);
   <ProductsContext.Provider value={products}>
     {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid />}
   </ProductsContext.Provider>
+  <Toolbar />
 
-   <BannerPanels/>
-   <CategoryGrid/>
+  <CategoryGrid/>
+   {sellerFilterActive ? (
+    <AuthorBannerPanels seller={currentSeller} />
+  ) : (
+    <BannerPanels />
+  )}
+
+   
    <section className={styles.popularCategory}>
     <Stack direction="row" spacing={2} sx={{marginLeft:1}}>
     {isFiltered && (<Button  disableElevation disableRipple
@@ -353,10 +389,15 @@ console.log("Products in CategoryPage before provider:", products);
         </div>
         <div className={`${styles.catalogCardsArea}`}>
           <div className={`${styles.catalogCards}`}>
-             <ProductCards
+           { /* <ProductCards
                     products={shouldRenderAll ? products : sortedFiltered}
                     filterMode={shouldRenderAll ? null : category}
-                  />
+                  />*/}
+           <ProductCards
+        products={sellerFilterActive ? sortedFiltered : shouldRenderAll ? products : sortedFiltered}
+        filterMode={sellerFilterActive ? "seller" : shouldRenderAll ? null : category}
+       />
+
           </div>
         </div>
       </div>

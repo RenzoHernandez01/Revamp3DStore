@@ -22,10 +22,10 @@ export default function SearchBarComponent() {
     );
 
     if (product) {
-      console.log("✅ Navigating to product:", product);
+ 
       router.push(`/productPage/${product.id}`);
     } else {
-      console.log("❌ Product not found:", value);
+  
       router.push(
         `/categoryPages/marketplace?notFound=${encodeURIComponent(value)}`
       );

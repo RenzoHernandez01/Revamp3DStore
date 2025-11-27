@@ -9,29 +9,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/navigation';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
-
-
-function checkForSale(product){
-
-  if (product.onSale) {
-    product.salePrice = Math.round(product.price * (1 - product.salePercentage / 100));
-    return (
-      <Stack direction="row" spacing={1}  sx={{alignItems:"center", marginLeft:"auto"}}>
-        <Typography variant="body.2" sx={{ textDecoration: "line-through", color: "gray" }}>
-          ${product.price}
-        </Typography>
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "red",  }}>
-          ${product.salePrice}
-        </Typography>
-      </Stack>
-    );
-  }
-  else{
-    return(
-      <Typography variant='h6' sx={{marginBottom:1, fontWeight:"bold", marginLeft:"auto"}}>${product.price}</Typography>
-    )
-  }
-}
+import { CheckForSale } from '@/utils/checkForSale';
 
 /*export default function ProductCards({ products = [], creators = null, filterMode = null, limitStart, limitEnd }) {
     let  router = useRouter();
@@ -192,11 +170,12 @@ function checkForSale(product){
     );
 }*/
 
-export default function ProductCards({ products = [], creators = null, filterMode = null, limitStart, limitEnd }) {
+export default function ProductCards({ products = [], filterMode = null, sellerName = null, limitStart, limitEnd }) {
     let router = useRouter();
-    let filtered = products.filter(product => !filterMode || product.category.toLowerCase() === filterMode.toLowerCase());
+    let filtered =  filterMode==="seller" ? products.filter(product => !filterMode || product.sellerId.toLowerCase() === sellerName.toLowerCase()) :
+     products.filter(product => !filterMode || product.category.toLowerCase() === filterMode.toLowerCase());
     let sliced = limitEnd ? filtered.slice(limitStart, limitEnd) : filtered.slice(0, filtered.length);
-
+    console.log("sadfasdfasdfsadf",filtered);
     return (
         sliced.map((product, index) => {
             let averageRating = 0;
@@ -295,7 +274,7 @@ export default function ProductCards({ products = [], creators = null, filterMod
                                 <Typography className={styles.cardPrice} variant="body2" sx={{ color: 'text.secondary' }} component="div">
                                     by {product.sellerId}
                                 </Typography>
-                                {checkForSale(product)}
+                                <CheckForSale product = {product}/>
                                 {/*<Typography className={styles.cardPrice} variant="h6" sx={{ color: 'text.secondary', marginLeft: "auto", fontWeight: "bold" }}>
                                     {product.price}
                                 </Typography>*/}

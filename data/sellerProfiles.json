@@ -3,7 +3,8 @@
     "id": "sellerOne",
     "name": "Mads",
     "rating": "4.8",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg"
   },
   {
     "id": "sellerTwo",

@@ -17,7 +17,8 @@ import { useRouter } from 'next/navigation';
 import Paper from '@mui/material/Paper';
 import { useAuth } from '../context/AuthContext';
 import SearchBarComponent from './searchBarComponent';
-
+import Toolbar from '@mui/material/Toolbar';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 
 export default function ResponsiveAppBar() {
@@ -35,8 +36,14 @@ useEffect(() => {
   document.body.style.overflow = showCart ? 'hidden' : 'auto';
 }, [showCart]);
 
+   const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
 
   return (
+       <AppBar position='fixed' sx={{backgroundColor:"white"}}  elevation={trigger ? 6 : 0}>
+       <Toolbar sx={{ justifyContent: "space-between", px: 2 }}>
     <div className={styles.buttonGrid}>
        <div className={styles.leftGroup}>
       <button className={styles.logoHome}>LOGO</button>
@@ -99,5 +106,7 @@ useEffect(() => {
 </Menu>
 
     </div>
+    </Toolbar>
+    </AppBar>
   );
 }

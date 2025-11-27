@@ -1,15 +1,22 @@
 import { http, HttpResponse } from 'msw';
 import products from '../../data/Products.json';
-
+import seller from '../../data/sellerProfiles.json';
 
 
 let users = []; 
 export const handlers = [
 
-  http.get('/api/products', () => {
-    console.log('[MSW] Returning products:', products);
-    return HttpResponse.json(products);
-  }),
+ http.get('/api/products', async () => {
+  console.log('[MSW] Returning products:', products);
+  await new Promise(res => setTimeout(res, 300));
+  return HttpResponse.json(products || []);
+}),
+
+ http.get('/api/seller', async () => {
+  console.log('[MSW] Returning seller:', seller);
+  await new Promise(res => setTimeout(res, 300));
+  return HttpResponse.json(seller || []);
+}),
   
   http.post('/api/signup', async ({ request }) => {
   try {

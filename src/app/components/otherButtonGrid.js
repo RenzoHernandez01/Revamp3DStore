@@ -8,6 +8,10 @@ import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
 import SearchBarComponent from './searchBarComponent';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+
 
 export default function ResponsiveAppBar({products}) {
   const router = useRouter();
@@ -19,38 +23,50 @@ export default function ResponsiveAppBar({products}) {
     document.body.style.overflow = showCart ? 'hidden' : 'auto';
   }, [showCart]);
 
+   const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
+
+
   return (
+    <AppBar position='fixed' sx={{backgroundColor:"white"}}  elevation={trigger ? 6 : 0}>
+       <Toolbar sx={{ justifyContent: "space-between", px: 2 }}>
+
     <div className={styles.buttonGrid}>
-      <div className={styles.leftGroup}>
-        <button className={styles.logoHome}>LOGO</button>
-        <SearchBarComponent/>
-      </div>
+          <div className={styles.leftGroup}>
+            <button className={styles.logoHome}>LOGO</button>
+            <SearchBarComponent/>
+          </div>
 
-      <div className={styles.rightGroup}>
-        <button
-          className={styles.cartBtnHomeMain}
-          onClick={handleOpenCart}
-        >
-          <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: "black" }} />
-        </button>
+          <div className={styles.rightGroup}>
+            <button
+              className={styles.cartBtnHomeMain}
+              onClick={handleOpenCart}
+            >
+              <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: "black" }} />
+            </button>
 
-        {showCart && (
-          <>
-            <div className={style.cartBackdrop} onClick={handleCloseCart} />
-            <CartOverLay onClose={handleCloseCart} />
-          </>
-        )}
+            {showCart && (
+              <>
+                <div className={style.cartBackdrop} onClick={handleCloseCart} />
+                <CartOverLay onClose={handleCloseCart} />
+              </>
+            )}
 
-        <Button variant="text" onClick={() => router.push('/authPage/signin')}>
-          Sign In
-        </Button>
+            <Button variant="text" onClick={() => router.push('/authPage/signin')}>
+              Sign In
+            </Button>
 
-        <div className={styles.signUpWrapperHome}>
-          <Button variant="text" onClick={() => router.push('/authPage/signup')}>
-            Sign Up
-          </Button>
+            <div className={styles.signUpWrapperHome}>
+              <Button variant="text" onClick={() => router.push('/authPage/signup')}>
+                Sign Up
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        </Toolbar>
+    </AppBar>
+    
   );
 }
