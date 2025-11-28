@@ -8,6 +8,7 @@ import SignUpForm from '@/app/components/signUpForm';
 import { useParams } from 'next/navigation';
 import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn"
 import { useAuth } from '@/app/context/AuthContext';
+import Toolbar from '@mui/material/Toolbar';
 
 export  default function AuthPage(){
 let { isSignedIn, user, signOut } = useAuth();
@@ -15,6 +16,7 @@ let { isSignedIn, user, signOut } = useAuth();
   return (
 <div>
   {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
+    <Toolbar />
   <CategoryGrid/>
    {mode === 'signin' && <SignInForm/>}
    {mode === 'signup' && <SignUpForm/>}

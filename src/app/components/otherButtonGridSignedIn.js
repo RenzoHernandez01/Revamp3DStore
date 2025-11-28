@@ -6,20 +6,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import styles from './button.module.css'; 
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import CartOverLay from './cartOverlay.js';
 import style from "../components/cartOverlay.module.css";
 import { useEffect, useState } from 'react';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useRouter } from 'next/navigation';
-import Paper from '@mui/material/Paper';
 import { useAuth } from '../context/AuthContext';
 import SearchBarComponent from './searchBarComponent';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-
+import AppBar from '@mui/material/AppBar';
 
 export default function ResponsiveAppBar() {
   let  router = useRouter();
@@ -46,7 +42,9 @@ useEffect(() => {
        <Toolbar sx={{ justifyContent: "space-between", px: 2 }}>
     <div className={styles.buttonGrid}>
        <div className={styles.leftGroup}>
-      <button className={styles.logoHome}>LOGO</button>
+        <Button variant="text" onClick={() => router.push('/')}>
+              HOME LOGO
+            </Button>
         <SearchBarComponent/>
         </div>
       <button className={styles.cartBtnHomeMain}    onClick={() => {
@@ -78,7 +76,7 @@ useEffect(() => {
   sx={{ mt: '45px' }}
   PaperProps={{
     sx: {
-      zIndex: 9999, // 👈 higher than your grid
+      zIndex: 9999,
     },
   }}
 >

@@ -10,30 +10,35 @@
     "id": "sellerTwo",
     "name": "NovaForge",
     "rating": "4.5",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg"
   },
   {
     "id": "sellerThree",
     "name": "PixelSmith",
     "rating": "4.5",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207899/9_nxhtgh.jpg"
   },
   {
     "id": "sellerFour",
     "name": "TerrainTech",
     "rating": "4.6",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207915/3_yairq8.jpg"
   },
   {
     "id": "sellerFive",
     "name": "AssetAlchemy",
     "rating": "4.7",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207891/renzo-hernandez-jpeg1_xdvf6z.jpg"
   },
   {
     "id": "sellerSix",
     "name": "RenderRiot",
     "rating": "4.4",
-    "profileImage": ["madlogo.png"]
+    "profileImage": ["madlogo.png"],
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761809339/terminalProp_goc6ju.jpg"
   }
 ]

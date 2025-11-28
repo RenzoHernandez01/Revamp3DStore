@@ -11,6 +11,7 @@ import SearchBarComponent from './searchBarComponent';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
 
 
 export default function ResponsiveAppBar({products}) {
@@ -35,7 +36,9 @@ export default function ResponsiveAppBar({products}) {
 
     <div className={styles.buttonGrid}>
           <div className={styles.leftGroup}>
-            <button className={styles.logoHome}>LOGO</button>
+            <Button variant="text" onClick={() => router.push('/')}>
+              HOME LOGO
+            </Button>
             <SearchBarComponent/>
           </div>
 

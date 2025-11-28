@@ -49,9 +49,6 @@ let [products, setProducts] = useState([]);
 let sellerFilterActive = sellers.some(s => s.id.toLowerCase().trim() === name.toLowerCase().trim());
 const currentSeller = sellers.find(  s => s.id?.toLowerCase().trim() === name?.toLowerCase().trim());
 
-
-
-
 let handleSliderChange = (e, newValue) => {
   setTempPriceTo(newValue);
   setHasInteracted(true);
@@ -75,7 +72,6 @@ useEffect(() => {
     });
 }, []);
 
-
 useEffect(() => {
   const timeout = setTimeout(() => {
     router.push(
@@ -88,18 +84,10 @@ useEffect(() => {
   return () => clearTimeout(timeout);
 }, [tempPriceTo, hasInteracted]);
 
-
-
-console.log("Route param name:", name);
-console.log("sellerFilterActive:", sellerFilterActive);
 let test = products.filter(product => {
   console.log("Comparing", product.sellerId, "to", name);
   return product.sellerId?.toLowerCase().trim() === name?.toLowerCase().trim();
 });
-console.log("Seller filter result:", test);
-
-
-
 
 
 let filtered = products.filter(product => {
