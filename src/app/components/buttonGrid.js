@@ -30,9 +30,9 @@ export default function ButtonGrid() {
      <AppBar position='fixed' sx={{backgroundColor: trigger?"white":"transparent",zIndex:99999}}  elevation={trigger ? 6 : 0}>
      <Toolbar sx={{ justifyContent: "space-between", px: 2 }}>
     <div className={`${styles.buttonGrid}`}>
-      <button className={`${styles.logoHome}`}>  <Button variant="text" onClick={() => router.push('/')}>
+      <div className={`${styles.logoHome}`}>  <Button variant="text" onClick={() => router.push('/')}>
               HOME LOGO
-            </Button></button>
+            </Button></div>
       
       <button className={styles.cartBtnHomeMain}    onClick={() => {
         handleOpenCart();

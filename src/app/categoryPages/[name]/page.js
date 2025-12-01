@@ -40,15 +40,16 @@ let priceFrom = Number(searchParams.get('price-from')) || 0;
 let priceTo = Number(searchParams.get('price-to')) || 1000;
 let [tempPriceTo, setTempPriceTo] = useState(priceTo);
 let [hasInteracted, setHasInteracted] = useState(false);
+let [selectedCategory, setSelectedCategory] = useState(null);
 let sellers = useSellers()
-let priceFilterActive = searchParams.has('maxPrice');
+let priceFilterActive = searchParams.has('price-to');
 let sortMode = ['trending', 'bestSelling', 'latest'].includes(tag) ? tag : null;
 let staffPickOnly = tag === 'staffPick';
 let onSaleOnly = tag === 'onSale';
 let [products, setProducts] = useState([]);
 let sellerFilterActive = sellers.some(s => s.id.toLowerCase().trim() === name.toLowerCase().trim());
 const currentSeller = sellers.find(  s => s.id?.toLowerCase().trim() === name?.toLowerCase().trim());
-
+let marketPlace = normalized === "marketplace";
 let handleSliderChange = (e, newValue) => {
   setTempPriceTo(newValue);
   setHasInteracted(true);
@@ -85,14 +86,15 @@ useEffect(() => {
 }, [tempPriceTo, hasInteracted]);
 
 let test = products.filter(product => {
-  console.log("Comparing", product.sellerId, "to", name);
   return product.sellerId?.toLowerCase().trim() === name?.toLowerCase().trim();
 });
 
+console.log(test,"testttt");
 
 let filtered = products.filter(product => {
 let matchesCategory =
-    normalized === "all" || normalized === "marketplace"
+    sellerFilterActive ? true :
+    normalized === "marketplace" || normalized === "all"
       ? true
       : product.category.toLowerCase() === normalized;
   let matchesOnSale = onSaleOnly ? !!product.onSale : true;
@@ -138,8 +140,8 @@ if (sortMode === "latest") {
 
 let category = name?.charAt(0).toUpperCase() + name?.slice(1);
 let isFiltered = tag !== null || priceFilterActive;
-let shouldRenderAll = normalized === 'marketplace' && !isFiltered;
-console.log("Products in CategoryPage before provider:", products);
+console.log("checking of the gyat",priceFilterActive);
+
 
 
   return (
@@ -164,10 +166,13 @@ console.log("Products in CategoryPage before provider:", products);
     let newParams = new URLSearchParams(searchParams);
     newParams.delete('price-to');
     newParams.delete('tag');
-
     router.push(`/categoryPages/${name}?${newParams.toString()}`, undefined, { scroll: false });
     setTempPriceTo(1000);
     setHasInteracted(false);
+    setSelectedCategory(null);
+
+
+
   }}
       sx={{
         '&:focus': {
@@ -295,7 +300,7 @@ console.log("Products in CategoryPage before provider:", products);
    <section className="catalogMainArea">
       <div className={`${styles.catalogMainAreaContainer}`}>
         <div className={`${styles.collapseArea}`}>
-          <Accordion  sx={{backgroundColor:"transparent",boxShadow:0}}>
+        { (marketPlace || sellerFilterActive) && (<Accordion  sx={{backgroundColor:"transparent",boxShadow:0}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon/>}
               aria-controls="panel1-content"
@@ -337,7 +342,7 @@ console.log("Products in CategoryPage before provider:", products);
                   </nav>
               </Box>
             </AccordionDetails>
-          </Accordion>
+          </Accordion>)}
           <Accordion sx={{backgroundColor:"transparent",boxShadow:0}}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -374,17 +379,35 @@ console.log("Products in CategoryPage before provider:", products);
               </Box>
             </AccordionDetails>
           </Accordion>
-        </div>
+        </div>  
         <div className={`${styles.catalogCardsArea}`}>
           <div className={`${styles.catalogCards}`}>
-           { /* <ProductCards
-                    products={shouldRenderAll ? products : sortedFiltered}
-                    filterMode={shouldRenderAll ? null : category}
-                  />*/}
-           <ProductCards
+
+      { /* <ProductCards
         products={sellerFilterActive ? sortedFiltered : shouldRenderAll ? products : sortedFiltered}
-        filterMode={sellerFilterActive ? "seller" : shouldRenderAll ? null : category}
-       />
+        filterMode={sellerFilterActive ? "seller" : shouldRenderAll ? null : category} 
+        sellerName= {sellerFilterActive?  normalized : null  }
+       />*/}
+       { /*  <ProductCards
+          products={sellerFilterActive ? sortedFiltered : products}
+          filterMode={sellerFilterActive ? "seller" : category} 
+          sellerName={sellerFilterActive ? normalized : null}
+        />*/}
+
+       { /*<ProductCards
+          products={sellerFilterActive ? sortedFiltered : products}
+          filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? null : category}
+          sellerName={sellerFilterActive ? normalized : null}
+        /> */}
+        <ProductCards
+            products={sortedFiltered}
+            filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? selectedCategory : category}
+            sellerName={sellerFilterActive ? normalized : null}
+            categoryFilter={selectedCategory}
+          />
+
+
+
 
           </div>
         </div>

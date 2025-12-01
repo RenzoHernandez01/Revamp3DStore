@@ -24,7 +24,7 @@ export default function AuthorCards({limitEnd}) {
     <CardContent sx={{position:"absolute", top: 0,  left: 0,
       width: "100%", height: "100%", display:"flex",justifyContent:"center", flexDirection:"column",
       alignItems:"center",backgroundColor:"transparent",zIndex:0}}>
-       <Avatar sx={{ bgcolor: "pink",width: 64, height: 64 }}> {seller.name?.charAt(0).toUpperCase()}
+       <Avatar sx={{ bgcolor: "#7DA0CA",width: 64, height: 64 }}> {seller.name?.charAt(0).toUpperCase()}
 </Avatar>
        <Typography variant="h5" sx={{color:"white"}}>{seller.name}</Typography>
     </CardContent>

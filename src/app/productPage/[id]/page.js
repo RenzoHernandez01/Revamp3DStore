@@ -22,11 +22,17 @@ import seller from '../../../../data/sellerProfiles.json';
 import { useAuth } from "@/app/context/AuthContext";
 import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 import { ProductsContext } from "@/app/context/productContext";
+import { useState } from 'react';
+import { useRouter, } from 'next/navigation';
+import Box from '@mui/material/Box';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 
 export  default function productPage({params}){
     let { id } = use(params);
+    let  router = useRouter();
     let product = products.find(p => p.id === id);
     let { isSignedIn, user, signOut } = useAuth();
+    let [expanded, setExpanded] = useState(false)
     let author = seller.find(s => s.id === product.sellerId);
     let authorProducts = products.filter(p => author.id === p.sellerId);
     console.log(authorProducts.length);
@@ -46,32 +52,35 @@ export  default function productPage({params}){
         .slice(0, limit);
       };
     let trendingProducts = getTopRatedProducts(products, 10);
-
-      
-
     useEffect(() => {renderCarousel(product.images);}, []);
     useEffect(() => {
         if (product?.modelPath) {
             modelViewer({ modelLink: product.modelPath });
         }
         }, [product?.modelPath]);
-
+console.log("asdfasdfasdf",product.staffPick);
     return(
     <div>
         <ProductsContext.Provider value={products}>
         {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
         </ProductsContext.Provider>
-
         <CategoryGrid/>
         <div className={`${styles.productWrapper}`}>
             <div className={`${styles.productBannerDiv}`}>  
             </div>
             <div className={`${styles.productArea}`}>
                 <div className={`${styles.productNamePlace}`}>
-                     <Typography variant='h4' color="black">{product.name}</Typography>
+                    <Stack direction={"row"} sx={{height:50, display:"flex", alignItems:"center", width: 710}} >
+                     <Typography variant='h4' color="black">{product.name}</Typography> 
+                    { product.staffPick && (<Box sx={{height:40, width:120, backgroundColor:"#7DA0CA", marginLeft: "auto", borderRadius:2, display:"flex", alignItems:"center", gap:1, justifyContent:"center"}}>
+                        <VerifiedOutlinedIcon/>
+                        <Typography>Staff Pick</Typography>
+                     </Box>)}
+                    </Stack>
+                     
                 </div>
                 <div className={`mainProductImage ${styles.mainProductImage}`}>
-                    <div className = {`heroImages ${styles.heroImages}`} id="threeDViewContainer"></div>
+                    <div className = {`threeDViewer ${styles.threeDViewer}`} id="threeDViewContainer"></div>  
                 </div>
                  <div className={`${styles.productActionWrapper}`}>
                     <AddToCartCard product={product}/>
@@ -80,26 +89,37 @@ export  default function productPage({params}){
                     <DimensionCard dimensions={product.dimensions}/>
                 </div>
                 <div className={`imageCarousel ${styles.imageCarousel}`}>
-                     <div className= {`${styles.productImages}`}></div>
                 </div>   
-                <div className={`${styles.productDescriptionArea}`}>
-                    <ProductDescription />
-                </div>
+                <div className={`${styles.productDescriptionArea} ${expanded ? styles.expanded : ""}`}>
+                    <ProductDescription
+                        productName={product.name}
+                        sellerName={author.name}
+                        rating={averageRating}
+                        totalRatingsBreakdown={totalRate}
+                    />
+                 </div>
+                 <Button variant="text" onClick={() => setExpanded(!expanded)}  className={`${styles.showMore}`}  disableRipple 
+                 sx={{color:"black", textDecoration:"underline", textTransform: "none", "&:hover": {backgroundColor: "transparent",}}}> 
+                    {expanded ? "Show Less" : "Show More"}
+                </Button>
+            
             </div>
         </div>  
         <div className ={`${styles.moreProductsWrapper}`}>
             <Stack direction="row" sx={{display:"flex", width:"100%",alignItems:"center"}}>
-                <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>More from Author</Typography>
-                <Button variant="outlined" sx={{width:160,height:30,marginLeft:"auto"}}>More Product</Button>
+                <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>More from {author.name}</Typography>
+                <Button disableRipple  variant="outlined"   onClick={() => router.push(`/categoryPages/${author.id}`)}
+                sx={{width:160,height:30,marginLeft:"auto", borderColor:"black",  color:"black","&:hover": {backgroundColor: "#313131ff", color:"white"}}}>More Product</Button>
             </Stack>
-            <div className = {`moreFromAuthor`}>
+            <div className = {styles.moreFromAuthor}>
                 <RenderMoreCarousel>
                   <ProductCards products={authorProducts} limitEnd={authorProducts.length}/> 
                 </RenderMoreCarousel>
             </div>
              <Stack direction="row" sx={{display:"flex", width:"100%",alignItems:"center"}}>
-                 <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>Trending Products</Typography>
-                <Button variant="outlined" sx={{width:160,height:30,marginLeft:"auto"}}>More Product</Button>
+                <Typography variant="h6" color="black" sx={{display:"flex",fontWeight:"bold",alignItems:"center"}}>Trending Products</Typography>
+                <Button disableRipple  variant="outlined"  onClick={() => router.push('/categoryPages/marketplace?tag=trending')}
+                sx={{width:160,height:30,marginLeft:"auto", borderColor:"black",  color:"black","&:hover": {backgroundColor: "#313131ff", color:"white"}}}>More Product</Button>
             </Stack>
             <div className = {`moreFromTrending`}>
                 <RenderMoreCarousel>

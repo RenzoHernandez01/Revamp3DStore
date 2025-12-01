@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+import CircularProgress from "@mui/material/CircularProgress";
+import { createRoot } from "react-dom/client";
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
 export function modelViewer({modelLink}){
 console.log("beingcalled");
 let productWindow = document.getElementById('threeDViewContainer');
@@ -37,6 +40,27 @@ let loader = new GLTFLoader();
 let rgbeLoader = new RGBELoader();
 let pmremGenerator = new THREE.PMREMGenerator(renderer);
 pmremGenerator.compileEquirectangularShader();
+
+
+let overlay = document.createElement("div");
+overlay.id = "overlay";
+overlay.style.position = "absolute";
+overlay.style.top = "0";
+overlay.style.left = "0";
+overlay.style.width = "100%";
+overlay.style.height = "100%";
+overlay.style.display = "flex";
+overlay.style.alignItems = "center";
+overlay.style.justifyContent = "center";
+overlay.style.backgroundColor = "rgba(255,255,255,0.8)";
+overlay.style.zIndex = "10";
+productWindow.style.position = "relative";
+productWindow.appendChild(overlay);
+
+const root = createRoot(overlay);
+root.render(<CircularProgress />);
+
+
 
 window.load3DModel = function (modelUrl) {
 
@@ -74,13 +98,17 @@ window.load3DModel = function (modelUrl) {
       camera.lookAt(center);
       controls.target.copy(center);
       controls.update();
- 
-      requestAnimationFrame(() => {
-        overlay.style.opacity = '0';
+      root.render(<ThreeDRotationIcon sx={{ fontSize:150, color: "black" }} />);
+        
         setTimeout(() => {
-          overlay.style.display = 'none';
-        }, 500);
-      });
+      overlay.style.transition = "opacity 0.5s ease";
+      overlay.style.opacity = "0";
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 500);
+    }, 1000);
+
+    
     },
     (xhr) => {
       const percent = (xhr.loaded / xhr.total) * 100;
@@ -92,7 +120,6 @@ window.load3DModel = function (modelUrl) {
     },
     (error) => {
       console.error('Model load error:', error);
-     /* overlay.style.display = 'none';*/
     }
   );
 };

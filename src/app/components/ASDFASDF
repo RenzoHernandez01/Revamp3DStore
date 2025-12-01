@@ -125,3 +125,21 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
         })
     );
 }
+
+
+let matchesCategory =
+    sellerFilterActive ? true :
+    normalized === "all" || normalized === "marketplace"
+      ? true
+      : product.category.toLowerCase() === normalized;
+
+      if(sellerFilterActive){
+        return true
+      }
+      else if( normalized === "all" || normalized === "marketplace"){
+        return true
+      }
+
+      else{
+        product.category.toLowerCase() === normalized;
+      }

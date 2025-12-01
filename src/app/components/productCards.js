@@ -13,19 +13,27 @@ import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined
 import { ProductImageCarousel } from "@/utils/ProductImageCarousel";
 import { CheckForSale } from '@/utils/checkForSale';
 
-export default function ProductCards({ products = [], filterMode = null, sellerName = null, limitStart, limitEnd }) {
+export default function ProductCards({ products = [], filterMode = null, sellerName = null, categoryFilter = null, limitStart, limitEnd }) {
   const router = useRouter();
-  let filtered =
-    filterMode === "seller"
-      ? products.filter(
-          (product) =>
-            !filterMode || product.sellerId.toLowerCase() === sellerName.toLowerCase()
-        )
-      : products.filter(
-          (product) =>
-            !filterMode || product.category.toLowerCase() === filterMode.toLowerCase()
-        );
+    let filtered;
+        if (filterMode === "seller") {
+          filtered = products.filter((product) =>{
+            let matchesSeller =  product.sellerId?.toLowerCase().trim() === sellerName?.toLowerCase().trim()
+            let matchesCategory = categoryFilter ? product.category?.toLowerCase().trim() === categoryFilter?.toLowerCase().trim() : true;
+            return matchesSeller && matchesCategory;
 
+          });
+            
+        
+        } else if (!filterMode) {
+          filtered = products;
+        } else {
+          filtered = products.filter(
+            (product) =>
+              product.category?.toLowerCase().trim() === filterMode?.toLowerCase().trim()
+          );
+        }
+  console.log(sellerName,"this is the seller");
   let sliced = limitEnd
     ? filtered.slice(limitStart, limitEnd)
     : filtered.slice(0, filtered.length);
@@ -63,7 +71,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
           margin: 0,
           padding: 2,
           borderRadius: 3,
-          boxShadow: 5,
+          boxShadow: 2,
           "&:hover": {
             boxShadow: 10,
             transform: "scale(1.01)",

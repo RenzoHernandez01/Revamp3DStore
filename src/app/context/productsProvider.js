@@ -1,4 +1,4 @@
-// src/app/context/ProductsProvider.jsx
+
 "use client";
 import { useEffect, useState } from "react";
 import { ProductsContext } from "./productContext";

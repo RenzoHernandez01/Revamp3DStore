@@ -16,9 +16,6 @@ export default function Home() {
   let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
   let [products, setProducts] = useState([]);
-  let handleClick = () => {
-  router.push('/categoryPages/marketplace?staffPickOnly=true');
-  };
   let homepageProducts = products.filter(p => p.staffPick);
   let handleViewStaffPicks = () => {
     navigate('/category/all', { state: { staffPickOnly: true } });
@@ -86,7 +83,7 @@ useEffect(() => {
       </div>
       <div className = {styles.viewAllTrendingGrid}>
         <Button variant="contained" disableElevation 
-        onClick={() => router.push('/categoryPages/marketplace?sortMode=trending')}>
+        onClick={() => router.push('/categoryPages/marketplace?tag=trending')}>
             View All Trending
          </Button>
       </div>
