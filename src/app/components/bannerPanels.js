@@ -1,23 +1,76 @@
 
 import Typography from '@mui/material/Typography';
-import styles from './bannerPanels.module.css'; 
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 export default function BannerPanels() {
   return (
-    <div className={styles.bannerDiv}>
-          <div className={styles.bannerWrapper}>
-          </div>
-            {/*<div class="bannerTextWrapper">
-               <h2 class="bannerText">Exclusive Kits</h2>
-               <p class="subText">Lorem ipsum dolor sit amet consectetur adipiscing elit. 
-                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
-                In id cursus mi pretium tellus duis convallis. 
-                Tempus leo eu aenean sed diam urna tempor. 
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. 
-                Iaculis massa nisl malesuada lacinia integer nunc posuere. 
-                Ut hendrerit semper vel class aptent taciti sociosqu.
-                .</p>
-            </div>*/}
-    </div>
+    <Stack sx={{display:"flex", width:"100%", height:283, justifyContent:"flex-start", alignItems:"flex-start", flexDirection:"column",
+      position:"relative",
+      overflow: "hidden", 
+      backgroundColor:"black",
+      "&::before":{
+      content:'""',
+      position:"absolute",
+      width:"100%",
+      height:"100%",
+      backgroundImage: "url('https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761809067/pistolRenders_tyvetw.jpg')",
+      backgroundRepeat:"no-repeat",
+      backgroundSize:"60%",
+      backgroundPositionX: 650,
+      backgroundPositionY:-105,
+      filter: "blur(4px)",
+      zIndex: 0,
+      },
+      "& > *": {
+      position: "relative",
+      zIndex: 1,
+    },
+    }}>
+      <Stack sx={{marginLeft:20, marginTop:2, width:400}}>
+        <Typography
+          variant="h6"
+          sx={{
+            position: "relative",
+            display: "inline-block",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              width: "90px",
+              height: "3px",
+              backgroundColor: "#8ff076ff",
+              borderRadius: "4px", 
+            },
+          }}
+        >
+          Exclusive
+        </Typography>
+        <Typography variant="caption text"sx={{color:"white", fontSize:11,marginTop:1}} >
+            3D asset's only available on websiteName.
+        </Typography>
+        <Typography variant="h3"sx={{color:"white",marginTop:1,}} >
+            Agency Pistol 
+        </Typography>
+        <Typography variant="body1"sx={{color:"white",marginTop:1,whiteSpace:"normal",wordBreak:"break-word"}} >
+            Unlock this awesome asset for 3d printing or for your next big game project 
+        </Typography>
+        <Stack direction={"row"} sx={{gap:2, marginTop:2}}>
+          <Button variant="contained" disableElevation  disableRipple
+          sx={{ backgroundColor:"#8ff076ff", width: 150 ,height: 40, whiteSpace:"nowrap",  textTransform: "none", color:"black", fontSize:20,
+            "&:hover": {backgroundColor: "#6bb058ff"}}}
+          >
+              Add to cart
+          </Button>
+          <Button disableRipple  variant="outlined"
+              sx={{width:150,height:40 , borderColor:"white", color:"white", whiteSpace:"nowrap",
+              "&:hover": {backgroundColor: "white", color:"black",}}}>More Product
+          </Button>
+        </Stack>
+      </Stack>
+    </Stack>
+    
   );
 }

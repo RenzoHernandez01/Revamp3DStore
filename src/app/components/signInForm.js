@@ -12,6 +12,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import { useAuth } from "../context/AuthContext";
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import GoogleIcon from '@mui/icons-material/Google';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 export default function SignInForm() {
   const router = useRouter();
 
@@ -94,51 +98,103 @@ if (!res.ok) {
    <div className={`${styles.signUpContainer}`}>
         <div className={`${styles.signPageBlock} ${styles.signInBlock}`} id="signInBlock">
             <div className={`${styles.signInImages}`}>    
+              <Stack  sx={{display:"flex", zIndex:2, direction:"column", width:"100%", height:"100%", padding:2, marginTop:5, gap:2}}>
+                <Typography variant='h3' sx={{fontWeight:"bold",}}>LOGO</Typography>
+                <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25 }}>Welcome back to webStorePage.</Typography>
+                <Box sx={{width:150, height:5, backgroundColor:"#7DA0CA", borderRadius:5}}> </Box> 
+                <Typography sx={{lineHeight:1.25}}>Sign in to continue to your account.</Typography>
+              </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>
-                <Button variant="outlined" sx={{width:384, marginBottom:2}}>Continue with Facbook</Button>
-                <Button variant="outlined" sx={{width:384}}>Continue with Google</Button>
-                <Divider textAlign="center" sx={{ my: 2 }}>
-                     <span style={{ fontSize: '1.2rem', color: 'black' }}>or</span>
-                </Divider>
-                <TextField id="outlined-basic" label="Email Address" variant="outlined" size="small" sx={{width:384,marginBottom:0}} 
-                onChange={handleChange('email')} error={!!errors.email} helperText={errors.email || ' '}/>    
-               <TextField
-                    id="outlined-basic"
-                    label="Password"
-                    variant="outlined"
-                    size="small"
-                    type={showPassword ? "text" : "password"}
-                    sx={{ width: 384 }}
-                    InputProps={{
-                        endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label={showPassword ? "hide the password" : "display the password"}
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            onMouseUp={handleMouseUpPassword}
-                            edge="end"
-                            >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                        ),
+                <Button variant="outlined"  disableRipple  
+               href='https://www.facebook.com/' target='_blank'
+                sx={{width:384, marginBottom:2, borderColor:"black",borderWidth:1.25, 
+                  "&:hover": {backgroundColor: "#dcdcdcff", }
+                }}>
+                  <Stack sx={{width:"100%", height:"100%", display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"row", gap:7}}>
+                    <FacebookOutlinedIcon sx={{color:'black',position:"absolute",marginRight:40}}/>
+                    <Typography sx={{color:"black", fontWeight:"bold", textTransform: "none",}} >
+                    Continue with Facebook 
+                    </Typography>
+                  </Stack>
+                </Button>
+                <Button variant="outlined"  disableRipple  
+                href='https://www.Google.com/' target='_blank'
+                sx={{width:384, marginBottom:2, borderColor:"black",borderWidth:1.25, 
+                  "&:hover": {backgroundColor: "#dcdcdcff", }
+                }}>
+                   <Stack sx={{width:"100%", height:"100%", display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"row", gap:7}}>
+                    <GoogleIcon  sx={{color:'black',position:"absolute",marginRight:40}}/>
+                    <Typography sx={{color:"black", fontWeight:"bold", textTransform: "none",}} >
+                    Continue with Google
+                    </Typography>
+                  </Stack>
+                </Button>
+               <Stack sx={{width:"100%",height:"20%", display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"row", gap:2}}>
+                  <Box sx={{width:160, height:2, backgroundColor:"black"}}></Box>
+                  <Typography sx={{color:"black"}}>Or</Typography>
+                  <Box sx={{width:160, height:2, backgroundColor:"black"}}></Box>
+                </Stack>
+                 <Stack sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                  <TextField id="outlined-basic" label="Email Address" variant="outlined" size="small" 
+                  sx={{width:384,marginBottom:0,
+                      "& input:-webkit-autofill": {
+                          WebkitBoxShadow: "0 0 0px 1000px #eaeaeaff inset", 
+                          WebkitTextFillColor: "black",                
+                          transition: "background-color 5000s ease-in-out 0s", }
+                  }} 
+                  onChange={handleChange('email')} error={!!errors.email} helperText={errors.email || ' '}/>    
+                  <TextField
+                      id="outlined-basic"
+                      label="Password"
+                      variant="outlined"
+                      size="small"
+                      type={showPassword ? "text" : "password"}
+                       sx={{ width: 384,marginBottom:1, marginTop:0, 
+                   "& input:-webkit-autofill": {
+                          WebkitBoxShadow: "0 0 0px 1000px #eaeaeaff inset", 
+                          WebkitTextFillColor: "black",                
+                          transition: "background-color 5000s ease-in-out 0s", }
                     }}
-                    value={form.password}
-                    onChange={handleChange("password")}
-                    error={!!errors.password}
-                    helperText={errors.password || " "}
-                    />
-                <Button onClick={handleSubmit}  variant="contained" sx={{width:384,marginTop:2, marginBottom:2}}>
-                    {loading ? "Signing in..." : "Sign In"}
-                </Button> 
-                <Typography variant="body2" color="text.secondary">
-                    Not yet a member?{' '}
-                        <Link href="#" underline="hover" component ="a" color="primary">
-                            {'Sign Up'}
-                        </Link>
+                      InputProps={{
+                          endAdornment: (
+                          <InputAdornment position="end">
+                              <IconButton
+                              aria-label={showPassword ? "hide the password" : "display the password"}
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              onMouseUp={handleMouseUpPassword}
+                              edge="end"
+                              >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                          </InputAdornment>
+                          ),
+                      }}
+                      value={form.password}
+                      onChange={handleChange("password")}
+                      error={!!errors.password}
+                      helperText={errors.password || " "}
+                      />
+                  <Button onClick={handleSubmit}  variant="contained" disableElevation 
+                sx={{ backgroundColor:"#7DA0CA", width: 384,height: 40, whiteSpace:"nowrap",  textTransform: "none", 
+                "&:hover": {backgroundColor: "#6f8cafff"}}} >
+                      {loading ? "Signing in..." : "Sign In"}
+                  </Button> 
+                     <Typography variant="body2" color="text.secondary">
+                   Not yet a member?{' '}
+                         <Button variant='text' disableRipple disableElevation sx={{textDecoration:"underline", textTransform:"none", color:"black",
+                         "&:hover": {
+                            backgroundColor: "transparent", 
+                            textDecoration: "underline",    
+                              },
+                          }}
+                            onClick={() => router.push('/authPage/signup')}
+                            >
+                                Sign In
+                        </Button>
                 </Typography>
+                </Stack>
             </div>
         </div>
    </div>

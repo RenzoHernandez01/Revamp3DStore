@@ -147,6 +147,7 @@ a.secondary {
   overflow: visible; 
   z-index: 01;
   background-color: #000;
+  margin: 0;
 }
 
 .heroDiv::before {
@@ -170,7 +171,16 @@ a.secondary {
    width: 100%;
   height: 609px;
   display: grid;
-  grid-template-rows: 64px 474px 71px;
+  grid-template-rows: 71px 474px 71px;
+ 
+}
+
+.staffPicksTitle{
+  grid-row:1/2;
+  width: 100%;
+  height: auto;
+ margin-bottom: 200px;
+  padding: 20;
 }
 
 .staffCardsGrid{
@@ -195,6 +205,7 @@ a.secondary {
 
 .trendingPicks{
   width: 100%;
+  margin-top: 0;
   height: 1154px;
   display: grid;
   grid-template-rows: 104px 435px 43px 435px 137px;

@@ -35,7 +35,7 @@
   width: 350%;
   height: 350%;
   background-image: url('https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761633434/1_msjwan.jpg'); 
-  background-color: #7da0ca4d;
+  background-color: #7da0ca33;
   background-blend-mode: lighten;
   background-size:contain;
   background-repeat: no-repeat;
@@ -67,7 +67,7 @@
 .userNameContainer{
   width: 100%;
   max-width: 384px;
-  height: 50px;
+ 
   gap: 10px;
   display: flex;
   align-items: center;

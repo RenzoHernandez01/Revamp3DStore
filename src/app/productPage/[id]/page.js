@@ -58,9 +58,10 @@ export  default function productPage({params}){
             modelViewer({ modelLink: product.modelPath });
         }
         }, [product?.modelPath]);
-console.log("asdfasdfasdf",product.staffPick);
+
     return(
     <div>
+        
         <ProductsContext.Provider value={products}>
         {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
         </ProductsContext.Provider>
@@ -102,7 +103,6 @@ console.log("asdfasdfasdf",product.staffPick);
                  sx={{color:"black", textDecoration:"underline", textTransform: "none", "&:hover": {backgroundColor: "transparent",}}}> 
                     {expanded ? "Show Less" : "Show More"}
                 </Button>
-            
             </div>
         </div>  
         <div className ={`${styles.moreProductsWrapper}`}>

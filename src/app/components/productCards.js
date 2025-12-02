@@ -21,10 +21,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
             let matchesSeller =  product.sellerId?.toLowerCase().trim() === sellerName?.toLowerCase().trim()
             let matchesCategory = categoryFilter ? product.category?.toLowerCase().trim() === categoryFilter?.toLowerCase().trim() : true;
             return matchesSeller && matchesCategory;
-
           });
-            
-        
         } else if (!filterMode) {
           filtered = products;
         } else {
@@ -33,7 +30,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
               product.category?.toLowerCase().trim() === filterMode?.toLowerCase().trim()
           );
         }
-  console.log(sellerName,"this is the seller");
+
   let sliced = limitEnd
     ? filtered.slice(limitStart, limitEnd)
     : filtered.slice(0, filtered.length);
@@ -59,7 +56,6 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
         isTrending = true;
       }
     }
-
 
     return (
       <Card
@@ -104,8 +100,6 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
             ) : (
               ""
             )}
-
-        
            <ProductImageCarousel images={product.images} />
           </div>
         </div>
@@ -118,7 +112,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
               </Box>
             )}
             {isTrending && (
-              <Box sx={{ backgroundColor: "#F8A127", display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 25, borderRadius: "25%" }}>
+              <Box sx={{ backgroundColor: "#EA641B", display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 25, borderRadius: "25%" }}>
                 <WhatshotOutlinedIcon sx={{ color: "white", fontSize: 20 }} />
               </Box>
             )}
