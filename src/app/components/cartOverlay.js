@@ -11,6 +11,10 @@ import CartMoreProductCards from './cartMoreProductCards';
 import EmptyCart from './emptyCart';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from "next/navigation";
+import { useCart } from '../context/cartContext';
+import InputBase from '@mui/material/InputBase';
+import TextField from '@mui/material/TextField';
+
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -25,25 +29,28 @@ function getTotalDiscount(cartItems) {
 
 
 export default function CartOverlay({ onClose }) {
-   const router = useRouter();
+  const router = useRouter();
   let [mounted, setMounted] = useState(false);
   let [overlayRoot, setOverlayRoot] = useState(null);
-  let [cartItems, setCartItems] = useState([]);
+  const { cartItems, removeFromCart } = useCart();
   let { isSignedIn, user, signOut } = useAuth();
   let subtotalPrice = 0;
   let totalDiscount = getTotalDiscount(cartItems);
   useEffect(() => {
     setMounted(true);
-    let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartItems(sortedCart);
     setOverlayRoot(document.getElementById('overlay-root'));
-  }, []);
-  if (!mounted || !overlayRoot) return null;
-  let handleRemoveFromCart = (id) => {  
-  let updatedCart = cartItems.filter((item) => item.id !== id);
-  setCartItems(updatedCart);
-  localStorage.setItem("cart", JSON.stringify(updatedCart));
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+
   };
+
+
+  }, []);
+
+  if (!mounted || !overlayRoot) return null;
 
   cartItems.forEach(productInCart =>{
     subtotalPrice = productInCart.price + subtotalPrice;
@@ -52,7 +59,7 @@ export default function CartOverlay({ onClose }) {
   return createPortal(
     <div className={`${style.cartContainer}`}>
       <Stack sx={{width:"100%", height:50,}}>
-        <Button variant='text' sx={{width:20,height:"100%",marginLeft:"auto"}}>
+        <Button variant='text' onClick={onClose}   sx={{width:20,height:"100%",marginLeft:"auto" , "&:hover":{backgroundColor:"transparent"}}} disableElevation disableRipple>
           <CloseIcon sx={{color:"gray", fontSize: 40 }}/>
         </Button>
       </Stack>
@@ -60,7 +67,7 @@ export default function CartOverlay({ onClose }) {
       (<>
       <div className={`${style.productSlot}`}>
         {cartItems.map((item) => (
-          <InCartProducts   key={item.id}   product = {item}  onRemove={handleRemoveFromCart}/>
+          <InCartProducts   key={item.id}   product = {item} />
         ))}
       </div>
       <div className={`${style.totalAmmountArea}`}>
@@ -82,33 +89,80 @@ export default function CartOverlay({ onClose }) {
           <Typography variant='h4'color="black" sx={{marginLeft:"auto",marginRight:1}}>${subtotalPrice-totalDiscount}</Typography>
         </Stack>
       </div>
-      <div className={`${style.checkOutArea}`}>
-        <div >
-           <fieldset className = {`${style.fieldStyle}`}>
-          <legend>Add discount code</legend>
-          <Button
-       
-          variant='contained' sx={{width:"100%", height:50,}}>
-            Checkout</Button>
-        </fieldset>
+
+    { isSignedIn ? 
+    <Stack >
+        <div className={`${style.checkOutArea}`}>
+            <div >
+            <fieldset className = {`${style.fieldStyle}`}>
+              <legend>Add discount code</legend>  
+              <Stack sx={{display:"flex",justifyContent:"center",alignItems:"center", flexDirection:"row", gap:2,
+                "& .MuiOutlinedInput-root": {
+                  height: "100%", 
+                  "& fieldset": { border: "1px solid black" },
+                  "& legend": { display: "none" },
+                },
+              }}>
+                <InputBase
+                sx={{
+                  width: 230,
+                  height: 50,                
+                  border: "1px solid black", 
+                  borderRadius: 1,
+                  px: 1.5,                   
+                }}
+              />
+
+                <Button
+                disableElevation disableRipple
+                variant ='contained'  sx={{flexGrow:1, height:50, backgroundColor: "#313131ff", color:"white",
+                  "&:hover":{backgroundColor:"#424242ff"}
+                }}>
+                  Checkout</Button>
+               </Stack>
+          </fieldset>
+          </div>
+            <fieldset className = {`${style.fieldStyle}`} style={{ marginLeft:"auto" }}>
+            <legend>Continue to checkout</legend>
+            <Button  
+                disableElevation disableRipple
+                onClick={() => {
+                console.log("Checkout button clicked, isSignedIn:", isSignedIn);
+                if (isSignedIn) {
+                  router.push("/checkOut");
+                } else {
+                  router.push("/authPage/signin");
+                }
+              }}
+            variant='contained'  sx={{width:"100%", height:50, backgroundColor: "#313131ff", color:"white",
+              "&:hover":{backgroundColor:"#424242ff"}
+            }}>Checkout</Button>
+          </fieldset>
         </div>
-        <div className={`${style.checkOutButtonWrapper}`}>
-           <fieldset className = {`${style.fieldStyle}`}>
-          <legend>Continue to checkout</legend>
-          <Button 
-              onClick={() => {
-              console.log("Checkout button clicked, isSignedIn:", isSignedIn);
-              if (isSignedIn) {
-                router.push("/checkOut");
-              } else {
-                router.push("/authPage/signin");
-              }
-            }}
-          
-          variant='contained' sx={{width:"100%", height:50,}}>Checkout</Button>
-        </fieldset>
+      </Stack>
+ 
+      :
+         <Stack>
+        <div className={`${style.checkOutArea}`}>
+          <Stack direction={"row"} sx={{gap:5}}>
+              <Button variant='contained' disableElevation disableRipple
+              sx ={{backgroundColor: "#313131ff", color:"white", width:200, height:40,
+              "&:hover":{backgroundColor:"#424242ff"}}}
+              onClick={() => {router.push("/authPage/signin");}} >
+                Sign In
+              </Button>
+              <Button variant='contained' disableElevation disableRipple
+              sx ={{backgroundColor: "#313131ff", color:"white", width:200, height:40,
+              "&:hover":{backgroundColor:"#424242ff"}}}
+              onClick={() => {router.push("/authPage/signup");}} >
+                Sign Up 
+              </Button>
+          </Stack>
+      
         </div>
-      </div>
+      </Stack>}
+      
+   
       </>   )}
        <div className={`${style.moreProductsArea}`}>
          <Typography variant='h5'color="black">Products you may like</Typography>

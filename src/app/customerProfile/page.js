@@ -14,7 +14,7 @@ import { useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from 'react';
 export  default function CustomerProfile(){
-     const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     const [libraryItems, setLibraryItems] = useState([]);
     const initialSection = searchParams.get("section") || "library";
     let [activeSection, setActiveSection] = useState("initialSection");
@@ -30,7 +30,7 @@ export  default function CustomerProfile(){
       const product = products.find(prod => prod.id === p.productId);
         return product
           ? { ...product, purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase}
-          : { id: p.productId, name: "Unkno wn Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
+          : { id: p.productId, name: "Unknown Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
       });
       setLibraryItems(merged);
     }

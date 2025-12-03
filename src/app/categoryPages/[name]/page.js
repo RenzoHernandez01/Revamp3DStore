@@ -147,7 +147,8 @@ console.log("checking of the gyat",priceFilterActive);
   return (
 <div> 
   <ProductsContext.Provider value={products}>
-    {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid />}
+   { /*isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid />*/}
+   <OtherButtonGrid/>
   </ProductsContext.Provider>
   <Toolbar />
 

@@ -8,7 +8,9 @@ import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/navigation';
 import { CheckForSaleCart } from '@/utils/checkForSaleCart';
 import { useProducts } from "../context/productContext"; 
+import { useCart } from '../context/cartContext';
 export default function CartMoreProductCards({limitEnd}) {
+  const { addToCart , cartItems,} = useCart();
   let router = useRouter();
   let products = useProducts();
   let sliced = products.slice(0, limitEnd) 
@@ -34,20 +36,16 @@ export default function CartMoreProductCards({limitEnd}) {
                       <Typography variant="body.2" >5</Typography>
                       <StarIcon/>
                       <Typography variant="body.2" >(23)</Typography>
-                      {/*<Typography variant="body.2" sx={{marginLeft:"auto"}} >${product.price}</Typography>*/}
+                    
                       <CheckForSaleCart product={product}/>
                   </Stack>
-                  <Button      onClick={(e) => {
-                    e.stopPropagation(); 
-          let cart = JSON.parse(localStorage.getItem('cart')) || [];
-          let existing = cart.find(item => item.id === product.id);
-          if (existing) {
-            existing.quantity += 1;
-          } else {
-            cart.push({ ...product, quantity: 1 });
-          }
-          localStorage.setItem('cart', JSON.stringify(cart));
-        }} variant='contained' sx={{width:"100%"} }>Add To CART</Button>
+        <Button  disableElevation disableRipple
+        sx ={{backgroundColor: "#313131ff", color:"white", width:"100%", 
+              "&:hover":{backgroundColor:"#424242ff"}}}
+        onClick={(e) => {e.stopPropagation();      
+          addToCart(product)
+          
+        }} variant='contained'>Add To CART</Button>
               </Stack>
           </CardContent>
       </Card>)

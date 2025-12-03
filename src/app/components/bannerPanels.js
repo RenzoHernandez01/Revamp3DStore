@@ -9,7 +9,7 @@ export default function BannerPanels() {
     <Stack sx={{display:"flex", width:"100%", height:283, justifyContent:"flex-start", alignItems:"flex-start", flexDirection:"column",
       position:"relative",
       overflow: "hidden", 
-      backgroundColor:"black",
+      backgroundColor:"black", zIndex:0,
       "&::before":{
       content:'""',
       position:"absolute",
@@ -57,9 +57,9 @@ export default function BannerPanels() {
         <Typography variant="body1"sx={{color:"white",marginTop:1,whiteSpace:"normal",wordBreak:"break-word"}} >
             Unlock this awesome asset for 3d printing or for your next big game project 
         </Typography>
-        <Stack direction={"row"} sx={{gap:2, marginTop:2}}>
+        <Stack direction={"row"} sx={{gap:2, marginTop:2,zIndex:0}}>
           <Button variant="contained" disableElevation  disableRipple
-          sx={{ backgroundColor:"#8ff076ff", width: 150 ,height: 40, whiteSpace:"nowrap",  textTransform: "none", color:"black", fontSize:20,
+          sx={{ backgroundColor:"#8ff076ff", width: 150 ,height: 40, whiteSpace:"nowrap",  textTransform: "none", color:"black", fontSize:20, zIndex:0,
             "&:hover": {backgroundColor: "#6bb058ff"}}}
           >
               Add to cart

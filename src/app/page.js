@@ -14,25 +14,25 @@ import { useEffect, useState } from 'react';
 import { useAuth } from "./context/AuthContext";
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+
 export default function Home() {
   let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
   let [products, setProducts] = useState([]);
   let homepageProducts = products.filter(p => p.staffPick);
-  let handleViewStaffPicks = () => {
-    navigate('/category/all', { state: { staffPickOnly: true } });
-  };
   let getAverage = (ratings) => {
   let entries = Object.entries(ratings || {});
   let totalVotes = entries.reduce((sum, [star, count]) => sum + count, 0);
   let weightedSum = entries.reduce((sum, [star, count]) => sum + Number(star) * count, 0);
     return totalVotes > 0 ? weightedSum / totalVotes : 0;
   };
+
  let getTopRatedProducts = (products, limit = 10) => {
   return [...products]
     .sort((a, b) => getAverage(b.ratingsBreakdown) - getAverage(a.ratingsBreakdown))
     .slice(0, limit);
   };
+
   let trendingProducts = getTopRatedProducts(products, 10);
 
 useEffect(() => {
@@ -54,7 +54,7 @@ useEffect(() => {
     <div className ={styles.heroDiv}>
       <div className ={styles.heroOverlay}>
       </div>
-      {isSignedIn ? <ButtonGridSignedIn/> : <ButtonGrid/>}
+       <ButtonGrid/>
       <SearchGrid products={products}/>
       <CategoryGrid/>
     </div>
@@ -95,9 +95,9 @@ useEffect(() => {
           <ProductCards products={homepageProducts} limitEnd={4}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
-        <Button variant="contained" disableElevation 
-          sx={{ backgroundColor:"#7DA0CA", width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
-            "&:hover": {backgroundColor: "#8dadd4ff"}}}
+        <Button variant="outlined" disableElevation 
+          sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
+            "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
           onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
           >
               View All Staff Picks
@@ -137,9 +137,9 @@ useEffect(() => {
           <ProductCards products={trendingProducts} limitStart={4} limitEnd={8}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
-        <Button variant="contained" disableElevation 
-          sx={{ backgroundColor:"#7DA0CA", width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
-            "&:hover": {backgroundColor: "#8dadd4ff"}}}
+        <Button variant="outlined" disableElevation 
+          sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
+            "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
           onClick={() => router.push('/categoryPages/marketplace?tag=trending')}   >
                View All Trending
           </Button>

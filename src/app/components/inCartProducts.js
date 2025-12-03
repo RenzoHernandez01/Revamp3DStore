@@ -8,9 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-
+import { useCart } from '../context/cartContext';
 function checkForSale(product){
-
   if (product.onSale) {
     product.salePrice = Math.round(product.price * (1 - product.salePercentage / 100));
     return (
@@ -30,8 +29,8 @@ function checkForSale(product){
     )
   }
 }
-
-export default function InCartProducts({product,onRemove}) {
+export default function InCartProducts({product}) {
+  const  {removeFromCart } = useCart() ;
   return (
     <div>
     <Card sx={{height:115, width:"100%",borderRadius:0,backgroundColor:  "rgba(238, 241, 244, 1)" }}>   
@@ -49,9 +48,12 @@ export default function InCartProducts({product,onRemove}) {
             <Typography variant='h6' className="libraryProductName" sx={{marginLeft:3,fontWeight:"bold"}}>
               {product.name}</Typography>
           <Stack sx={{marginLeft:"auto",height:"100%",width:100}} direction="column">
-            <Button 
-            onClick={() => onRemove(product.id)}
-            variant='text' size="small" sx={{width:.1,height:.3,marginLeft:"auto",marginBottom:.5}}>
+            <Button  disableRipple  
+            onClick={() =>  {removeFromCart(product.id)}}
+            variant='text' size="small" 
+            sx={{width:.1,height:.3,marginLeft:"auto",marginBottom:.5, 
+               "&:hover" :{backgroundColor:"transparent"}
+            }}>
               <CloseIcon sx={{color:"gray", fontSize: 20}}/>
             </Button>
               <Box sx={{ display: "flex", justifyContent: "flex-end", marginRight: 6 }}>

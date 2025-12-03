@@ -68,6 +68,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
           padding: 2,
           borderRadius: 3,
           boxShadow: 2,
+          zIndex:0,
           "&:hover": {
             boxShadow: 10,
             transform: "scale(1.01)",
@@ -93,6 +94,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
                   color: "white",
                   alignItems: "center",
                   justifyContent: "center",
+
                 }}
               >
                 {product.salePercentage}%

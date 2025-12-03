@@ -176,7 +176,7 @@ if (!res.ok) {
                       error={!!errors.password}
                       helperText={errors.password || " "}
                       />
-                  <Button onClick={handleSubmit}  variant="contained" disableElevation 
+                  <Button onClick={handleSubmit}  variant="contained" disableElevation  disableRipple
                 sx={{ backgroundColor:"#7DA0CA", width: 384,height: 40, whiteSpace:"nowrap",  textTransform: "none", 
                 "&:hover": {backgroundColor: "#6f8cafff"}}} >
                       {loading ? "Signing in..." : "Sign In"}

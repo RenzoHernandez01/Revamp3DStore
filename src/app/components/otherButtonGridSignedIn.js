@@ -16,6 +16,7 @@ import SearchBarComponent from './searchBarComponent';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
 
 export default function ResponsiveAppBar() {
   let  router = useRouter();
