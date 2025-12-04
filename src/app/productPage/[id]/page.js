@@ -20,7 +20,6 @@ import { use } from 'react';
 import products from '../../../../data/Products.json';
 import seller from '../../../../data/sellerProfiles.json';
 import { useAuth } from "@/app/context/AuthContext";
-import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 import { ProductsContext } from "@/app/context/productContext";
 import { useState } from 'react';
 import { useRouter, } from 'next/navigation';
@@ -63,7 +62,7 @@ export  default function productPage({params}){
     <div>
         
         <ProductsContext.Provider value={products}>
-        {isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid/>}
+        <OtherButtonGrid/>
         </ProductsContext.Provider>
         <CategoryGrid/>
         <div className={`${styles.productWrapper}`}>

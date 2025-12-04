@@ -21,17 +21,20 @@ import Avatar from '@mui/material/Avatar';
 import { Stack } from '@mui/material';
 import Badge from '@mui/material/Badge';
 
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+
 export default function ButtonGrid() {
     let  router = useRouter();
     let [showCart, setShowCart] = React.useState(false);
+    let { isSignedIn, user, signOut } = useAuth();
     let [anchorElUser, setAnchorElUser] = React.useState(null);
     let handleOpenCart = () => setShowCart(true);
     let handleCloseCart = () => setShowCart(false);
     let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
     let handleCloseUserMenu = () => setAnchorElUser(null);
     const { cartItems,} = useCart();
-    let { isSignedIn, user, signOut } = useAuth();
-
+    
+    console.log("current state", isSignedIn);
   useEffect(() => {
     document.body.style.overflow = showCart ? 'hidden' : 'auto';
   }, [showCart]);
@@ -48,6 +51,20 @@ export default function ButtonGrid() {
       <div className={`${styles.logoHome}`}>  <Button variant="text" onClick={() => router.push('/')}>
               HOME LOGO
             </Button></div>
+                 <IconButton
+                disableRipple
+                sx={{
+                  width: 32,
+                  height: 32,
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onClick={() => router.push('/wishListPage')}
+              >
+                <FavoriteBorderRoundedIcon/>
+              </IconButton>
       
       <button className={styles.cartBtnHomeMain}    
       onClick={() => {
@@ -65,10 +82,13 @@ export default function ButtonGrid() {
       )}
       
 
-      { isSignedIn ? <Stack>
+      { isSignedIn ? 
+      <Stack>
           <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 ,marginRight:5}}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: "#7DA0CA",}}>
+                {user?.firstName?.charAt(0).toUpperCase()}
+                </Avatar>
               </IconButton>
             </Tooltip>
 

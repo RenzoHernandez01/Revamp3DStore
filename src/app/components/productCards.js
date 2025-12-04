@@ -12,9 +12,14 @@ import { useRouter } from 'next/navigation';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
 import { ProductImageCarousel } from "@/utils/ProductImageCarousel";
 import { CheckForSale } from '@/utils/checkForSale';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import IconButton from '@mui/material/IconButton';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import { useWishList } from "../context/wishListContext";
 
 export default function ProductCards({ products = [], filterMode = null, sellerName = null, categoryFilter = null, limitStart, limitEnd }) {
   const router = useRouter();
+  const {addToWishList} = useWishList();
     let filtered;
         if (filterMode === "seller") {
           filtered = products.filter((product) =>{
@@ -36,6 +41,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
     : filtered.slice(0, filtered.length);
 
   return sliced.map((product) => {
+    const [favorited, setFavorited] = useState(false);
     let averageRating = 0;
     let totalRate = 0;
     let trendingScore = 0;
@@ -99,9 +105,41 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
               >
                 {product.salePercentage}%
               </Box>
+            
             ) : (
               ""
             )}
+             <IconButton
+                disableRipple
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFavorited(!favorited);
+                  addToWishList(product);
+                }}
+                sx={{
+                  position: "absolute",
+                  bottom: 10,
+                  right: 10,
+                  width: 32,
+                  height: 32,
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  "& .hover-show": { display: "none" },
+                  "&:hover .hover-show": { display: "block" },
+                  "&:hover .hover-hide": { display: "none" },
+                }}
+              >
+                {!favorited && (
+                  <>
+                    <FavoriteBorderRoundedIcon className="hover-hide" />
+                    <FavoriteRoundedIcon className="hover-show" />
+                  </>
+                )}
+                {favorited && <FavoriteRoundedIcon />}
+              </IconButton>
+
            <ProductImageCarousel images={product.images} />
           </div>
         </div>

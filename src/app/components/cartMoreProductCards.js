@@ -14,6 +14,7 @@ export default function CartMoreProductCards({limitEnd}) {
   let router = useRouter();
   let products = useProducts();
   let sliced = products.slice(0, limitEnd) 
+  
   return (
      sliced.map((product, index) => {
       return(

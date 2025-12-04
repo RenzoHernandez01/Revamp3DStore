@@ -21,6 +21,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useCart } from '../context/cartContext';
 import { useAuth } from '../context/AuthContext';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 export default function ResponsiveAppBar({products}) {
   let router = useRouter();
@@ -55,6 +56,20 @@ export default function ResponsiveAppBar({products}) {
           </div>
 
           <div className={styles.rightGroup}>
+            <IconButton
+                disableRipple
+                sx={{
+                  width: 32,
+                  height: 32,
+                  backgroundColor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onClick={() => router.push('/wishListPage')}
+              >
+                <FavoriteBorderRoundedIcon/>
+              </IconButton>
             <button
               className={styles.cartBtnHomeMain}
               onClick={handleOpenCart}
@@ -75,7 +90,10 @@ export default function ResponsiveAppBar({products}) {
          <Stack>
               <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 ,marginRight:5}}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: "#7DA0CA",}}>
+                {user?.firstName?.charAt(0).toUpperCase()}
+
+                </Avatar>
               </IconButton>
             </Tooltip>
 

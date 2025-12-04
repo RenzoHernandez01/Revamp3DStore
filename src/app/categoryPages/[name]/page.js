@@ -85,11 +85,7 @@ useEffect(() => {
   return () => clearTimeout(timeout);
 }, [tempPriceTo, hasInteracted]);
 
-let test = products.filter(product => {
-  return product.sellerId?.toLowerCase().trim() === name?.toLowerCase().trim();
-});
 
-console.log(test,"testttt");
 
 let filtered = products.filter(product => {
 let matchesCategory =

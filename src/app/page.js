@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from "./context/AuthContext";
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import { ProductsContext } from "@/app/context/productContext";
 
 export default function Home() {
   let { isSignedIn, user, signOut } = useAuth();
@@ -54,7 +55,9 @@ useEffect(() => {
     <div className ={styles.heroDiv}>
       <div className ={styles.heroOverlay}>
       </div>
-       <ButtonGrid/>
+      <ProductsContext.Provider value={products}>
+        <ButtonGrid/>
+      </ProductsContext.Provider>
       <SearchGrid products={products}/>
       <CategoryGrid/>
     </div>

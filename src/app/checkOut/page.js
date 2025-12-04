@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styles from "./checkOut.module.css";
 import CategoryGrid from "../components/categoryGrid";
-import OtherButtonGridSignedIn from "../components/otherButtonGridSignedIn"
+import OtherButtonGrid from "../components/otherButtonGrid";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -15,6 +15,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/cartContext';
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -28,10 +30,12 @@ function getTotalDiscount(cartItems) {
 
 export  default function CheckOut(){
     let  router = useRouter();
+    const { user} = useAuth();
+    const { cartItems, clearCart } = useCart();
     const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
-    let [cartItems, setCartItems] = useState([]);
     let subtotalPrice = 0;
     let totalDiscount = getTotalDiscount(cartItems);
+    let [saveInfo, setSaveInfo] = useState(false);
     let [errors, setErrors] = React.useState({});
     let [ccForm, setCcForm] = React.useState({
         email: '',
@@ -43,6 +47,17 @@ export  default function CheckOut(){
         address: '',
     })
 
+    useEffect(() => {
+    if (user?.email) {
+        const saved = localStorage.getItem(`savedPaymentInfo_${user.email}`);
+        if (saved) {
+        setCcForm(JSON.parse(saved));
+        setSaveInfo(true);
+        } else {
+        setSaveInfo(false);
+        }
+    }
+    }, [user]);
 
 
     let handleChange = (field) => (e) => {
@@ -93,28 +108,35 @@ const handleSubmit = async () => {
   if (Object.keys(newErrors).length > 0) return;
 
   try {
-   
-    const res = await fetch('/api/storeCcInfo', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ccForm),
-    });
-    const data = await res.json();
+    let latestUser = null;
 
-    if (!res.ok) {
-      setErrors(prev => ({ ...prev, email: data.error }));
-      return;
+    if (saveInfo && user?.email) {
+      localStorage.setItem(`savedPaymentInfo_${user.email}`, JSON.stringify(ccForm));
+      const res = await fetch('/api/storeCcInfo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ccForm),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrors(prev => ({ ...prev, email: data.error }));
+        return;
+      }
+
+      localStorage.setItem('user', JSON.stringify(data.user));
+      latestUser = data.user;
+    } else {
+      const storedUser = localStorage.getItem("user");
+      latestUser = storedUser ? JSON.parse(storedUser) : { email: ccForm.email };
     }
-
-    console.log('payment response', data);
-    localStorage.setItem('user', JSON.stringify(data.user));
 
     if (!cartItems || cartItems.length === 0) {
       console.warn('No items in cart to purchase');
       return;
     }
-    let latestUser = data.user;
-  
+
     for (const cartItem of cartItems) {
       if (!cartItem?.id) {
         console.warn('Cart item missing id:', cartItem);
@@ -131,10 +153,9 @@ const handleSubmit = async () => {
         body: JSON.stringify({
           email: latestUser.email,
           productId: cartItem.id,
-          priceAtPurchase: finalPrice,   
+          priceAtPurchase: finalPrice,
         }),
       });
-
 
       const purchaseData = await purchaseRes.json();
 
@@ -144,12 +165,13 @@ const handleSubmit = async () => {
       }
 
       console.log('purchase response', purchaseData);
-     
+
       latestUser = purchaseData.user;
       localStorage.setItem('user', JSON.stringify(latestUser));
     }
 
     router.push('/customerProfile');
+    clearCart();
   } catch (err) {
     console.log('payment failed:', err);
   }
@@ -157,8 +179,6 @@ const handleSubmit = async () => {
 
 
     useEffect(() => {
-    let sortedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartItems(sortedCart);
     let storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser?.email) {
       setCcForm(prev => ({ ...prev, email: storedUser.email }));
@@ -171,7 +191,7 @@ const handleSubmit = async () => {
 
   return (
 <div>
-    <OtherButtonGridSignedIn/>
+    <OtherButtonGrid/>
     <CategoryGrid/>
     <section>
         <div className = {`${styles.checkOutContainer}`}>
@@ -183,12 +203,14 @@ const handleSubmit = async () => {
                 </div>
                 <div className={`${styles.subTotalArea}`}>
                     <div className={`${styles.subTotalWrapper}`}>
+                        <Box sx={{width:480, height:2}}>
+                        </Box>
                         <Stack
                             direction="row"
                             spacing={2}
                             justifyContent="flex-start"
                             alignItems="center"
-                            sx={{ width: '100%',backgroundColor:"#f1f1f1",marginTop:.1,marginBottom:5}}>
+                            sx={{ width: '100%',marginTop:.1,marginBottom:5}}>
                             <Typography variant="h6" color = "black">
                                 Subtotal
                             </Typography>
@@ -202,7 +224,7 @@ const handleSubmit = async () => {
                             spacing={2}
                             justifyContent="flex-start"
                             alignItems="center"
-                            sx={{ width: '100%',backgroundColor:"#f1f1f1",marginBottom:5}}>
+                            sx={{ width: '100%',marginBottom:5}}>
                             <Typography variant="h6" color = "black">
                                 Sale Discount
                             </Typography>
@@ -211,6 +233,8 @@ const handleSubmit = async () => {
                                 -${totalDiscount}   
                             </Typography>
                         </Stack>
+                         <Box sx={{width:480, height:2,backgroundColor:"#9f9f9f"}}>
+                        </Box>
                          <Stack
                             direction="row"
                             spacing={2}
@@ -367,12 +391,21 @@ const handleSubmit = async () => {
 
                     </div>
                     <div className= {`${styles.storeCCInfoArea}`}>
-                         <Checkbox {...label} />
+                         <Checkbox 
+                        inputProps={{ 'aria-label': 'Save payment info' }}
+                         checked={saveInfo}           
+                         onChange={(e) => setSaveInfo(e.target.checked)}/>
                         <Typography variant="h8" color = "black">
                             Save my payment details for faster checkout next time
                         </Typography>
                     </div>
-                  <Button  onClick={handleSubmit} variant="contained" sx={{width:588,marginTop:2, marginBottom:2}}>Pay</Button> 
+                  <Button  
+                  onClick={handleSubmit} 
+                  disableElevation disableRipple
+                  variant="contained" 
+                  sx={{ height:50, width:588,marginTop:2, marginBottom:2,  backgroundColor: "#313131ff" , 
+                  color:"white", "&:hover":{backgroundColor:"#424242ff"}}}> 
+                    Pay</Button> 
                 </div> 
             </div>
         </div>

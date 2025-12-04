@@ -115,7 +115,7 @@
 .storeCCInfoArea{
   display: flex;
   background-color: rgb(255, 255, 255);
- box-shadow: 0 10px 30px rgba(0, 0, 0, 0.301);
+ box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   height: 60px;
   width: 588px;
   border-radius: 10px;

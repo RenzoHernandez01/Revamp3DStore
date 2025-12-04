@@ -8,9 +8,9 @@ import { useCart } from '../context/cartContext';
 
 
 export default function addToCartCard({ product}) {
-  const { addToCart , cartItems,} = useCart();
+  const { addToCart} = useCart();
 
-  console.log("werqwerqwr",cartItems.length);
+
   return (
     <Card sx={{ width: '100%',}} variant="outlined">
       <CardActions>

@@ -14,9 +14,10 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
-
+import { useAuth } from '../context/AuthContext';
 export  default function SignUpForm(){
   let  router = useRouter();
+ const { signUp } = useAuth();
   let [showPassword, setShowPassword] = React.useState(false);
   let handleClickShowPassword = () => setShowPassword((prev) => !prev);
   let handleMouseDownPassword = (event) => event.preventDefault();
@@ -68,8 +69,7 @@ export  default function SignUpForm(){
         setErrors(prev => ({ ...prev, email: data.error }));
         return;
         }
-        console.log('signup response', data);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        signUp(data.user);
         router.push('/authPage/signin');
     } catch (err) {
         console.log('Sign up failed:', err);
