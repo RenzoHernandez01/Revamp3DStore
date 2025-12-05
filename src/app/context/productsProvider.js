@@ -2,6 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ProductsContext } from "./productContext";
+import { useSafeFetch } from "../hooks/useSafeFetch";
 
 export default function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
@@ -18,3 +19,13 @@ export default function ProductsProvider({ children }) {
     </ProductsContext.Provider>
   );
 }
+
+{/*export default function ProductsProvider({ children }) {
+  const { data: products, error } = useSafeFetch("/api/products", []);
+  const safeProducts = Array.isArray(products) ? products : [];
+  return (
+    <ProductsContext.Provider value={{ products: safeProducts, error }}>
+      {children}
+    </ProductsContext.Provider>
+  );
+}*/}

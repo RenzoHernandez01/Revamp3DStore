@@ -68,16 +68,21 @@ export default function ResponsiveAppBar({products}) {
                 }}
                 onClick={() => router.push('/wishListPage')}
               >
-                <FavoriteBorderRoundedIcon/>
+                <FavoriteBorderRoundedIcon sx={{color:"#313131ff", "&:hover":{color:"#1a79ecff"}}}/>
               </IconButton>
-            <button
-              className={styles.cartBtnHomeMain}
+
+            <IconButton
+              disableRipple
               onClick={handleOpenCart}
+              sx={{
+                width: 32,
+                height: 32,
+              }}
             >
               <Badge  badgeContent={cartItems.length} color="primary">
-                <ShoppingCartOutlinedIcon sx={{ fontSize: 30, color: "black" }} />
+                <ShoppingCartOutlinedIcon  sx={{color:"#313131ff", "&:hover":{color:"#1a79ecff"}}} />
               </Badge>
-            </button>
+            </IconButton>
 
             {showCart && (
               <>
@@ -136,16 +141,16 @@ export default function ResponsiveAppBar({products}) {
           :
            <Stack direction={"row"} sx={{gap:2}}>
                   <Button   disableElevation disableRipple
-                      variant="text" sx={{color:"black", fontWeight:"bold", textTransform: "none",
+                      variant="text" sx={{color:"#313131ff", fontWeight:"bold", textTransform: "none",
                     "&:hover":{
-                          backgroundColor:"transparent",color: "black", 
+                          backgroundColor:"transparent",color:"#1a79ecff", 
                         }
                   }} 
                   onClick={() => router.push('/authPage/signin')}>
                     Sign In
                   </Button>
                   <div className={styles.signUpWrapperHome}>
-                    <Button variant="text"  sx={{color:"black", fontWeight:"bold", textTransform: "none",
+                    <Button variant="text"  sx={{color:"#313131ff", fontWeight:"bold", textTransform: "none",
                       "&:hover":{
                           backgroundColor:"transparent",color: "black", 
                         }

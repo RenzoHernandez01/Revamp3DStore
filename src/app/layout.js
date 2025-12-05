@@ -1,4 +1,4 @@
-// src/app/layout.js
+
 import { Geist, Geist_Mono } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";

@@ -1,8 +1,9 @@
 .buttonGrid {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  gap: 20px;
+ 
 }
 
 .leftGroup {
@@ -50,7 +51,7 @@
   align-items: center;
   text-decoration: none;
   border-style: solid;
-  border-color:black;
+  border-color:#313131ff;
   border-radius: 5px;
 }
 

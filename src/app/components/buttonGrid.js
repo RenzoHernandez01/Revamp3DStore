@@ -56,25 +56,36 @@ export default function ButtonGrid() {
                 sx={{
                   width: 32,
                   height: 32,
-                  backgroundColor: "white",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
                 onClick={() => router.push('/wishListPage')}
               >
-                <FavoriteBorderRoundedIcon/>
+                <FavoriteBorderRoundedIcon sx={{ color:trigger?"#313131ff":"white", "&:hover":{color:"#1a79ecff"}}} />
               </IconButton>
       
-      <button className={styles.cartBtnHomeMain}    
+{     /* <button className={styles.cartBtnHomeMain}    
       onClick={() => {
         handleOpenCart();
       }}>
         <Badge  badgeContent={cartItems.length} color="primary">
         <ShoppingCartOutlinedIcon sx={{ fontSize: 30,color:trigger?"black":"white"}}/>
         </Badge>
-      </button>
+      </button> */}
      
+      <IconButton
+              disableRipple
+              onClick={handleOpenCart}
+              sx={{
+                width: 32,
+                height: 32,
+              }}
+            >
+              <Badge  badgeContent={cartItems.length} color="primary">
+                <ShoppingCartOutlinedIcon  sx={{ color:trigger?"#313131ff":"white", backgroundColor:"transparent","&:hover":{color:"#1a79ecff"}}} />
+              </Badge>
+        </IconButton>
 
       {showCart && ( <><div className= {style.cartBackdrop} onClick={handleCloseCart} />
         <CartOverLay onClose={handleCloseCart} /> 
@@ -130,8 +141,8 @@ export default function ButtonGrid() {
       </Stack>
       :
       <Stack  direction={"row"} sx={{gap:2}}>
-          <Button disableRipple variant='text' sx={{color:trigger?"black":"white", fontWeight:"bold", textTransform: "none", "&:hover":{
-            backgroundColor:"transparent",
+          <Button disableRipple variant='text' sx={{color:trigger?"#313131ff":"white", fontWeight:"bold", textTransform: "none", "&:hover":{
+            backgroundColor:"transparent",color:"#1a79ecff", 
           } }}
         onClick={() => router.push('/authPage/signin')}
         >

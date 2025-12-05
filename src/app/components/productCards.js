@@ -19,7 +19,8 @@ import { useWishList } from "../context/wishListContext";
 
 export default function ProductCards({ products = [], filterMode = null, sellerName = null, categoryFilter = null, limitStart, limitEnd }) {
   const router = useRouter();
-  const {addToWishList} = useWishList();
+  const {addToWishList, removeFromWishList,wishListItems} = useWishList();
+
     let filtered;
         if (filterMode === "seller") {
           filtered = products.filter((product) =>{
@@ -41,7 +42,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
     : filtered.slice(0, filtered.length);
 
   return sliced.map((product) => {
-    const [favorited, setFavorited] = useState(false);
+     const favorited = wishListItems.some(item => item.id === product.id);
     let averageRating = 0;
     let totalRate = 0;
     let trendingScore = 0;
@@ -57,10 +58,12 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
         0
       );
       averageRating = totalRate === 0 ? 0 : (weightedSum / totalRate).toFixed(1);
-      trendingScore = totalRate + Math.floor(Math.random() * 20);
-      if (trendingScore >= 60) {
+       trendingScore = Math.floor(totalRate * 0.5);
+
+      if (trendingScore >= 20) {
         isTrending = true;
       }
+    
     }
 
     return (
@@ -75,10 +78,15 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
           borderRadius: 3,
           boxShadow: 2,
           zIndex:0,
+          position:"relative",
           "&:hover": {
             boxShadow: 10,
             transform: "scale(1.01)",
             transition: "all 0.2s ease-in-out",
+          },
+           "&:hover .wishlistIcon": {
+            opacity: 1,
+            transform: "translateY(0)",
           },
         }}
         onClick={() => router.push(`/productPage/${product.id}`)}
@@ -109,36 +117,44 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
             ) : (
               ""
             )}
-             <IconButton
-                disableRipple
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setFavorited(!favorited);
+            
+           <IconButton
+              disableRipple
+              onClick={(e) => {
+                e.stopPropagation();
+                if (favorited) {
+                  removeFromWishList(product.id);
+                } else {
                   addToWishList(product);
-                }}
-                sx={{
-                  position: "absolute",
-                  bottom: 10,
-                  right: 10,
-                  width: 32,
-                  height: 32,
-                  backgroundColor: "white",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  "& .hover-show": { display: "none" },
-                  "&:hover .hover-show": { display: "block" },
-                  "&:hover .hover-hide": { display: "none" },
-                }}
-              >
-                {!favorited && (
-                  <>
-                    <FavoriteBorderRoundedIcon className="hover-hide" />
-                    <FavoriteRoundedIcon className="hover-show" />
-                  </>
-                )}
-                {favorited && <FavoriteRoundedIcon />}
-              </IconButton>
+                }
+              }}
+              className="wishlistIcon"
+              sx={{
+                position: "absolute",
+                bottom: 10,
+                right: 10,
+                width: 32,
+                height: 32,
+                backgroundColor: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: 0, 
+                transform: "translateY(10px)", 
+                transition: "all 0.2s ease", 
+
+              }}
+            >
+              {favorited ? (
+                <FavoriteRoundedIcon sx={{ color: "#313131ff" }} />
+              ) : (
+                <>
+                  <FavoriteBorderRoundedIcon className="hover-hide" sx={{ color: "#313131ff" }} />
+                </>
+              )}
+      </IconButton>
+
+
 
            <ProductImageCarousel images={product.images} />
           </div>

@@ -5,10 +5,12 @@ const wishListContext = createContext();
 
 export function WishListProvider({ children }) {
   const [wishListItems, setWishListItems] = useState([]);
+
   
  useEffect(() => {
    const stored = JSON.parse(localStorage.getItem("wishList")) || [];
     setWishListItems(stored)
+    
   },[]);
 
   const addToWishList = (product) => {

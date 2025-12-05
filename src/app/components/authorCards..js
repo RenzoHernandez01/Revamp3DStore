@@ -10,7 +10,7 @@ import { useRouter, useSearchParams} from 'next/navigation';
 export default function AuthorCards({limitEnd}) {
   let router = useRouter();
   let sellers = useSellers();
-  let sliced = sellers.slice(0, limitEnd) 
+  let sliced = sellers.slice(0, limitEnd) ;
   return (
     sliced.map((seller, index) => {
       return(
