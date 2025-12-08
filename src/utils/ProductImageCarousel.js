@@ -1,7 +1,7 @@
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 import { useState, useRef } from "react";
-
+import Skeleton from '@mui/material/Skeleton';
 export function ProductImageCarousel({ images }) {
   const [imageIndex, setImageIndex] = useState(0);
   const intervalRef = useRef(null);
@@ -24,6 +24,7 @@ export function ProductImageCarousel({ images }) {
       onMouseEnter={startCarousel}
       onMouseLeave={stopCarousel}
     >
+     
       <CardMedia
         component="img"
         sx={{

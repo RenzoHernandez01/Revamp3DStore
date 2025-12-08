@@ -23,7 +23,6 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams} from 'next/navigation';
 import { useAuth } from "@/app/context/AuthContext";
-import OtherButtonGridSignedIn from "../../components/otherButtonGridSignedIn";
 import {ProductsContext} from "../../context/productContext";
 import AuthorBannerPanels from "@/app/components/authorBannerPanel";
 import { useSellers } from "@/app/context/authorContext";
@@ -33,6 +32,7 @@ export default function CategoryPage() {
 let router = useRouter();
 let { isSignedIn, user, signOut } = useAuth();
 let searchParams = useSearchParams();
+let [loading, setLoading] = useState(true);
 let { name } = useParams(); 
 let normalized = name?.toLowerCase(); 
 let tag = searchParams.get('tag'); 
@@ -63,27 +63,42 @@ let handleTextChange = (e) => {
   }
 };
 
+
+
 useEffect(() => {
   console.log('Fetching products...');
-  fetch('/api/products')
-    .then(res => res.json())
-    .then(data => {
-      console.log("Fetched data:", data);
-      setProducts(Array.isArray(data) ? data : data.products);
-    });
+  setLoading(true);
+  const timer = setTimeout(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        console.log("Fetched data:", data);
+        setProducts(Array.isArray(data) ? data : data.products);
+      })
+      .catch(err => {
+        console.error("Failed to fetch products:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, 500); 
+
+  return () => clearTimeout(timer);
 }, []);
 
-useEffect(() => {
-  const timeout = setTimeout(() => {
-    router.push(
-      `/categoryPages/${name}?tag=${tag || ''}&price-to=${tempPriceTo}`,
-      undefined,
-      { scroll: false }
-    );
-  }, 300);
 
-  return () => clearTimeout(timeout);
-}, [tempPriceTo, hasInteracted]);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.push(
+        `/categoryPages/${name}?tag=${tag || ''}&price-to=${tempPriceTo}`,
+        undefined,
+        { scroll: false }
+      );
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [tempPriceTo, hasInteracted]);
+
 
 
 
@@ -101,7 +116,6 @@ let matchesCategory =
 });
 
 let sortedFiltered = [...filtered];
-
 console.log(sortedFiltered.length);
 if (sortMode === "bestSelling") {
   sortedFiltered.sort((a, b) => {
@@ -111,21 +125,19 @@ if (sortMode === "bestSelling") {
   });
 }
 
-if (sortMode === "trending") {
+if(sortMode === "trending") {
   let getAverage = (ratings) => {
     let entries = Object.entries(ratings || {});
     let totalVotes = entries.reduce((sum, [star, count]) => sum + count, 0);
     let weightedSum = entries.reduce((sum, [star, count]) => sum + Number(star) * count, 0);
     return totalVotes > 0 ? weightedSum / totalVotes : 0;
   };
-
   sortedFiltered.sort((a, b) => {
     let avgA = getAverage(a.ratingsBreakdown);
     let avgB = getAverage(b.ratingsBreakdown);
     return avgB - avgA;
   });
 }
-
 if (sortMode === "latest") {
   sortedFiltered.sort((a, b) => {
     let dateA = new Date(a.releaseDate);
@@ -133,17 +145,13 @@ if (sortMode === "latest") {
     return dateB - dateA;
   });
 }
-
 let category = name?.charAt(0).toUpperCase() + name?.slice(1);
 let isFiltered = tag !== null || priceFilterActive;
 console.log("checking of the gyat",priceFilterActive);
 
-
-
   return (
 <div> 
   <ProductsContext.Provider value={products}>
-   { /*isSignedIn?  <OtherButtonGridSignedIn/>: <OtherButtonGrid />*/}
    <OtherButtonGrid/>
   </ProductsContext.Provider>
   <Toolbar />
@@ -167,9 +175,6 @@ console.log("checking of the gyat",priceFilterActive);
     setTempPriceTo(1000);
     setHasInteracted(false);
     setSelectedCategory(null);
-
-
-
   }}
       sx={{
         '&:focus': {
@@ -379,33 +384,13 @@ console.log("checking of the gyat",priceFilterActive);
         </div>  
         <div className={`${styles.catalogCardsArea}`}>
           <div className={`${styles.catalogCards}`}>
-
-      { /* <ProductCards
-        products={sellerFilterActive ? sortedFiltered : shouldRenderAll ? products : sortedFiltered}
-        filterMode={sellerFilterActive ? "seller" : shouldRenderAll ? null : category} 
-        sellerName= {sellerFilterActive?  normalized : null  }
-       />*/}
-       { /*  <ProductCards
-          products={sellerFilterActive ? sortedFiltered : products}
-          filterMode={sellerFilterActive ? "seller" : category} 
-          sellerName={sellerFilterActive ? normalized : null}
-        />*/}
-
-       { /*<ProductCards
-          products={sellerFilterActive ? sortedFiltered : products}
-          filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? null : category}
-          sellerName={sellerFilterActive ? normalized : null}
-        /> */}
         <ProductCards
             products={sortedFiltered}
             filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? selectedCategory : category}
             sellerName={sellerFilterActive ? normalized : null}
-            categoryFilter={selectedCategory}
+            categoryFilter={selectedCategory} 
+            loading={loading}
           />
-
-
-
-
           </div>
         </div>
       </div>
@@ -423,4 +408,24 @@ console.log("checking of the gyat",priceFilterActive);
 
 
 
- 
+ {/*useEffect(() => {
+  console.log('Fetching products...');
+  fetch('/api/products')
+    .then(res => res.json())
+    .then(data => {
+      console.log("Fetched data:", data);
+      setProducts(Array.isArray(data) ? data : data.products);
+    });
+}, []);
+
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    router.push(
+      `/categoryPages/${name}?tag=${tag || ''}&price-to=${tempPriceTo}`,
+      undefined,
+      { scroll: false }
+    );
+  }, 300);
+
+  return () => clearTimeout(timeout);
+}, [tempPriceTo, hasInteracted]);*/}

@@ -16,6 +16,7 @@ import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useAuth } from '../context/AuthContext';
 import { safeFetch } from '@/utils/safeFetch';
+import {ProductsContext} from "../context/productContext";
 export  default function SignUpForm(){
   let  router = useRouter();
  const { signUp } = useAuth();

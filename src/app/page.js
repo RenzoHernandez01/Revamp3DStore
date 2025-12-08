@@ -20,6 +20,7 @@ export default function Home() {
   let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
   let [products, setProducts] = useState([]);
+  let [loading, setLoading] = useState(true);
   let homepageProducts = products.filter(p => p.staffPick);
   let getAverage = (ratings) => {
   let entries = Object.entries(ratings || {});
@@ -36,6 +37,7 @@ export default function Home() {
 
   let trendingProducts = getTopRatedProducts(products, 10);
 
+
 useEffect(() => {
   const runFetch = async () => {
     try {
@@ -43,12 +45,19 @@ useEffect(() => {
       if (!res.ok) throw new Error(`HTTP error ${res.status}`);
       const data = await res.json();
       setProducts(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000); 
+
     } catch (err) {
       console.error('Failed to fetch products:', err);
+      setLoading(false);
     }
-  };  
-  setTimeout(runFetch, 300);
+  };
+  setTimeout(runFetch, 1000);
 }, []);
+
+
   return (
 <div>
   <section className={styles.searchCategorySection}>       
@@ -62,40 +71,17 @@ useEffect(() => {
       <CategoryGrid/>
     </div>
   </section>
- { /* <CreatorGrid/>
-  <section className = {styles.staffPicksSection}>
-    
-    <div className = {styles.staffPicks}>
-    <Stack className = {styles.staffPicksTitle} sx={{margin:0}}>
-        <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
-        Trending products</Typography>
-            <Typography variant="subtitle1"sx={{color:"black",}} >
-        Trending products</Typography>
-    </Stack>
-      <div className = {styles.staffCardsGrid}>
-        <ProductCards products={homepageProducts} limitEnd={4}/>  
-      </div>
-      <div className = {styles.viewPicksGrid}>
-         <Button variant="contained" disableElevation 
-         sx={{ backgroundColor:"#7DA0CA", "&:hover": {backgroundColor: "#8dadd4ff"} ,}}
-         onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
-        >
-            View All Staff Picks
-         </Button>
-      </div>
-    </div>
-  </section>*/}
     <Stack direction={"column"} sx={{gap:4,justifyContent:"center", marginBottom:2,}}>
       <CreatorGrid/>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"flex-start", alignItems:"flex-start"}}>
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
           Staff Picks</Typography>
-          <Typography variant="caption text"sx={{color:"gray", fontSize:10}} >
+          <Typography variant="caption text"sx={{color:"gray", fontSize:13}} >
           Check out the most popular CG content on FlippedNormals! Level up your art with brushes, textures, and 3D models, and learn with Blender, Maya, Photoshop, ZBrush, and more.
           </Typography>
       </Stack>
       <Stack direction={"row"} sx ={{display:"flex", justifyContent:"center", alignItems:"center", gap:5}}>
-          <ProductCards products={homepageProducts} limitEnd={4}/>  
+          <ProductCards products={homepageProducts} limitEnd={4} loading={loading}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
         <Button variant="outlined" disableElevation 
@@ -108,36 +94,19 @@ useEffect(() => {
       </Stack>
     </Stack>
    <BannerPanels />
- { /*<section className = {styles.trendingSection}>
-    <div className = {styles.trendingPicks}>
-      <Typography variant="h5"sx={{color:"black",marginLeft:5,marginTop:4, fontWeight:"bold"}} >Trending products</Typography>
-      <div className = {styles.firstRowGrid}>
-      <ProductCards products={trendingProducts} limitEnd={4}/> 
-      </div>
-      <div className = {styles.secondRowGrid}>
-      <ProductCards products={trendingProducts} limitStart={4} limitEnd={8}/> 
-      </div>
-      <div className = {styles.viewAllTrendingGrid}>
-        <Button variant="contained" disableElevation  sx={{ backgroundColor:"#7DA0CA", "&:hover": {backgroundColor: "#8dadd4ff"} ,}}
-        onClick={() => router.push('/categoryPages/marketplace?tag=trending')}>
-            View All Trending
-         </Button>
-      </div>
-    </div>
-  </section>*/}
      <Stack direction={"column"} sx={{gap:4,justifyContent:"center", marginBottom:2, marginTop:3}}>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"flex-start", alignItems:"flex-start"}}>
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
           Trending products</Typography>
-          <Typography variant="caption text"sx={{color:"gray", fontSize:10}} >
+          <Typography variant="caption text"sx={{color:"gray", fontSize:13}} >
           Check out the most popular CG content on FlippedNormals! Level up your art with brushes, textures, and 3D models, and learn with Blender, Maya, Photoshop, ZBrush, and more.
           </Typography>
       </Stack>
       <Stack direction={"row"} sx ={{display:"flex", justifyContent:"center", alignItems:"center", gap:5}}>
-          <ProductCards products={trendingProducts} limitEnd={4}/>  
+          <ProductCards products={trendingProducts} limitEnd={4} loading={loading}/>  
       </Stack>
       <Stack direction={"row"} sx ={{display:"flex", justifyContent:"center", alignItems:"center", gap:5}}>
-          <ProductCards products={trendingProducts} limitStart={4} limitEnd={8}/>  
+          <ProductCards products={trendingProducts} limitStart={4} limitEnd={8} loading={loading}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
         <Button variant="outlined" disableElevation 

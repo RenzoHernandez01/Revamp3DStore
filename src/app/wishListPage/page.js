@@ -18,7 +18,7 @@ export default function wishListPage() {
   let [products, setProducts] = useState([]);
   let  router = useRouter();
   const {wishListItems, setWishListItems} = useWishList();
-  console.log(wishListItems,"asdfasdfsadfsadf");
+
   return (
 <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}> 
   <ProductsContext.Provider value={products}>

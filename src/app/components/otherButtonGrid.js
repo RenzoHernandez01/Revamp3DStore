@@ -33,7 +33,7 @@ export default function ResponsiveAppBar({products}) {
   let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   let handleCloseUserMenu = () => setAnchorElUser(null);
   const { cartItems,} = useCart();
-  console.log("asdfasdfa",isSignedIn);
+
   useEffect(() => {
     document.body.style.overflow = showCart ? 'hidden' : 'auto';
   }, [showCart]);
@@ -56,7 +56,7 @@ export default function ResponsiveAppBar({products}) {
           </div>
 
           <div className={styles.rightGroup}>
-            <IconButton
+           { isSignedIn ? <IconButton
                 disableRipple
                 sx={{
                   width: 32,
@@ -69,7 +69,7 @@ export default function ResponsiveAppBar({products}) {
                 onClick={() => router.push('/wishListPage')}
               >
                 <FavoriteBorderRoundedIcon sx={{color:"#313131ff", "&:hover":{color:"#1a79ecff"}}}/>
-              </IconButton>
+              </IconButton> : null}
 
             <IconButton
               disableRipple
@@ -92,6 +92,7 @@ export default function ResponsiveAppBar({products}) {
             )}
 
          { isSignedIn ? 
+          
          <Stack>
               <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 ,marginRight:5}}>
@@ -138,6 +139,7 @@ export default function ResponsiveAppBar({products}) {
                 ))}
               </Menu>
           </Stack>
+          
           :
            <Stack direction={"row"} sx={{gap:2}}>
                   <Button   disableElevation disableRipple

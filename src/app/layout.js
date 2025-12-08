@@ -1,12 +1,13 @@
-
-import { Geist, Geist_Mono } from "next/font/google";
-import { Poppins } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "../app/providers"; 
 import MSWProvider from "./MSWProvider";
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-poppins" });
+import "./mswInit";
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={openSans.variable}>
         <MSWProvider/>
         <Providers>
           {children}

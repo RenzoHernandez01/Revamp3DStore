@@ -20,7 +20,6 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import { Stack } from '@mui/material';
 import Badge from '@mui/material/Badge';
-
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 export default function ButtonGrid() {
@@ -51,28 +50,22 @@ export default function ButtonGrid() {
       <div className={`${styles.logoHome}`}>  <Button variant="text" onClick={() => router.push('/')}>
               HOME LOGO
             </Button></div>
-                 <IconButton
+                       { isSignedIn ? <IconButton
                 disableRipple
                 sx={{
                   width: 32,
                   height: 32,
+                  backgroundColor: "transparent",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
                 onClick={() => router.push('/wishListPage')}
               >
-                <FavoriteBorderRoundedIcon sx={{ color:trigger?"#313131ff":"white", "&:hover":{color:"#1a79ecff"}}} />
-              </IconButton>
+                <FavoriteBorderRoundedIcon  sx={{ color:trigger?"#313131ff":"white", backgroundColor:"transparent","&:hover":{color:"#1a79ecff"}}}/>
+              </IconButton> : null}
       
-{     /* <button className={styles.cartBtnHomeMain}    
-      onClick={() => {
-        handleOpenCart();
-      }}>
-        <Badge  badgeContent={cartItems.length} color="primary">
-        <ShoppingCartOutlinedIcon sx={{ fontSize: 30,color:trigger?"black":"white"}}/>
-        </Badge>
-      </button> */}
+
      
       <IconButton
               disableRipple

@@ -7,9 +7,11 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { useSellers } from '../context/authorContext';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
 export default function AuthorBannerPanels({seller}) {
+
   return (
     <Box
   sx={{
@@ -50,14 +52,14 @@ export default function AuthorBannerPanels({seller}) {
 
 
     <Stack sx={{gap:1, display:"flex", justifyContent:"center",alignItems:"center"}}>
-        <Avatar sx={{ bgcolor: "pink" }}> {seller.name?.charAt(0).toUpperCase()}
- </Avatar>
+        <Avatar sx={{ bgcolor: "#7DA0CA",width: 64, height: 64 }}  src={seller.profileImage}> 
+       </Avatar>
         <Stack sx={{justifyContent:"center", alignItems:"center", display:"flex", flexDirection:"row" }}>
-          <Typography fontSize={20}> {seller.rating} </Typography> <StarPurple500OutlinedIcon sx={{fontSize:"40", marginLeft:1}}/>
+          <Typography fontSize={20} sx={{color:"white"}}> {seller.rating} </Typography> <StarPurple500OutlinedIcon sx={{fontSize:"40", marginLeft:1,color:"white"}}/>
         </Stack>
-        <Typography variant='h4'>{seller.name} </Typography>
+        <Typography variant='h4' sx={{color:"white"}}>{seller.name} </Typography>
         <Button variant="outlined">Contact</Button>
-        <Typography >Something something about the authro made up lmao big bong bing bong nachu pampu  </Typography>
+        <Typography sx={{color:"white"}}>Something something about the authro made up lmao big bong bing bong nachu pampu  </Typography>
         <Stack sx={{display:"flex", flexDirection:"row"}}>
             <IconButton aria-label="youtube" >
                     <YouTubeIcon sx={{ color: "white",fontSize:30 }} />

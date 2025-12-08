@@ -95,7 +95,7 @@ export  default function CheckOut(){
         if(!ccForm.ccDate.trim()) newErrors.ccDate = 'this field is required';
         if(!ccForm.cvc.trim()) newErrors.cvc = 'this field is required';
         if(!ccForm.ccName.trim()) newErrors.ccName = 'this field is required';
-       if (!ccForm.country || !ccForm.country.label) {
+        if (!ccForm.country || !ccForm.country.label) {
             newErrors.country = 'this field is required';
             }
         if(!ccForm.address.trim()) newErrors.address = 'this field is required';
@@ -164,7 +164,7 @@ const handleSubmit = async () => {
         return;
       }
 
-      console.log('purchase response', purchaseData);
+
 
       latestUser = purchaseData.user;
       localStorage.setItem('user', JSON.stringify(latestUser));
