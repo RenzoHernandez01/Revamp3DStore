@@ -29,7 +29,7 @@ export default function Home() {
     return totalVotes > 0 ? weightedSum / totalVotes : 0;
   };
 
- let getTopRatedProducts = (products, limit = 10) => {
+ let getTopRatedProducts = (products, limit = 15) => {
   return [...products]
     .sort((a, b) => getAverage(b.ratingsBreakdown) - getAverage(a.ratingsBreakdown))
     .slice(0, limit);

@@ -18,11 +18,6 @@ renderer.toneMappingExposure = 0.4;
 productWindow.appendChild(renderer.domElement);
 renderer.setSize(productWindow.clientWidth, productWindow.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-let materialVertexColor = new THREE.MeshStandardMaterial({
-  vertexColors: true,
-  roughness: 0.5,
-  metalness: 0 
-  });
 let directionalLight = new THREE.DirectionalLight(0xffffff, 5);
 directionalLight.position.set(5, 10, 7.5); 
 renderer.shadowMap.enabled = true;
@@ -40,7 +35,11 @@ let loader = new GLTFLoader();
 let rgbeLoader = new RGBELoader();
 let pmremGenerator = new THREE.PMREMGenerator(renderer);
 pmremGenerator.compileEquirectangularShader();
-
+let neutralGrayMaterial = new THREE.MeshStandardMaterial({
+  color: "#d8d8d8",   
+  roughness: 0.5,
+  metalness: 0.0
+});
 
 let overlay = document.createElement("div");
 overlay.id = "overlay";
@@ -79,7 +78,7 @@ window.load3DModel = function (modelUrl) {
       objectToRender = gltf.scene;
       objectToRender.traverse((child) => {
         if (child.isMesh) {
-          child.material = materialVertexColor.clone();
+          child.material = neutralGrayMaterial.clone();
           child.material.envMapIntensity = 0.1;
           child.castShadow = true;
           child.receiveShadow = true;
