@@ -25,6 +25,7 @@ import { useState } from 'react';
 import { useRouter, } from 'next/navigation';
 import Box from '@mui/material/Box';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+import ProductBannerPanel from "@/app/components/productBannerPanel";
 
 export  default function productPage({params}){
     let { id } = use(params);
@@ -66,8 +67,8 @@ export  default function productPage({params}){
         </ProductsContext.Provider>
         <CategoryGrid/>
         <div className={`${styles.productWrapper}`}>
-            <div className={`${styles.productBannerDiv}`}>  
-            </div>
+            <ProductBannerPanel product={product}/>
+        
             <div className={`${styles.productArea}`}>
                 <div className={`${styles.productNamePlace}`}>
                     <Stack direction={"row"} sx={{height:50, display:"flex", alignItems:"center", width: 710}} >

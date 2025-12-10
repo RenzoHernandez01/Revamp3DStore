@@ -6,17 +6,19 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { useSellers } from '../context/authorContext';
 import { useRouter, useSearchParams} from 'next/navigation';
-
+import { useNotFound } from '../context/notFoundContext';
 export default function AuthorCards({ limitEnd}) {
   let router = useRouter();
   let sellers = useSellers();
   let sliced = sellers.slice(0, limitEnd) ;
+  const { setItemNotFound } = useNotFound();
   return (
     sliced.map((seller, index) => {
       return(
    <Card  key={index} sx={{width:250, height:150, position:"relative", '&:hover': 
    { boxShadow: 4,  transform: 'scale(1.01)', transition: 'all 0.2s ease-in-out',},}}  
-   onClick={() => router.push(`/categoryPages/${seller.id}`)} >
+   onClick={() =>{ setItemNotFound(null); router.push(`/categoryPages/${seller.id}`);}} >
+   
     <CardMedia
     sx={{ width: "100%", height: "100%", borderRadius:2 ,  filter: "blur(4px)"}} 
     image={seller.profileImage}/>  

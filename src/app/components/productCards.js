@@ -20,7 +20,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useAuth } from "@/app/context/AuthContext";
 export default function ProductCards({ products = [], filterMode = null, sellerName = null, categoryFilter = null, limitStart, limitEnd, loading }) {
   const router = useRouter();
-   let { isSignedIn } = useAuth();
+  let { isSignedIn } = useAuth();
   const {addToWishList, removeFromWishList,wishListItems} = useWishList();
 
     let filtered;

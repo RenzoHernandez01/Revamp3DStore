@@ -9,11 +9,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useProducts } from "../context/productContext"; 
 import styles from "./searchGrid.module.css"; 
 import { useRouter } from "next/navigation"; 
-
+import { useNotFound } from '../context/notFoundContext';
 export default function SearchBarComponent() {
   const products = useProducts();
   const router = useRouter();
-
+ const { setItemNotFound } = useNotFound();
   const handleSearch = (value) => {
     if (!value) return;
     const normalizedValue = value.toLowerCase().replace(/\s+/g, "");
@@ -22,10 +22,10 @@ export default function SearchBarComponent() {
     );
 
     if (product) {
- 
+      setItemNotFound(null);
       router.push(`/productPage/${product.id}`);
     } else {
-  
+      setItemNotFound(value);
       router.push(
         `/categoryPages/marketplace?notFound=${encodeURIComponent(value)}`
       );
@@ -49,7 +49,6 @@ export default function SearchBarComponent() {
           renderOption={(props, option, { inputValue }) => {
             const matches = match(option, inputValue, { insideWords: true });
             const parts = parse(option, matches);
-
             return (
               <li {...props}>
                 {parts.map((part, index) => (
@@ -66,12 +65,20 @@ export default function SearchBarComponent() {
               </li>
             );
           }}
+           onInputChange={(event, newInputValue) => {
+
+              if (newInputValue) {
+                setItemNotFound(null);
+              }
+            }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+             
               handleSearch(e.target.value);
             }
           }}
           onChange={(event, value) => {
+           
             if (value) handleSearch(value);
           }}
           renderInput={(params) => (

@@ -83,10 +83,10 @@ export  default function SignUpForm(){
         <div className={`${styles.signPageBlock} ${styles.signInBlock}`}>
             <div className={`${styles.signInImages}`}> 
               <Stack  sx={{display:"flex", zIndex:2, direction:"column", width:"100%", height:"100%", padding:2, marginTop:5, gap:2}}>
-                <Typography variant='h3' sx={{fontWeight:"bold",}}>LOGO</Typography>
-                <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25 }}>Create a free account.</Typography>
+                <Typography variant='h3' sx={{fontWeight:"bold",color:"white"}}>LOGO</Typography>
+                <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25,color:"white" }}>Create a free account.</Typography>
                 <Box sx={{width:150, height:5, backgroundColor:"#7DA0CA", borderRadius:5}}> </Box> 
-                <Typography sx={{lineHeight:1.25}}>Join FlippedNormals and explore thousands of courses and resources created by the world’s best artists.</Typography>
+                <Typography sx={{lineHeight:1.25,color:"white "}}>Join FlippedNormals and explore thousands of courses and resources created by the world’s best artists.</Typography>
               </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>

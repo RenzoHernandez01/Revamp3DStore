@@ -64,7 +64,7 @@
     "images": ["https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765243862/cargo_lbhdu7.jpg", "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765243863/sunrise_xc2qmt.jpg", "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765243862/faceRender_xmg7rj.jpg", "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765243862/backRender_m69czh.jpg"],
     "dimensions": "H: 60cm × W: 70cm × D: 50cm",
     "rating": 5.0,
-    "ratingsBreakdown": { "5": 55, "4": 0, "3": 0, "2": 0, "1": 0 },
+    "ratingsBreakdown": { "5": 55, "4": 20, "3": 3, "2": 1, "1":2},
     "onSale": true,
     "releaseDate":"2022-11-09",
     "staffPick":true,

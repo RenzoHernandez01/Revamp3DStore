@@ -1,5 +1,4 @@
 import styles from './buttonMain.module.css'; 
-import Link from 'next/link';
 import Button from '@mui/material/Button';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useEffect, useState } from 'react';
@@ -10,7 +9,6 @@ import style from "../components/cartOverlay.module.css";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { withTheme } from '@emotion/react';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -21,7 +19,7 @@ import Avatar from '@mui/material/Avatar';
 import { Stack } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-
+import { useWishList } from "../context/wishListContext";
 export default function ButtonGrid() {
     let  router = useRouter();
     let [showCart, setShowCart] = React.useState(false);
@@ -32,6 +30,7 @@ export default function ButtonGrid() {
     let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
     let handleCloseUserMenu = () => setAnchorElUser(null);
     const { cartItems,} = useCart();
+    const {wishListItems} = useWishList();
     
     console.log("current state", isSignedIn);
   useEffect(() => {
@@ -62,7 +61,9 @@ export default function ButtonGrid() {
                 }}
                 onClick={() => router.push('/wishListPage')}
               >
+                <Badge  badgeContent={wishListItems.length} color="primary">
                 <FavoriteBorderRoundedIcon  sx={{ color:trigger?"#313131ff":"white", backgroundColor:"transparent","&:hover":{color:"#1a79ecff"}}}/>
+                </Badge>
               </IconButton> : null}
       
 
@@ -100,11 +101,15 @@ export default function ButtonGrid() {
                 anchorEl={anchorElUser}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
+                disableScrollLock
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                sx={{ mt: '45px' }}
+                sx={{ mt: '45px',position:"absolute" }}
                 PaperProps={{
                   sx: {
+                    maxWidth: 'unset',
+                    overflowX: 'hidden',
+                    marginRight: 0,
                     zIndex: 9999,
                   },
                 }}

@@ -99,10 +99,10 @@ if (!res.ok) {
         <div className={`${styles.signPageBlock} ${styles.signInBlock}`} id="signInBlock">
             <div className={`${styles.signInImages}`}>    
               <Stack  sx={{display:"flex", zIndex:2, direction:"column", width:"100%", height:"100%", padding:2, marginTop:5, gap:2}}>
-                <Typography variant='h3' sx={{fontWeight:"bold",}}>LOGO</Typography>
-                <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25 }}>Welcome back to webStorePage.</Typography>
+                <Typography variant='h3' sx={{fontWeight:"bold",color:"white"}}>LOGO</Typography>
+                <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25,color:"white"}}>Welcome back to webStorePage.</Typography>
                 <Box sx={{width:150, height:5, backgroundColor:"#7DA0CA", borderRadius:5}}> </Box> 
-                <Typography sx={{lineHeight:1.25}}>Sign in to continue to your account.</Typography>
+                <Typography sx={{lineHeight:1.25, color:"white"}}>Sign in to continue to your account.</Typography>
               </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>
@@ -191,7 +191,7 @@ if (!res.ok) {
                           }}
                             onClick={() => router.push('/authPage/signup')}
                             >
-                                Sign In
+                                Sign Up
                         </Button>
                 </Typography>
                 </Stack>

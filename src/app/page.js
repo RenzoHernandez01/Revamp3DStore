@@ -8,7 +8,7 @@ import ProductCards from "./components/productCards.js";
 import BannerPanels from "./components/bannerPanels.js";
 import FooterPanel from "./components/footerPanel";
 import Button from '@mui/material/Button';
-import ButtonGridSignedIn from "./components/buttonGridSignedIn";
+
 import { useRouter, } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from "./context/AuthContext";
@@ -22,6 +22,7 @@ export default function Home() {
   let [products, setProducts] = useState([]);
   let [loading, setLoading] = useState(true);
   let homepageProducts = products.filter(p => p.staffPick);
+  let specialProduct = products.find (p => p.id === "5");
   let getAverage = (ratings) => {
   let entries = Object.entries(ratings || {});
   let totalVotes = entries.reduce((sum, [star, count]) => sum + count, 0);
@@ -67,11 +68,20 @@ useEffect(() => {
       <ProductsContext.Provider value={products}>
         <ButtonGrid/>
       </ProductsContext.Provider>
+   
       <SearchGrid products={products}/>
       <CategoryGrid/>
     </div>
   </section>
     <Stack direction={"column"} sx={{gap:4,justifyContent:"center", marginBottom:2,}}>
+       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, marginTop:5, marginBottom:0,justifyContent:"flex-start", alignItems:"flex-start"}}>
+          <Typography variant="h5"sx={{color:"black", fontWeight:"bold", margin:0}} >
+         Featured Artists</Typography>
+         <Typography variant="caption text"sx={{color:"gray", fontSize:13}} >
+          View our top content creators store page
+          </Typography>
+       </Stack>
+      
       <CreatorGrid/>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"flex-start", alignItems:"flex-start"}}>
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
@@ -93,7 +103,10 @@ useEffect(() => {
           </Button>
       </Stack>
     </Stack>
-   <BannerPanels />
+  
+      <BannerPanels product={specialProduct} />
+
+
      <Stack direction={"column"} sx={{gap:4,justifyContent:"center", marginBottom:2, marginTop:3}}>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"flex-start", alignItems:"flex-start"}}>
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >

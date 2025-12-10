@@ -17,6 +17,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/cartContext';
+import { ProductsContext } from '../context/productContext';
+
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -36,6 +38,7 @@ export  default function CheckOut(){
     let subtotalPrice = 0;
     let totalDiscount = getTotalDiscount(cartItems);
     let [saveInfo, setSaveInfo] = useState(false);
+    let [products, setProducts] = useState([]);
     let [errors, setErrors] = React.useState({});
     let [ccForm, setCcForm] = React.useState({
         email: '',
@@ -191,7 +194,9 @@ const handleSubmit = async () => {
 
   return (
 <div>
-    <OtherButtonGrid/>
+    <ProductsContext.Provider value={products}>
+        <OtherButtonGrid/>
+   </ProductsContext.Provider>
     <CategoryGrid/>
     <section>
         <div className = {`${styles.checkOutContainer}`}>
@@ -240,7 +245,7 @@ const handleSubmit = async () => {
                             spacing={2}
                             justifyContent="flex-start"
                             alignItems="center"
-                            sx={{ width: '100%',backgroundColor:"#f1f1f1",marginTop:.1}}>
+                            sx={{ width: '100%',marginTop:.1}}>
                             <Typography variant="h6" color = "black">
                                 Total Price
                             </Typography>

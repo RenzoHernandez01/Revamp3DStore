@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
+import { ProductsContext } from '../context/productContext';
 export  default function CustomerProfile(){
     const searchParams = useSearchParams();
     const [libraryItems, setLibraryItems] = useState([]);
@@ -40,10 +41,11 @@ export  default function CustomerProfile(){
   
   return (
 <div>
+  <ProductsContext.Provider value={products}>
     <OtherButtonGrid/>
+  </ProductsContext.Provider>
     <Toolbar/>
     <CategoryGrid/>
-
     <div className={`${styles.profileContainer}`}>
         <div className={`${styles.myAccountWrapper}`}>
             <Typography variant="h6" color="#777" sx={{marginBottom:3}}>My Account</Typography>

@@ -2,17 +2,28 @@
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useRouter } from 'next/navigation';
+import {useSearchParams, useRouter } from 'next/navigation';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import styles from './searchGrid.module.css';
 import SearchIcon from '@mui/icons-material/Search';
+import Typography from '@mui/material/Typography';
+import { useNotFound } from '../context/notFoundContext';
 export default function SearchGrid({ products }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { setItemNotFound } = useNotFound();
 
   return (
     <div className={styles.searchGrid}>
-      <Stack spacing={2} sx={{ width: 747 }}>
+      <Stack sx={{display:"flex", justifyContent:"flex-start", alignItems:"center", flexDirection:"column", width:"100%", height:"100%", gap:2}}>
+      <Typography variant="h4"sx={{color:"#e8e8e8ff", fontWeight:700, marginTop:10, fontSize: 46}} >
+               CG Marketplace by the World's Best 3D Artists
+      </Typography>
+       <Typography variant="h6"sx={{color:"#e8e8e8ff",fontWeight:500, margin:0, fontSize: 20}} >
+               Curated 3D models. Ready to use in gaming, animation, and 3D Printing.
+      </Typography>
+      <Stack spacing={2} sx={{ width: 1000, marginTop:2 }}>
         <Autocomplete
           id="free-solo-demo"
           freeSolo
@@ -43,6 +54,13 @@ export default function SearchGrid({ products }) {
               </li>
             );
           }}
+           onInputChange={(event, newInputValue) => {
+
+              if (newInputValue) {
+                setItemNotFound(null);
+              }
+            }}
+
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               const value = e.target.value.toLowerCase().trim();
@@ -52,9 +70,14 @@ export default function SearchGrid({ products }) {
               );
 
               if (product) {
+                setItemNotFound(null);
                 router.push(`/productPage/${product.id}`);
               } else {
-                router.push(`/categoryPages/marketplace?notFound=${encodeURIComponent(value)}`);
+                setItemNotFound(value);
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('notFound', value);
+                router.push(`/categoryPages/marketplace?${params.toString()}`);
+
               }
             }
           }}
@@ -65,7 +88,13 @@ export default function SearchGrid({ products }) {
               p.name.toLowerCase().replace(/\s+/g, '').includes(normalizedValue)
             );
             if (product) {
+               setItemNotFound(null);
               router.push(`/productPage/${product.id}`);
+            } else {
+              const params = new URLSearchParams(searchParams.toString());
+              params.set('notFound', value);
+              router.push(`/categoryPages/marketplace?${params.toString()}`);
+              setItemNotFound(value);
             }
           }}
           renderInput={(params) => (
@@ -94,6 +123,7 @@ export default function SearchGrid({ products }) {
             />
           )}
         />
+      </Stack>  
       </Stack>
     </div>
   );

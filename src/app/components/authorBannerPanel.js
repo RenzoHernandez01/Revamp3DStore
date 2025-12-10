@@ -10,6 +10,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { useSellers } from '../context/authorContext';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
+
 export default function AuthorBannerPanels({seller}) {
 
   return (

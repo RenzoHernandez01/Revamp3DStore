@@ -27,10 +27,12 @@ import {ProductsContext} from "../../context/productContext";
 import AuthorBannerPanels from "@/app/components/authorBannerPanel";
 import { useSellers } from "@/app/context/authorContext";
 import Toolbar from '@mui/material/Toolbar';
+import { useNotFound } from "../../context/notFoundContext";
+
 
 export default function CategoryPage() {
 let router = useRouter();
-let { isSignedIn, user, signOut } = useAuth();
+const { itemNotFound,setItemNotFound } = useNotFound();
 let searchParams = useSearchParams();
 let [loading, setLoading] = useState(true);
 let { name } = useParams(); 
@@ -50,9 +52,19 @@ let [products, setProducts] = useState([]);
 let sellerFilterActive = sellers.some(s => s.id.toLowerCase().trim() === name.toLowerCase().trim());
 const currentSeller = sellers.find(  s => s.id?.toLowerCase().trim() === name?.toLowerCase().trim());
 let marketPlace = normalized === "marketplace";
+const filteredProducts = products.filter(p =>
+  itemNotFound ? p.name.toLowerCase().includes(itemNotFound.toLowerCase()) : true
+);
+const isEmptySearch = itemNotFound && filteredProducts.length === 0;
+let specialProduct = products.find (p => p.id === "5");
 let handleSliderChange = (e, newValue) => {
   setTempPriceTo(newValue);
   setHasInteracted(true);
+  setItemNotFound(null);
+
+
+  router.push(`/categoryPages/marketplace?${params.toString()}`);
+
 };
 
 let handleTextChange = (e) => {
@@ -62,8 +74,6 @@ let handleTextChange = (e) => {
     setHasInteracted(true);
   }
 };
-
-
 
 useEffect(() => {
   console.log('Fetching products...');
@@ -98,9 +108,6 @@ useEffect(() => {
 
     return () => clearTimeout(timeout);
   }, [tempPriceTo, hasInteracted]);
-
-
-
 
 let filtered = products.filter(product => {
 let matchesCategory =
@@ -147,9 +154,9 @@ if (sortMode === "latest") {
 }
 let category = name?.charAt(0).toUpperCase() + name?.slice(1);
 let isFiltered = tag !== null || priceFilterActive;
-console.log("checking of the gyat",priceFilterActive);
 
-  return (
+
+ return (
 <div> 
   <ProductsContext.Provider value={products}>
    <OtherButtonGrid/>
@@ -160,7 +167,7 @@ console.log("checking of the gyat",priceFilterActive);
    {sellerFilterActive ? (
     <AuthorBannerPanels seller={currentSeller} />
   ) : (
-    <BannerPanels />
+    <BannerPanels product={specialProduct}/>
   )}
 
    
@@ -383,14 +390,54 @@ console.log("checking of the gyat",priceFilterActive);
           </Accordion>
         </div>  
         <div className={`${styles.catalogCardsArea}`}>
-          <div className={`${styles.catalogCards}`}>
-        <ProductCards
+        <div className={`${styles.catalogCards}`}>
+      {isEmptySearch ? (
+  <Stack
+    sx={{
+      justifyContent: "center",
+      alignItems: "center",
+      display: "flex",
+      gap: 2,
+      height: 400,
+    }}
+  >
+      <Typography variant="h5" sx={{ color:"black" }}>
+      No results found for "{itemNotFound}"
+    </Typography>
+
+    <Typography sx={{ color: "black" }}>
+      Try searching again or explore our top picks.
+    </Typography>
+    <Button
+      variant="outlined"
+      disableElevation
+      sx={{
+        borderColor: "black",
+        borderWidth: 1.5,
+        color: "black",
+        width: 180,
+        height: 40,
+        whiteSpace: "nowrap",
+        textTransform: "none",
+        "&:hover": { backgroundColor: "#313131ff", color: "white" },
+      }}
+      onClick={() =>{
+        setItemNotFound(null);
+        router.push("/categoryPages/marketplace?tag=staffPick")
+      }}
+    >
+      View All Staff Picks
+    </Button>
+  </Stack>
+) : (
+   <ProductCards
             products={sortedFiltered}
             filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? selectedCategory : category}
             sellerName={sellerFilterActive ? normalized : null}
             categoryFilter={selectedCategory} 
             loading={loading}
           />
+)}
           </div>
         </div>
       </div>
@@ -406,7 +453,27 @@ console.log("checking of the gyat",priceFilterActive);
 
 
 
-
+ {/*  <Stack sx={{justifyContent:"center", alignItems:"center", display:"flex", gap:2,height:400}}>
+              <Typography variant="h5"  sx={{color:"black"}}>Your Wishlist is empty
+              </Typography>
+              <Typography  sx={{color:"black"}}>
+              When you save a product, it will appear here.
+              </Typography>
+                <Button variant="outlined" disableElevation 
+              sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
+                "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
+              onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
+              >
+                  View All Staff Picks
+              </Button>
+        </Stack>
+       <ProductCards
+            products={sortedFiltered}
+            filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? selectedCategory : category}
+            sellerName={sellerFilterActive ? normalized : null}
+            categoryFilter={selectedCategory} 
+            loading={loading}
+          />*/}
 
  {/*useEffect(() => {
   console.log('Fetching products...');

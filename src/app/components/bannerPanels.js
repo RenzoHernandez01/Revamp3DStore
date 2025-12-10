@@ -2,9 +2,14 @@
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useRouter, } from 'next/navigation';
+import { useCart } from '../context/cartContext';
+
+export default function BannerPanels({product}) {
+  const router = useRouter();
+  const { addToCart} = useCart();
 
 
-export default function BannerPanels() {
   return (
     <Stack sx={{display:"flex", width:"100%", height:283, justifyContent:"flex-start", alignItems:"flex-start", flexDirection:"column",
       position:"relative",
@@ -18,9 +23,8 @@ export default function BannerPanels() {
       backgroundImage: "url('https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761809067/pistolRenders_tyvetw.jpg')",
       backgroundRepeat:"no-repeat",
       backgroundSize:"60%",
-      backgroundPositionX: 650,
+      backgroundPositionX: 750,
       backgroundPositionY:-105,
-      filter: "blur(4px)",
       zIndex: 0,
       },
       "& > *": {
@@ -59,14 +63,18 @@ export default function BannerPanels() {
         </Typography>
         <Stack direction={"row"} sx={{gap:2, marginTop:2,zIndex:0}}>
           <Button variant="contained" disableElevation  disableRipple
+          onClick={() => { 
+            addToCart(product) 
+          }}
           sx={{ backgroundColor:"#8ff076ff", width: 150 ,height: 40, whiteSpace:"nowrap",  textTransform: "none", color:"black", fontSize:20, zIndex:0,
             "&:hover": {backgroundColor: "#6bb058ff"}}}
           >
               Add to cart
           </Button>
           <Button disableRipple  variant="outlined"
+          onClick={() => router.push(`/productPage/5`)}
               sx={{width:150,height:40 , borderColor:"white", color:"white", whiteSpace:"nowrap",
-              "&:hover": {backgroundColor: "white", color:"black",}}}>More Product
+              "&:hover": {backgroundColor: "white", color:"black",}}}>View Product
           </Button>
         </Stack>
       </Stack>

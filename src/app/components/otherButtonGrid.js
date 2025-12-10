@@ -14,17 +14,18 @@ import SearchBarComponent from './searchBarComponent';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
 import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useCart } from '../context/cartContext';
 import { useAuth } from '../context/AuthContext';
+import { usePathname } from "next/navigation";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-
+import { useWishList } from "../context/wishListContext";
 export default function ResponsiveAppBar({products}) {
   let router = useRouter();
+  const pathname = usePathname();
   let [showCart, setShowCart] = React.useState(false);
   let { isSignedIn, signOut, user } = useAuth();
   let [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -33,6 +34,7 @@ export default function ResponsiveAppBar({products}) {
   let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   let handleCloseUserMenu = () => setAnchorElUser(null);
   const { cartItems,} = useCart();
+  const {wishListItems} = useWishList();
 
   useEffect(() => {
     document.body.style.overflow = showCart ? 'hidden' : 'auto';
@@ -52,11 +54,11 @@ export default function ResponsiveAppBar({products}) {
             <Button variant="text" onClick={() => router.push('/')}>
               HOME LOGO
             </Button>
-            <SearchBarComponent/>
+            {pathname !== "/checkOut" && <SearchBarComponent />}
           </div>
-
           <div className={styles.rightGroup}>
-           { isSignedIn ? <IconButton
+           { isSignedIn ? 
+           <IconButton
                 disableRipple
                 sx={{
                   width: 32,
@@ -68,7 +70,9 @@ export default function ResponsiveAppBar({products}) {
                 }}
                 onClick={() => router.push('/wishListPage')}
               >
+                <Badge  badgeContent={wishListItems.length} color="primary">
                 <FavoriteBorderRoundedIcon sx={{color:"#313131ff", "&:hover":{color:"#1a79ecff"}}}/>
+                </Badge>
               </IconButton> : null}
 
             <IconButton
@@ -107,11 +111,15 @@ export default function ResponsiveAppBar({products}) {
                 anchorEl={anchorElUser}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
+                disableScrollLock
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                sx={{ mt: '45px' }}
+                sx={{ mt: '45px' ,}}
                 PaperProps={{
                   sx: {
+                    maxWidth: 'unset',
+                    overflowX: 'hidden',
+                    marginRight: 0,
                     zIndex: 9999,
                   },
                 }}

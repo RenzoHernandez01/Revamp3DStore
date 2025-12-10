@@ -3,9 +3,10 @@ import styles from './categoryGrid.module.css';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Link from 'next/link';
-
+import { useNotFound } from '../context/notFoundContext';
 
 export default function categoryGrid() {
+  const { setItemNotFound } = useNotFound();
   return (
    <div>
         <div className = {`${styles.categoryGrid}`}>
@@ -15,8 +16,9 @@ export default function categoryGrid() {
                 flex:1,textTransform:"none", backgroundColor:"#7DA0CA",  boxShadow: "none",
                  "&:hover": {backgroundColor: "#8dadd4ff"}
               },
-             
-            }}>
+            }}
+            onClick={() => setItemNotFound(null)}
+            >
                 <Button sx={{borderRadius:0}} component={Link} href="/categoryPages/character">Character</Button>
                 <Button  component={Link} href="/categoryPages/terrain">Terrain</Button>
                 <Button  component={Link} href="/categoryPages/vehicle">Vehicles</Button>
