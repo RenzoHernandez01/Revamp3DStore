@@ -59,18 +59,19 @@ export default function AuthorBannerPanels({seller}) {
           <Typography fontSize={20} sx={{color:"white"}}> {seller.rating} </Typography> <StarPurple500OutlinedIcon sx={{fontSize:"40", marginLeft:1,color:"white"}}/>
         </Stack>
         <Typography variant='h4' sx={{color:"white"}}>{seller.name} </Typography>
-        <Button variant="outlined">Contact</Button>
-        <Typography sx={{color:"white"}}>Something something about the authro made up lmao big bong bing bong nachu pampu  </Typography>
+        <Button disableRipple variant="outlined"
+        href='https://www.linkedin.com/in/renzo-hernandez-b3568a20a/' target="_blank"
+        sx={{width:160,height:30, borderColor:"white",  color:"white","&:hover": {backgroundColor: "white", color:"#313131ff"}}}>
+          Contact</Button>
+        <Typography sx={{color:"white", fontSize:15}}>  {seller.sellerDescription} </Typography>
         <Stack sx={{display:"flex", flexDirection:"row"}}>
-            <IconButton aria-label="youtube" >
+            <IconButton aria-label="youtube"  href='https://www.youtube.com/' target="_blank">
                     <YouTubeIcon sx={{ color: "white",fontSize:30 }} />
             </IconButton>
-            <IconButton aria-label="youtube" >
+            <IconButton aria-label="instagram" href='https://www.instagram.com/' target="_blank" >
                     <InstagramIcon sx={{ color: "white",fontSize:30 }} />
             </IconButton>
-             <IconButton aria-label="youtube" >
-                    <LinkedInIcon sx={{ color: "white",fontSize:30 }} />
-            </IconButton>
+       
         </Stack> 
     </Stack>
 

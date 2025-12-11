@@ -1,44 +1,51 @@
 [
   {
     "id": "sellerOne",
-    "name": "Mads",
+    "name": "3dWizard",
     "rating": "4.8",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179738/seller_picA_zik9xl.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg",
+    "sellerDescription":"3d Wizards are a collective of worldclass 3d artist from the games and vfx industries sharing their creative talents to you"
   },
   {
     "id": "sellerTwo",
     "name": "NovaForge",
     "rating": "4.5",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179738/seller_picB_cvlog6.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207948/2_ngc34t.jpg",
+    "sellerDescription":"NovaForge aims to provide stunning 3d models for both games and 3d printing"
   },
   {
     "id": "sellerThree",
     "name": "PixelSmith",
     "rating": "4.5",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179740/seller_picC_avoi4h.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207899/9_nxhtgh.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207899/9_nxhtgh.jpg",
+    "sellerDescription":"PixelSmith are offering a wide variety of 3d models for all your possible needs"
   },
   {
     "id": "sellerFour",
     "name": "TerrainTech",
     "rating": "4.6",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179738/seller_picD_d8j0r2.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207915/3_yairq8.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207915/3_yairq8.jpg",
+    "sellerDescription":"TerrainTech provides high quality 3D products that make digital experiences feel real"
   },
   {
     "id": "sellerFive",
     "name": "AssetAlchemy",
     "rating": "4.7",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179738/seller_picE_ktmkpw.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207891/renzo-hernandez-jpeg1_xdvf6z.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1764207891/renzo-hernandez-jpeg1_xdvf6z.jpg",
+    "sellerDescription":"AssetAlchemy transforms ordinary digital assets into extraordinary 3D products that captivate and inspire."
   },
   {
     "id": "sellerSix",
     "name": "RenderRiot",
     "rating": "4.4",
     "profileImage": "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765179927/seller_picF_axnzbo.png",
-    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761809339/terminalProp_goc6ju.jpg"
+    "authorBanner" : "https://res.cloudinary.com/dxqj5g1ii/image/upload/v1761809339/terminalProp_goc6ju.jpg",
+    "sellerDescription":"RenderRiot delivers bold, high‑impact 3D products that bring energy and chaos to your creative vision."
+    
   }
 ]

@@ -53,7 +53,7 @@ export default function BannerPanels({product}) {
           Exclusive
         </Typography>
         <Typography variant="caption text"sx={{color:"white", fontSize:11,marginTop:1}} >
-            3D asset's only available on websiteName.
+            3D asset's only available on Revamp.
         </Typography>
         <Typography variant="h3"sx={{color:"white",marginTop:1,}} >
             Agency Pistol 

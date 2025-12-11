@@ -32,7 +32,7 @@ export default function ButtonGrid() {
     const { cartItems,} = useCart();
     const {wishListItems} = useWishList();
     
-    console.log("current state", isSignedIn);
+  
   useEffect(() => {
     document.body.style.overflow = showCart ? 'hidden' : 'auto';
   }, [showCart]);
@@ -46,9 +46,22 @@ export default function ButtonGrid() {
      <AppBar position='fixed' sx={{backgroundColor: trigger?"white":"transparent",zIndex:99999}}  elevation={trigger ? 6 : 0}>
      <Toolbar sx={{ justifyContent: "space-between", px: 2  }}>
     <div className={`${styles.buttonGrid}`}>
-      <div className={`${styles.logoHome}`}>  <Button variant="text" onClick={() => router.push('/')}>
-              HOME LOGO
-            </Button></div>
+      <div className={`${styles.logoHome}`}>  
+           <Button
+                disableRipple disableElevation
+                variant="text"
+                onClick={() => router.push('/')}
+                sx={{
+                  width: 120,
+                  height: 50,
+                  backgroundImage: trigger?  'url(https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765432800/revampBlue_re31ch.png)': 'url(https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765433828/revampWhite_xaycqm.png)',
+                 backgroundSize: 'contain',                   
+                  backgroundPosition: 'center',
+                  backgroundRepeat:"no-repeat" ,
+                  "&:hover":{backgroundColor:"transparent"}               
+                }}
+              >
+              </Button></div>
                        { isSignedIn ? <IconButton
                 disableRipple
                 sx={{

@@ -87,7 +87,7 @@ useEffect(() => {
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
           Staff Picks</Typography>
           <Typography variant="caption text"sx={{color:"gray", fontSize:13}} >
-          Check out the most popular CG content on FlippedNormals! Level up your art with brushes, textures, and 3D models, and learn with Blender, Maya, Photoshop, ZBrush, and more.
+          3D models from our curated marketplace, including assets created for VFX, gaming, and 3D printing. 
           </Typography>
       </Stack>
       <Stack direction={"row"} sx ={{display:"flex", justifyContent:"center", alignItems:"center", gap:5}}>
@@ -112,7 +112,7 @@ useEffect(() => {
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
           Trending products</Typography>
           <Typography variant="caption text"sx={{color:"gray", fontSize:13}} >
-          Check out the most popular CG content on FlippedNormals! Level up your art with brushes, textures, and 3D models, and learn with Blender, Maya, Photoshop, ZBrush, and more.
+          Check out the most popular CG content on Revamp! 
           </Typography>
       </Stack>
       <Stack direction={"row"} sx ={{display:"flex", justifyContent:"center", alignItems:"center", gap:5}}>

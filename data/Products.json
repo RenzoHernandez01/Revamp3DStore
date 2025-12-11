@@ -15,7 +15,8 @@
     "staffPick":true,
     "salePercentage":20,
     "salePrice":0,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/pyramidHead.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/pyramidHead.glb",
+    "sellerName":"PixelSmith"
   },
   
   {
@@ -32,7 +33,8 @@
     "onSale": false,
     "releaseDate":"2024-06-03",
     "staffPick":true,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/chogath.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/chogath.glb",
+    "sellerName":"3dWizard"
   },
 
   {
@@ -51,7 +53,8 @@
      "staffPick":true,
      "salePercentage":30,
      "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/terminal.glb"
+     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/terminal.glb",
+     "sellerName":"AssetAlchemy"
   },
 
   {
@@ -70,7 +73,8 @@
     "staffPick":true,
     "salePercentage":60,
     "salePrice":0,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/sight.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/sight.glb",
+    "sellerName":"RenderRiot"
   },
 
   {
@@ -87,7 +91,8 @@
     "onSale": false,
     "releaseDate":"2023-08-21",
     "staffPick":true,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/tarotRifle.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/tarotRifle.glb",
+    "sellerName":"NovaForge"
   },
 
   {
@@ -106,7 +111,8 @@
     "staffPick":true,
     "salePercentage":45,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/agencyPistol.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/agencyPistol.glb",
+    "sellerName":"TerrainTech"
   },
 
   {
@@ -125,7 +131,8 @@
     "staffPick":false,
     "salePercentage":15,
     "salePrice":0,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xicochh.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xicochh.glb",
+    "sellerName":"AssetAlchemy"
     
 
   },
@@ -144,7 +151,8 @@
     "onSale": false,
     "releaseDate":"2023-05-30",
     "staffPick":false,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xgwhejhdw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xgwhejhdw.glb",
+    "sellerName":"3dWizard"
   },
 
   {
@@ -161,7 +169,8 @@
     "onSale": false,
     "releaseDate":"2022-12-18",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xgknben.glb"
+     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xgknben.glb",
+     "sellerName":"PixelSmith"
   },
 
   {
@@ -178,7 +187,8 @@
     "onSale": false,
     "releaseDate":"2024-09-07",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xeumfdu.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/xeumfdu.glb",
+    "sellerName":"RenderRiot"
   },
 
   {
@@ -195,7 +205,8 @@
     "onSale": false,
     "releaseDate":"2025-04-22",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wjkjegiaw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wjkjegiaw.glb",
+    "sellerName":"NovaForge"
   },
 
   {
@@ -212,7 +223,8 @@
     "onSale": false,
     "releaseDate":"2023-07-11",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wjglah2s.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wjglah2s.glb",
+    "sellerName":"TerrainTech"
   },
 
   {
@@ -231,7 +243,8 @@
     "staffPick":false,
     "salePercentage":60,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wgoubbgaw.glb"
+     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wgoubbgaw.glb",
+     "sellerName":"RenderRiot"
   },
 
   {
@@ -250,7 +263,8 @@
     "staffPick":false,
     "salePercentage":40,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wcuscjwdw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/wcuscjwdw.glb",
+    "sellerName":"PixelSmith"
   },
 
   {
@@ -267,7 +281,8 @@
     "onSale": false,
     "releaseDate":"2023-03-08",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/vlwrderdw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/vlwrderdw.glb",
+    "sellerName":"3dWizard"
   },
 
   {
@@ -286,7 +301,8 @@
     "staffPick":false,
     "salePercentage":20,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/vh3lbfy.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/vh3lbfy.glb",
+    "sellerName":"AssetAlchemy"
   },
 
   {
@@ -303,7 +319,8 @@
     "onSale": false,
     "releaseDate":"2022-08-26",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ukqpfhsaw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ukqpfhsaw.glb",
+    "sellerName":"RenderRiot"
   },
 
   {
@@ -322,7 +339,8 @@
     "staffPick":false,
     "salePercentage":30,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ukjsdavdw.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ukjsdavdw.glb",
+    "sellerName":"NovaForge"
   },
 
   {
@@ -341,7 +359,8 @@
     "staffPick":false,
     "salePercentage":40,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ud4oai0fa.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/ud4oai0fa.glb",
+    "sellerName":"TerrainTech"
   },
 
   {
@@ -358,7 +377,8 @@
     "onSale": false,
     "releaseDate":"2025-02-05",
     "staffPick":false,
-    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/uc1kebzfa.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/uc1kebzfa.glb",
+    "sellerName":"AssetAlchemy"
   },
 
   {
@@ -375,7 +395,8 @@
     "onSale": false,
     "releaseDate":"2022-07-04",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/titfbczfa.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/titfbczfa.glb",
+    "sellerName":"3dWizard"
   },
 
 
@@ -393,7 +414,8 @@
     "onSale": false,
     "releaseDate":"2023-12-01",
     "staffPick":false,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/nissanGtr.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/nissanGtr.glb",
+    "sellerName":"RenderRiot"
   },
 
   {
@@ -403,7 +425,7 @@
     "category": "vehicle",
     "description": "This model has been sourced from CGTrader by dgknuldg. (https://www.cgtrader.com/free-3d-models/car/sport-car/chevrolet-corvette-carbon-65-edition).It is included solely for demonstration purposes within the demo store.",
     "sellerId": "sellerTwo",
-   "images": ["https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283214/CorvettFront_wdyjjl.jpg","https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283213/corvettSide_m34ixb.jpg","https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283214/corvettBack_yx46j1.jpg"],
+    "images": ["https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283214/CorvettFront_wdyjjl.jpg","https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283213/corvettSide_m34ixb.jpg","https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765283214/corvettBack_yx46j1.jpg"],
     "dimensions": "H: 59cm × W: 76cm × D: 56cm",
     "rating": 2.9,
     "ratingsBreakdown": { "5": 11, "4": 6, "3": 14, "2": 11, "1": 6 },
@@ -412,7 +434,8 @@
     "staffPick":false,
     "salePercentage":50,
     "salePrice":0,
-     "modelPath":"https://storage.googleapis.com/3dwebstoreassets/Corvette.glb"
+    "modelPath":"https://storage.googleapis.com/3dwebstoreassets/Corvette.glb",
+    "sellerName":"NovaForge"
   }
 
   

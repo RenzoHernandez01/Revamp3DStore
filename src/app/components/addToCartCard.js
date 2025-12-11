@@ -6,24 +6,38 @@ import IconButton from '@mui/material/IconButton';
 import { useWishList } from "../context/wishListContext";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import { useAuth } from '../context/AuthContext';
+import { useAuth} from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import CartOverLay from './cartOverlay';
+import style from "../components/cartOverlay.module.css";
+import React from 'react';
 export default function addToCartCard({ product}) {
-  const { addToCart} = useCart();
+  const { addToCart,cartItems,showCart,openCart,closeCart} = useCart();
   const {addToWishList, removeFromWishList,wishListItems} = useWishList();
+  const inCart = cartItems.some(item => item.id === product.id);
   const favorited = wishListItems.some(item => item.id === product.id);
   const { isSignedIn } = useAuth();
   const router = useRouter();
+  //const [showCart, setShowCart] = useState(false);
+  //const handleOpenCart = () => setShowCart(true);
+  //const handleCloseCart = () => setShowCart(false);
+
   return (
     <Card sx={{ display:"flex", width: '100%', height:70}} variant="outlined">
       <CardActions sx={{width: '100%'}}>
         <Button variant="contained"   disableElevation disableRipple
-        sx={{backgroundColor: "#313131ff", color:"white", flex:1 , "&:hover": {backgroundColor: "#4a4a4aff"}}}
-         onClick={() => {
-          addToCart(product)  
-        }}
-        >${product.price}</Button>
-        <IconButton  disableRipple  
+        sx={{backgroundColor: "#313131ff", color:"white", flex:1 , textTransform:"none", "&:hover": {backgroundColor: "#4a4a4aff"}}}
+        onClick={() => {
+            if (inCart) {
+              openCart()
+            } else {
+              addToCart(product); 
+            }
+          }}
+
+        > {inCart ? "View Cart" : `${product.price}`}</Button>
+      <IconButton  disableRipple  
             onClick={(e) => {
                 e.stopPropagation(); 
                 if (isSignedIn) {
@@ -55,6 +69,13 @@ export default function addToCartCard({ product}) {
                     )}
       </IconButton>
       </CardActions>
+      {showCart && (
+        <>
+          <div className={style.cartBackdrop} onClick={closeCart} />
+          <CartOverLay onClose={closeCart} />
+        </>
+      )}
+
     </Card>
   );
 }

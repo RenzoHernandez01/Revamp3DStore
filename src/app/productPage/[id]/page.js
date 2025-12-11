@@ -85,7 +85,7 @@ export  default function productPage({params}){
                 </div>
                  <div className={`${styles.productActionWrapper}`}>
                     <AddToCartCard product={product}/>
-                    <SellerProfileCard id={author.id} name={author.name} rating={author.rating} profileImage={author.prof} />
+                    <SellerProfileCard id={author.id} name={author.name} rating={author.rating} profileImage={author.profileImage} />
                     <ProductRatingCard totalRatingsBreakdown={totalRate} rating={averageRating} ratingsBreakdown={product.ratingsBreakdown}/>
                     <DimensionCard dimensions={product.dimensions}/>
                 </div>
@@ -97,6 +97,7 @@ export  default function productPage({params}){
                         sellerName={author.name}
                         rating={averageRating}
                         totalRatingsBreakdown={totalRate}
+                        productDescription = {product.description}
                     />
                  </div>
                  <Button variant="text" onClick={() => setExpanded(!expanded)}  className={`${styles.showMore}`}  disableRipple 

@@ -26,14 +26,13 @@ import { useWishList } from "../context/wishListContext";
 export default function ResponsiveAppBar({products}) {
   let router = useRouter();
   const pathname = usePathname();
-  let [showCart, setShowCart] = React.useState(false);
   let { isSignedIn, signOut, user } = useAuth();
   let [anchorElUser, setAnchorElUser] = React.useState(null);
   let handleOpenCart = () => setShowCart(true);
   let handleCloseCart = () => setShowCart(false);
   let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   let handleCloseUserMenu = () => setAnchorElUser(null);
-  const { cartItems,} = useCart();
+  const { showCart, openCart,cartItems, closeCart} = useCart();
   const {wishListItems} = useWishList();
 
   useEffect(() => {
@@ -51,9 +50,22 @@ export default function ResponsiveAppBar({products}) {
 
     <div className={styles.buttonGrid}>
           <div className={styles.leftGroup}>
-            <Button variant="text" onClick={() => router.push('/')}>
-              HOME LOGO
-            </Button>
+            <Button
+                disableRipple disableElevation
+                variant="text"
+                onClick={() => router.push('/')}
+                sx={{
+                  width: 120,
+                  height: 50,
+                  backgroundImage: 'url(https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765432800/revampBlue_re31ch.png)', 
+                 backgroundSize: 'contain',                   
+                  backgroundPosition: 'center',
+                  backgroundRepeat:"no-repeat",
+                  "&:hover":{backgroundColor:"transparent"}                 
+                }}
+              >
+              </Button>
+
             {pathname !== "/checkOut" && <SearchBarComponent />}
           </div>
           <div className={styles.rightGroup}>
@@ -77,7 +89,7 @@ export default function ResponsiveAppBar({products}) {
 
             <IconButton
               disableRipple
-              onClick={handleOpenCart}
+              onClick={openCart}
               sx={{
                 width: 32,
                 height: 32,
@@ -90,8 +102,8 @@ export default function ResponsiveAppBar({products}) {
 
             {showCart && (
               <>
-                <div className={style.cartBackdrop} onClick={handleCloseCart} />
-                <CartOverLay onClose={handleCloseCart} />
+                <div className={style.cartBackdrop} onClick={closeCart} />
+                <CartOverLay onClose={closeCart} />
               </>
             )}
 

@@ -2,7 +2,7 @@
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import StarPurple500OutlinedIcon from '@mui/icons-material/StarPurple500Outlined';
-export default function productDescription({productName, sellerName, rating,totalRatingsBreakdown}) {
+export default function productDescription({productName, sellerName, rating,totalRatingsBreakdown,productDescription}) {
  
   return (
   <div>
@@ -14,6 +14,7 @@ export default function productDescription({productName, sellerName, rating,tota
        </Stack>
 
        <Typography variant='h5' color='black' sx={{ marginBottom:2}}>{productName}</Typography>
+       <Typography variant='h6' color='black' fontStyle={"italic"}>{productDescription}</Typography>
        <Typography variant='body2' color='black'> 
         Lorem ipsum dolor sit amet consectetur adipiscing elit. 
         Quisque faucibus ex sapien vitae pellentesque sem placerat. 
@@ -127,7 +128,7 @@ export default function productDescription({productName, sellerName, rating,tota
         Iaculis massa nisl malesuada lacinia integer nunc posuere. 
         Ut hendrerit semper vel class aptent taciti sociosqu. 
         Ad litora torquent per conubia nostra inceptos himenaeos. 
-        </Typography>
+      </Typography>
   </div>
 );
 }

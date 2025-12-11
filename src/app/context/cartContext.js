@@ -1,15 +1,15 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-  
- useEffect(() => {
-   const stored = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(stored)
-  },[]);
+  const [showCart, setShowCart] = useState(false); 
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(stored);
+  }, []);
 
   const addToCart = (product) => {
     setCartItems(prev => {
@@ -35,14 +35,27 @@ export function CartProvider({ children }) {
     });
   };
 
-    const clearCart = () => {
+  const clearCart = () => {
     setCartItems([]);
-    localStorage.removeItem("cart"); 
+    localStorage.removeItem("cart");
   };
 
 
+  const openCart = () => setShowCart(true);
+  const closeCart = () => setShowCart(false);
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart,clearCart }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        showCart,     
+        openCart,     
+        closeCart    
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -82,11 +82,20 @@ export  default function SignUpForm(){
     <div className={`${styles.signUpContainer}`} id="signUpBlock">
         <div className={`${styles.signPageBlock} ${styles.signInBlock}`}>
             <div className={`${styles.signInImages}`}> 
-              <Stack  sx={{display:"flex", zIndex:2, direction:"column", width:"100%", height:"100%", padding:2, marginTop:5, gap:2}}>
-                <Typography variant='h3' sx={{fontWeight:"bold",color:"white"}}>LOGO</Typography>
+              <Stack  sx={{display:"flex", zIndex:2, direction:"column", width:"100%", height:"100%", padding:2, marginTop:5, gap:1}}>
+                <Box
+                    sx={{
+                        width: 200,
+                        height: 80,
+                        backgroundImage:'url(https://res.cloudinary.com/dxqj5g1ii/image/upload/v1765433828/revampWhite_xaycqm.png)',
+                        backgroundSize: 'contain',                   
+                        backgroundPosition: 'center',
+                        backgroundRepeat:"no-repeat" ,
+                     }}
+                  />
                 <Typography variant='h6' sx={{fontWeight:"bold", fontSize:25, lineHeight:1.25,color:"white" }}>Create a free account.</Typography>
                 <Box sx={{width:150, height:5, backgroundColor:"#7DA0CA", borderRadius:5}}> </Box> 
-                <Typography sx={{lineHeight:1.25,color:"white "}}>Join FlippedNormals and explore thousands of courses and resources created by the world’s best artists.</Typography>
+                <Typography sx={{lineHeight:1.25,color:"white "}}>Join Revamp and explore 3d assets created by the world’s best artists.</Typography>
               </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>

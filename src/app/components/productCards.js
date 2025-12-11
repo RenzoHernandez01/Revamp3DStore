@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import styles from './productCards.module.css'; 
 import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
@@ -256,7 +255,7 @@ export default function ProductCards({ products = [], filterMode = null, sellerN
               sx={{ color: 'text.secondary' }}
               component="div"
             >
-              by {product.sellerId}
+              by {product.sellerName}
             </Typography>
             <CheckForSale product={product} />
           </Stack>
