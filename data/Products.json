@@ -39,7 +39,7 @@
 
   {
     "id": "2",
-    "name": "Sci-fi Termnial",
+    "name": "Sci-fi Terminal",
     "price": 400,
     "category": "props",
     "description": "This is a props",
@@ -59,7 +59,7 @@
 
   {
     "id": "3",
-    "name": "Trijicon",
+    "name": "Trijicon sight",
     "price": 600,
     "category": "weapon",
     "description": "This is a weapon",

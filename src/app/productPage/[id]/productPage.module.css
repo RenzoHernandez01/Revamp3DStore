@@ -33,7 +33,7 @@
   left: 50%;
   transform: translateX(-50%);
   position: relative;
-  background-color: #f1f1f1;
+  background-color: #ffffff;
   width:1185px;
   height: 1551px;
   z-index: 2;
@@ -163,7 +163,7 @@
 }
 
 .productDescriptionArea{
-  background-color: #f1f1f1;
+
   width: 719px;
   height: auto;
   grid-row: 7/8;

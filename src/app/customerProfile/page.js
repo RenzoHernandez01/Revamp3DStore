@@ -69,6 +69,7 @@ export default function CustomerProfile({ searchParams }) {
               marginBottom: 1,
               color: activeSection === "library" ?  "#004598ff" :  "#777",
               backgroundColor: activeSection === "library" ? "white" : "transparent",
+              textTransform:"none",
               "&:hover": { backgroundColor: "#e0e0e0ff" },
             }}
           >
@@ -84,10 +85,11 @@ export default function CustomerProfile({ searchParams }) {
               marginBottom: 1,
               color: activeSection === "orderHistory" ?  "#004598ff" :  "#777",
               backgroundColor: activeSection === "orderHistory" ? "white" : "transparent",
+              textTransform:"none",
               "&:hover": { backgroundColor: "#e0e0e0ff" },
             }}
           >
-            OrderHistory
+            Order History
           </Button>
         </div>
         {activeSection === "orderHistory" && (

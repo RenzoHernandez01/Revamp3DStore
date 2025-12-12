@@ -12,7 +12,6 @@ export default function productDescription({productName, sellerName, rating,tota
        <StarPurple500OutlinedIcon sx={{color:"black"}} fontSize='20'/>
        <Typography variant='subtitle1' sx={{color:"black"}}>({totalRatingsBreakdown}) ratings</Typography>
        </Stack>
-
        <Typography variant='h5' color='black' sx={{ marginBottom:2}}>{productName}</Typography>
        <Typography variant='h6' color='black' fontStyle={"italic"}>{productDescription}</Typography>
        <Typography variant='body2' color='black'> 
