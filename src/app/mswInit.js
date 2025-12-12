@@ -1,11 +1,22 @@
-if (process.env.NODE_ENV === "development") {
+
+if (typeof window !== "undefined") {
   import("../mocks/browser").then(({ worker }) => {
     worker.start({
       onUnhandledRequest: "bypass",
-      serviceWorker: {
-        url: "/mockServiceWorker.js", // must exist in /public
-      },
+      serviceWorker: { url: "/mockServiceWorker.js" },
     });
     console.log("[MSW] Worker started before React mount");
   });
 }
+
+{/*if (process.env.NODE_ENV === "development") {
+  import("../mocks/browser").then(({ worker }) => {
+    worker.start({
+      onUnhandledRequest: "bypass",
+      serviceWorker: {
+        url: "/mockServiceWorker.js", \
+      },
+    });
+    console.log("[MSW] Worker started before React mount");
+  });
+}*/}
