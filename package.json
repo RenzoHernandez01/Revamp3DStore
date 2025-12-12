@@ -14,7 +14,7 @@
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
     "autosuggest-highlight": "^3.3.4",
-    "next": "16.0.1",
+    "next": "^16.0.10",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-slick": "^0.31.0",
