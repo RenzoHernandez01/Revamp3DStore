@@ -94,7 +94,7 @@ useEffect(() => {
           <ProductCards products={homepageProducts} limitEnd={4} loading={loading}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
-        <Button variant="outlined" disableElevation 
+        <Button variant="outlined" disableElevation disableRipple
           sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
             "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
           onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
@@ -122,7 +122,7 @@ useEffect(() => {
           <ProductCards products={trendingProducts} limitStart={4} limitEnd={8} loading={loading}/>  
       </Stack>
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"center", alignItems:"center"}}>
-        <Button variant="outlined" disableElevation 
+        <Button variant="outlined" disableElevation disableRipple
           sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
             "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
           onClick={() => router.push('/categoryPages/marketplace?tag=trending')}   >
