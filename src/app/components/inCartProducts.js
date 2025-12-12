@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { useRouter } from 'next/navigation';
 import { useCart } from '../context/cartContext';
 function checkForSale(product){
   if (product.onSale) {
@@ -31,9 +32,12 @@ function checkForSale(product){
 }
 export default function InCartProducts({product}) {
   const  {removeFromCart } = useCart() ;
+  const router = useRouter();
   return (
     <div>
-    <Card sx={{height:115, width:"100%",borderRadius:0,backgroundColor:  "rgba(238, 241, 244, 1)" }}>   
+    <Card 
+    onClick={() => router.push(`/productPage/${product.id}`)}
+    sx={{height:115, width:"100%",borderRadius:0,backgroundColor:  "rgba(238, 241, 244, 1)",cursor:"pointer" }}>   
      <CardContent sx={{display:'flex',height:"100%", width:"100%",padding:0,}}> 
         <Stack direction="row" sx={{justifyContent:"center", flex:1,alignItems:"center" ,height:115,padding:.5}}>
           <CardMedia component="img"
@@ -49,7 +53,7 @@ export default function InCartProducts({product}) {
               {product.name}</Typography>
           <Stack sx={{marginLeft:"auto",height:"100%",width:100}} direction="column">
             <Button  disableRipple  
-            onClick={() =>  {removeFromCart(product.id)}}
+            onClick={(e) => {e.stopPropagation(); {removeFromCart(product.id)}}}
             variant='text' size="small" 
             sx={{width:.1,height:.3,marginLeft:"auto",marginBottom:.5, 
                "&:hover" :{backgroundColor:"transparent"}

@@ -32,7 +32,7 @@ export default function CartOverlay({ onClose }) {
   const router = useRouter();
   let [mounted, setMounted] = useState(false);
   let [overlayRoot, setOverlayRoot] = useState(null);
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart,openCart,closeCart} = useCart();
   let { isSignedIn, user, signOut } = useAuth();
   let subtotalPrice = 0;
   let totalDiscount = getTotalDiscount(cartItems);
@@ -129,8 +129,10 @@ export default function CartOverlay({ onClose }) {
                 onClick={() => {
                 console.log("Checkout button clicked, isSignedIn:", isSignedIn);
                 if (isSignedIn) {
+                  closeCart();
                   router.push("/checkOut");
                 } else {
+                  closeCart();
                   router.push("/authPage/signin");
                 }
               }}
@@ -154,7 +156,9 @@ export default function CartOverlay({ onClose }) {
               <Button variant='contained' disableElevation disableRipple
               sx ={{backgroundColor: "#313131ff", color:"white", width:200, height:40,
               "&:hover":{backgroundColor:"#424242ff"}}}
-              onClick={() => {router.push("/authPage/signup");}} >
+              onClick={() => { closeCart();
+              {router.push("/authPage/signup");}}
+               } >
                 Sign Up 
               </Button>
           </Stack>

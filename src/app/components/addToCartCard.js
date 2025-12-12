@@ -19,10 +19,6 @@ export default function addToCartCard({ product}) {
   const favorited = wishListItems.some(item => item.id === product.id);
   const { isSignedIn } = useAuth();
   const router = useRouter();
-  //const [showCart, setShowCart] = useState(false);
-  //const handleOpenCart = () => setShowCart(true);
-  //const handleCloseCart = () => setShowCart(false);
-
   return (
     <Card sx={{ display:"flex", width: '100%', height:70}} variant="outlined">
       <CardActions sx={{width: '100%'}}>

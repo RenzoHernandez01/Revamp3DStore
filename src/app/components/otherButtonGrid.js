@@ -28,8 +28,6 @@ export default function ResponsiveAppBar({products}) {
   const pathname = usePathname();
   let { isSignedIn, signOut, user } = useAuth();
   let [anchorElUser, setAnchorElUser] = React.useState(null);
-  let handleOpenCart = () => setShowCart(true);
-  let handleCloseCart = () => setShowCart(false);
   let handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   let handleCloseUserMenu = () => setAnchorElUser(null);
   const { showCart, openCart,cartItems, closeCart} = useCart();
