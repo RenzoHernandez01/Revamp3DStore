@@ -18,25 +18,36 @@ import { ProductsContext } from '../context/productContext';
 export  default function CustomerProfile(){
     const searchParams = useSearchParams();
     const [libraryItems, setLibraryItems] = useState([]);
-    const initialSection = searchParams.get("section") || "library";
-    let [activeSection, setActiveSection] = useState("initialSection");
+   const initialSection = searchParams.get("section") || "library";
+const [activeSection, setActiveSection] = useState(initialSection);
+
     useEffect(() => {
     const section = searchParams.get("section") || "library";
     setActiveSection(section);
   }, [searchParams]);
 
-    useEffect(() => {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      if (storedUser?.purchases) {
-      const merged = storedUser.purchases.map(p => {
-      const product = products.find(prod => prod.id === p.productId);
-        return product
-          ? { ...product, purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase}
-          : { id: p.productId, name: "Unknown Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
-      });
-      setLibraryItems(merged);
+useEffect(() => {
+  if (typeof window !== 'undefined') {
+    const storedUserRaw = window.localStorage.getItem("user");
+    if (storedUserRaw) {
+      try {
+        const storedUser = JSON.parse(storedUserRaw);
+        if (storedUser?.purchases) {
+          const merged = storedUser.purchases.map(p => {
+            const product = products.find(prod => prod.id === p.productId);
+            return product
+              ? { ...product, purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase }
+              : { id: p.productId, name: "Unknown Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
+          });
+          setLibraryItems(merged);
+        }
+      } catch (err) {
+        console.error("Failed to parse user from localStorage", err);
+      }
     }
-  }, []);
+  }
+}, []);
+
 
   
   return (
