@@ -8,7 +8,6 @@ import ProductCards from "./components/productCards.js";
 import BannerPanels from "./components/bannerPanels.js";
 import FooterPanel from "./components/footerPanel";
 import Button from '@mui/material/Button';
-
 import { useRouter, } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from "./context/AuthContext";
@@ -16,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { ProductsContext } from "@/app/context/productContext";
 
-export default function Home() {
+export default function Home({ searchParams }) {
   let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
   let [products, setProducts] = useState([]);
@@ -69,7 +68,8 @@ useEffect(() => {
         <ButtonGrid/>
       </ProductsContext.Provider>
    
-      <SearchGrid products={products}/>
+       <SearchGrid products={products} searchParams={searchParams} />
+
       <CategoryGrid/>
     </div>
   </section>
