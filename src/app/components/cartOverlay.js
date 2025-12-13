@@ -71,7 +71,7 @@ export default function CartOverlay({ onClose }) {
         ))}
       </div>
       <div className={`${style.totalAmmountArea}`}>
-        <Typography variant='h5'color="black">Total ({cartItems.length} items) </Typography>
+        <Typography variant='h5'color="black">Total {cartItems.length} {cartItems.length > 1 ? "items" : "item"}  </Typography>
         <Stack sx={{flexDirection:"column",height:"auto", width:250,marginLeft:"auto",justifyContent:'flex-start'}}>
           <Stack sx={{flexDirection:"column",height:60, width:"100%",marginLeft:"auto",marginBottom:2,}}>
             <Stack sx={{flexDirection:"row",height:"auto", width:"100%",marginLeft:"auto",marginBottom:1}}>

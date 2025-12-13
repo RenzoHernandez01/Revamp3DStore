@@ -32,7 +32,7 @@ export default function addToCartCard({ product}) {
             }
           }}
 
-        > {inCart ? "View Cart" : `${product.price}`}</Button>
+        > {inCart ? "View Cart" : `$${product.price} - Add to Cart` }</Button>
       <IconButton  disableRipple  
             onClick={(e) => {
                 e.stopPropagation(); 
