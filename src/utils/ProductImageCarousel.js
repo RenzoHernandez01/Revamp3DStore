@@ -9,7 +9,7 @@ export function ProductImageCarousel({ images }) {
     if (intervalRef.current) return; 
     intervalRef.current = setInterval(() => {
       setImageIndex((prev) => (prev + 1) % images.length);
-    }, 1000);
+    },500);
   };
   const stopCarousel = () => {
     clearInterval(intervalRef.current);

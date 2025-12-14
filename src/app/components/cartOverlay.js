@@ -127,7 +127,6 @@ export default function CartOverlay({ onClose }) {
             <Button  
                 disableElevation disableRipple
                 onClick={() => {
-                console.log("Checkout button clicked, isSignedIn:", isSignedIn);
                 if (isSignedIn) {
                   closeCart();
                   router.push("/checkOut");

@@ -8,6 +8,10 @@ import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
 export function modelViewer({modelLink}){
 console.log("beingcalled");
 let productWindow = document.getElementById('threeDViewContainer');
+let existingCanvas = productWindow.querySelector("canvas");
+if (existingCanvas) {
+  productWindow.removeChild(existingCanvas);
+}
 let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(75, productWindow.clientWidth/productWindow.clientHeight, 0.1, 1000);
 let renderer = new THREE.WebGLRenderer();
@@ -22,7 +26,7 @@ let directionalLight = new THREE.DirectionalLight(0xffffff, 5);
 directionalLight.position.set(5, 10, 7.5); 
 renderer.shadowMap.enabled = true;
 renderer.setClearColor(0xeeeeee); 
-let canvas = renderer.domElement;
+let canvas = renderer.domElement; 
 camera.position.z = 5;  
 let controls = new OrbitControls(camera, renderer.domElement);
 controls.minPolarAngle = Math.PI / 4;    
@@ -40,7 +44,6 @@ let neutralGrayMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.5,
   metalness: 0.0
 });
-
 let overlay = document.createElement("div");
 overlay.id = "overlay";
 overlay.style.position = "absolute";
@@ -55,17 +58,13 @@ overlay.style.backgroundColor = "rgba(255,255,255,0.8)";
 overlay.style.zIndex = "10";
 productWindow.style.position = "relative";
 productWindow.appendChild(overlay);
-
 const root = createRoot(overlay);
 root.render(<CircularProgress />);
 
 
 
 window.load3DModel = function (modelUrl) {
-
-  console.log("aaa",{modelLink});
   if (typeof modelUrl !== 'string') {
-  console.error('Invalid model URL:', modelUrl);
   return;
 }
 
@@ -92,13 +91,15 @@ window.load3DModel = function (modelUrl) {
       const center = box.getCenter(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
       const fov = camera.fov * (Math.PI / 180);
+      const baseDistance = Math.abs(maxDim / 2 / Math.tan(fov / 2));
       const cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
       camera.position.set(center.x, center.y, cameraZ * 1.5);
       camera.lookAt(center);
       controls.target.copy(center);
       controls.update();
+      controls.minDistance = baseDistance * 0.5;
+      controls.maxDistance = baseDistance * 3.0;
       root.render(<ThreeDRotationIcon sx={{ fontSize:150, color: "black" }} />);
-        
         setTimeout(() => {
       overlay.style.transition = "opacity 0.5s ease";
       overlay.style.opacity = "0";
@@ -137,11 +138,12 @@ function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
-function handleWheelZoom(event) {
+{/*function handleWheelZoom(event) {
   let zoomSpeed = 0.5;
   camera.position.z += event.deltaY * zoomSpeed * 0.01;
-  camera.position.z = Math.max(2, Math.min(20, camera.position.z));
-}
+  camera.position.z = Math.max(minZoom, Math.min(maxZoom, camera.position.z));
+
+}*/}
 canvas.addEventListener('mouseenter', () => {
   controls.enableZoom = true;
 });
