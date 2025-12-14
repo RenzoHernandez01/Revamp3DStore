@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import { useSellers } from '../context/authorContext';
 import { useRouter, useSearchParams} from 'next/navigation';
 import { useNotFound } from '../context/notFoundContext';
+import Skeleton from '@mui/material/Skeleton';
 export default function AuthorCards({ limitEnd}) {
   let router = useRouter();
   let sellers = useSellers();
