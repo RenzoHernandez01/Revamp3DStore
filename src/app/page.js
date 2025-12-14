@@ -14,7 +14,7 @@ import { useAuth } from "./context/AuthContext";
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { ProductsContext } from "@/app/context/productContext";
-
+import AuthorCards from "./components/authorCards.";
 export default function Home({ searchParams }) {
   let { isSignedIn, user, signOut } = useAuth();
   let  router = useRouter();
@@ -67,9 +67,7 @@ useEffect(() => {
       <ProductsContext.Provider value={products}>
         <ButtonGrid/>
       </ProductsContext.Provider>
-   
        <SearchGrid products={products} searchParams={searchParams} />
-
       <CategoryGrid/>
     </div>
   </section>
@@ -81,8 +79,10 @@ useEffect(() => {
           View our top content creators store page
           </Typography>
        </Stack>
-      
-      <CreatorGrid/>
+       <Stack sx={{display:"flex",justifyContent:"center", alignItems:"center",  flexDirection:"row" , gap:5}}>
+        <AuthorCards limitEnd={5} loading={loading} />     
+      </Stack>
+   
       <Stack direction={"column"} sx={{display:"flex", marginLeft: 5, justifyContent:"flex-start", alignItems:"flex-start"}}>
           <Typography variant="h5"sx={{color:"black", fontWeight:"bold"}} >
           Staff Picks</Typography>

@@ -8,12 +8,28 @@ import { useSellers } from '../context/authorContext';
 import { useRouter, useSearchParams} from 'next/navigation';
 import { useNotFound } from '../context/notFoundContext';
 import Skeleton from '@mui/material/Skeleton';
-export default function AuthorCards({ limitEnd}) {
+import { Stack } from '@mui/material';
+export default function AuthorCards({ limitEnd, loading}) {
   let router = useRouter();
   let sellers = useSellers();
   let sliced = sellers.slice(0, limitEnd) ;
   const { setItemNotFound } = useNotFound();
+   if (loading) {
+    return Array.from({ length: limitEnd }).map((_, i) => (
+      <Card key={i} sx={{ width: 250, height: 150, p: 2 ,position:"relative",}}>
+      <CardContent sx={{position:"absolute", top: 0,  left: 0,
+      width: "100%", height: "100%", display:"flex",justifyContent:"center", flexDirection:"column",
+      alignItems:"center",backgroundColor:"transparent",zIndex:0}}>
+        <Skeleton variant="circular" width={64} height={64} />
+        <Skeleton variant="text" width="60%" sx={{ mt: 1 }} />
+        </CardContent>
+      </Card>
+    ));
+  }
+
   return (
+
+    
     sliced.map((seller, index) => {
       return(
    <Card  key={index} sx={{width:250, height:150, position:"relative", '&:hover': 
