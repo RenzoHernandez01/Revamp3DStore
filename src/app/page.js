@@ -47,7 +47,7 @@ useEffect(() => {
       setProducts(data);
       setTimeout(() => {
         setLoading(false);
-      }, 1000); 
+      }, 600); 
 
     } catch (err) {
       console.error('Failed to fetch products:', err);
