@@ -30,8 +30,8 @@ export default function addToCartCard({ product}) {
         onClick={() => {
           if(inLibrary){
             router.push('/customerProfile');
-          }
-            if (inCart) {
+          } 
+           else if (inCart) {
               openCart()
             } else {
               addToCart(product); 
