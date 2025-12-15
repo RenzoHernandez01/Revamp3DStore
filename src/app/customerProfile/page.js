@@ -11,19 +11,21 @@ import Typography from '@mui/material/Typography';
 import LibraryCards from '../components/libraryCards';
 import products from  '../../../data/Products.json';
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import { ProductsContext } from '../context/productContext';
 
+
 export default function CustomerProfile({ searchParams }) {
+  const params = use(searchParams);
   const [libraryItems, setLibraryItems] = useState([]);
-  const initialSection = searchParams?.section || "library";
+  const initialSection = params?.section || "library"
   const [activeSection, setActiveSection] = useState(initialSection);
 
-  useEffect(() => {
-    const section = searchParams?.section || "library";
-    setActiveSection(section);
-  }, [searchParams]);
+  
+    useEffect(() => {
+    setActiveSection(params?.section || "library");
+  }, [params]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

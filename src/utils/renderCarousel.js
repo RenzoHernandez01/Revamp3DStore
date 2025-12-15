@@ -5,6 +5,9 @@ import ViewInArRoundedIcon from '@mui/icons-material/ViewInArRounded';
 export function renderCarousel(product) {
   let heroImagesContainer = document.querySelector(".mainProductImage");
   let carouselContainer = document.querySelector(".imageCarousel");
+  heroImagesContainer.querySelectorAll(".heroImages").forEach(el => el.remove());
+  carouselContainer.querySelectorAll(".productImages").forEach(el => el.remove());
+
   let existingModel = carouselContainer.querySelector(".modelProductImages");
   if(!existingModel)
 {  
