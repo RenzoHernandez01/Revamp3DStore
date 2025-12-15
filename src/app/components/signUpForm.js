@@ -16,6 +16,8 @@ import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useAuth } from '../context/AuthContext';
 import { safeFetch } from '@/utils/safeFetch';
+import { useEffect } from 'react';
+
 import {ProductsContext} from "../context/productContext";
 export  default function SignUpForm(){
   let  router = useRouter();
@@ -25,6 +27,7 @@ export  default function SignUpForm(){
   let handleMouseDownPassword = (event) => event.preventDefault();
   let handleMouseUpPassword = (event) => event.preventDefault();
   let [errors, setErrors] = React.useState({});
+  
   let [form, setForm] = React.useState({
     firstName: '',
     lastName: '',
@@ -60,6 +63,8 @@ export  default function SignUpForm(){
     if (Object.keys(newErrors).length > 0) {
         return; 
     }
+
+    setErrors({});
     try {
         let res = await fetch('/api/signup', {
         method: 'POST',
@@ -69,12 +74,18 @@ export  default function SignUpForm(){
         let data = await res.json();
         if (!res.ok) {
         setErrors(prev => ({ ...prev, email: data.error }));
+ 
         return;
         }
-        signUp(data.user);
-        router.push('/authPage/signin');
+       setErrors({});
+
+        await router.push('/authPage/signin');
+
+
+
     } catch (err) {
         console.log('Sign up failed:', err);
+
     }
     };
 
@@ -99,6 +110,8 @@ export  default function SignUpForm(){
               </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>
+            
+
                 <Button variant="outlined"  disableRipple  
                href='https://www.facebook.com/' target='_blank'
                 sx={{width:384, marginBottom:2, borderColor:"black",borderWidth:1.25, 
@@ -128,6 +141,7 @@ export  default function SignUpForm(){
                   <Typography sx={{color:"black"}}>Or</Typography>
                   <Box sx={{width:160, height:2, backgroundColor:"black"}}></Box>
                 </Stack>
+                 <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                 <Stack sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                   <div className={`${styles.userNameContainer}`}>
                         <TextField id="outlined-basic" label="First Name" variant="outlined" size="small"
@@ -158,7 +172,7 @@ export  default function SignUpForm(){
                   
                 }} 
                 value={form.email} 
-                onChange={handleChange('email')} error={!!errors.email} helperText={errors.email || ' '}/>    
+                onChange={handleChange('email')}  error={ !!errors.email}  helperText={ errors.email ||  ' '}/>    
                 <TextField
                 id="outlined-basic"
                 label="Password"
@@ -189,25 +203,27 @@ export  default function SignUpForm(){
                 value={form.password} onChange={handleChange('password')} 
                 error={!!errors.password} helperText={errors.password || ' '}
                 />
-                <Button  onClick={handleSubmit}  variant="contained" disableElevation  disableRipple
+                <Button  onClick={handleSubmit} type="submit" variant="contained" disableElevation  disableRipple
                 sx={{ backgroundColor:"#7DA0CA", width: 384,height: 40, whiteSpace:"nowrap",  textTransform: "none",
                 "&:hover": {backgroundColor: "#6f8cafff"}}} >
                   Sign Up
                   </Button> 
                 <Typography variant="body2" color="text.secondary">
                     Already a member?{' '}
+                        
                          <Button variant='text' disableRipple disableElevation sx={{textDecoration:"underline", textTransform:"none", color:"black",
                          "&:hover": {
                             backgroundColor: "transparent", 
                             textDecoration: "underline",    
                               },
                           }}
-                            onClick={() => router.push('/authPage/signin')}
+                          onClick={() => router.push('/authPage/signin')}
                             >
                                 Sign In
                         </Button>
                 </Typography>
                 </Stack>
+                 </form>
                 
 
             </div>

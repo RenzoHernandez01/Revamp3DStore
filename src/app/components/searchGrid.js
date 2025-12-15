@@ -66,7 +66,7 @@ export default function SearchGrid({ products, searchParams }) {
                 const product = products.find(p =>
                   p.name.toLowerCase().replace(/\s+/g, '').includes(normalizedInput)
                 );
-
+                  
                 if (product) {
                   setItemNotFound(null);
                   router.push(`/productPage/${product.id}`);

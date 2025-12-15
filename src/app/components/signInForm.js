@@ -145,6 +145,7 @@ if (!res.ok) {
                   <Typography sx={{color:"black"}}>Or</Typography>
                   <Box sx={{width:160, height:2, backgroundColor:"black"}}></Box>
                 </Stack>
+                <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                  <Stack sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                   <TextField id="outlined-basic" label="Email Address" variant="outlined" size="small" 
                   sx={{width:384,marginBottom:0,
@@ -186,7 +187,7 @@ if (!res.ok) {
                       error={!!errors.password}
                       helperText={errors.password || " "}
                       />
-                  <Button onClick={handleSubmit}  variant="contained" disableElevation  disableRipple
+                  <Button onClick={handleSubmit}   type="submit" variant="contained" disableElevation  disableRipple
                 sx={{ backgroundColor:"#7DA0CA", width: 384,height: 40, whiteSpace:"nowrap",  textTransform: "none", 
                 "&:hover": {backgroundColor: "#6f8cafff"}}} >
                       {loading ? "Signing in..." : "Sign In"}
@@ -205,6 +206,7 @@ if (!res.ok) {
                         </Button>
                 </Typography>
                 </Stack>
+                </form>
             </div>
         </div>
    </div>
