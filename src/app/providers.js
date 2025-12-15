@@ -19,6 +19,7 @@ export default function Providers({ children }) {
             <CartProvider>
               <WishListProvider>
                 <NotFoundProvider>
+                  <MSWProvider/>
                 {children}
                 <div id="overlay-root"></div>
                 </NotFoundProvider>
