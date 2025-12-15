@@ -16,15 +16,21 @@ export default function addToCartCard({ product}) {
   const { addToCart,cartItems,showCart,openCart,closeCart} = useCart();
   const {addToWishList, removeFromWishList,wishListItems} = useWishList();
   const inCart = cartItems.some(item => item.id === product.id);
+  const {user} = useAuth();
+  const inLibrary = user?.library?.some(item => item.id === product.id);
   const favorited = wishListItems.some(item => item.id === product.id);
   const { isSignedIn } = useAuth();
   const router = useRouter();
+  console.log(inLibrary);
   return (
     <Card sx={{ display:"flex", width: '100%', height:70}} variant="outlined">
       <CardActions sx={{width: '100%'}}>
         <Button variant="contained"   disableElevation disableRipple
         sx={{backgroundColor: "#313131ff", color:"white", flex:1 , textTransform:"none", "&:hover": {backgroundColor: "#4a4a4aff"}}}
         onClick={() => {
+          if(inLibrary){
+            router.push('/customerProfile');
+          }
             if (inCart) {
               openCart()
             } else {
@@ -32,7 +38,7 @@ export default function addToCartCard({ product}) {
             }
           }}
 
-        > {inCart ? "View Cart" : `$${product.price} - Add to Cart` }</Button>
+        > { inLibrary ? "View in Library" : inCart ? "View Cart" : `$${product.price} - Add to Cart` }</Button>
       <IconButton  disableRipple  
             onClick={(e) => {
                 e.stopPropagation(); 

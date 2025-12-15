@@ -4,6 +4,19 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
+
+export const enrichUserWithLibrary = (userData, products) => {
+  if (userData?.purchases) {
+    userData.library = userData.purchases.map(p => {
+      const product = products?.find(prod => prod.id === p.productId);
+      return product
+        ? { ...product, purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase }
+        : { id: p.productId, name: "Unknown Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
+    });
+  }
+  return userData;
+};
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [newUser, setNewUser] = useState(null);
@@ -21,6 +34,7 @@ useEffect(() => {
 
 
   const signIn = (userData) => {
+    const enrichedUser = enrichUserWithLibrary(userData);
     localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
     setNewUser(false);
@@ -42,7 +56,7 @@ useEffect(() => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isSignedIn, user, newUser, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, setUser, isSignedIn, user, newUser, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

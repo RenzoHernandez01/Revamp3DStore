@@ -110,8 +110,6 @@ export  default function SignUpForm(){
               </Stack>  
             </div>
             <div className={`${styles.signUpInputs}`}>
-            
-
                 <Button variant="outlined"  disableRipple  
                href='https://www.facebook.com/' target='_blank'
                 sx={{width:384, marginBottom:2, borderColor:"black",borderWidth:1.25, 

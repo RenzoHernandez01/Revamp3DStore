@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/cartContext';
 import { ProductsContext } from '../context/productContext';
-
+import { enrichUserWithLibrary } from '../context/AuthContext';
 function getTotalDiscount(cartItems) {
   let totalDiscount = 0;
   cartItems.forEach(product => {
@@ -32,7 +32,7 @@ function getTotalDiscount(cartItems) {
 
 export  default function CheckOut(){
     let  router = useRouter();
-    const { user} = useAuth();
+    const { user, setUser } = useAuth();
     const { cartItems, clearCart } = useCart();
     const label = { slotProps: { input: { 'aria-label': 'Checkbox demo' } } };
     let subtotalPrice = 0;
@@ -166,11 +166,15 @@ const handleSubmit = async () => {
         console.error('Purchase failed:', purchaseData.error);
         return;
       }
+      
 
 
+      const enrichedUser = enrichUserWithLibrary(purchaseData.user, products);
+    localStorage.setItem("user", JSON.stringify(enrichedUser));
+    setUser(enrichedUser);
+            latestUser = enrichedUser;
 
-      latestUser = purchaseData.user;
-      localStorage.setItem('user', JSON.stringify(latestUser));
+
     }
 
     router.push('/customerProfile');

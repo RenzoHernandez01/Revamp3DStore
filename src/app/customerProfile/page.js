@@ -38,6 +38,9 @@ export default function CustomerProfile({ searchParams }) {
                 ? { ...product, purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase }
                 : { id: p.productId, name: "Unknown Product", purchaseDate: p.purchaseDate, priceAtPurchase: p.priceAtPurchase };
             });
+            storedUser.library = merged;
+             window.localStorage.setItem("user", JSON.stringify(storedUser));
+
             setLibraryItems(merged);
           }
         } catch (err) {
