@@ -79,8 +79,6 @@ export default function ButtonGrid() {
                 </Badge>
               </IconButton> : null}
       
-
-     
       <IconButton
               disableRipple
               onClick={handleOpenCart}

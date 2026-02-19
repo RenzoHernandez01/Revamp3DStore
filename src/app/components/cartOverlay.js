@@ -26,8 +26,6 @@ function getTotalDiscount(cartItems) {
   return totalDiscount;
 }
 
-
-
 export default function CartOverlay({ onClose }) {
   const router = useRouter();
   let [mounted, setMounted] = useState(false);
@@ -44,18 +42,12 @@ export default function CartOverlay({ onClose }) {
     return () => {
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
-
   };
-
-
   }, []);
-
   if (!mounted || !overlayRoot) return null;
-
   cartItems.forEach(productInCart =>{
     subtotalPrice = productInCart.price + subtotalPrice;
   })
-
   return createPortal(
     <div className={`${style.cartContainer}`}>
       <Stack sx={{width:"100%", height:50,}}>
@@ -89,7 +81,6 @@ export default function CartOverlay({ onClose }) {
           <Typography variant='h4'color="black" sx={{marginLeft:"auto",marginRight:1}}>${subtotalPrice-totalDiscount}</Typography>
         </Stack>
       </div>
-
     { isSignedIn ? 
     <Stack >
         <div className={`${style.checkOutArea}`}>
@@ -129,7 +120,7 @@ export default function CartOverlay({ onClose }) {
                 onClick={() => {
                 if (isSignedIn) {
                   closeCart();
-                  router.push("/checkOut");
+                  router.push("/checkOut");``
                 } else {
                   closeCart();
                   router.push("/authPage/signin");
@@ -141,31 +132,25 @@ export default function CartOverlay({ onClose }) {
           </fieldset>
         </div>
       </Stack>
- 
       :
-         <Stack>
+      <Stack>
         <div className={`${style.checkOutArea}`}>
           <Stack direction={"row"} sx={{gap:5}}>
               <Button variant='contained' disableElevation disableRipple
               sx ={{backgroundColor: "#313131ff", color:"white", width:200, height:40,
               "&:hover":{backgroundColor:"#424242ff"}}}
-              onClick={() => {router.push("/authPage/signin");}} >
+              onClick={() => {closeCart(); router.push("/authPage/signin");}} >
                 Sign In
               </Button>
               <Button variant='contained' disableElevation disableRipple
               sx ={{backgroundColor: "#313131ff", color:"white", width:200, height:40,
               "&:hover":{backgroundColor:"#424242ff"}}}
-              onClick={() => { closeCart();
-              {router.push("/authPage/signup");}}
-               } >
+              onClick={() => { closeCart();{router.push("/authPage/signup");}}  } >
                 Sign Up 
               </Button>
           </Stack>
-      
         </div>
       </Stack>}
-      
-   
       </>   )}
        <div className={`${style.moreProductsArea}`}>
          <Typography variant='h5'color="black">Products you may like</Typography>
