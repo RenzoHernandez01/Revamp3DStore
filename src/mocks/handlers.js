@@ -20,7 +20,7 @@ export const handlers = [
   
   http.post('/api/signup', async ({ request }) => {
   try {
-    //const body = await request.json();
+   const body = await request.json();
    // console.log("[MSW] Signup body:", body);
 
     const existingUser = users.find(u => u.email === body.email);

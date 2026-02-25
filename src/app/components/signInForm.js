@@ -84,7 +84,7 @@ if (!res.ok) {
   return;
 }
 
-    console.log("signin response", data);
+    //console.log("signin response", data);
      signIn(data.user);
     router.push("/");
   } catch (err) {

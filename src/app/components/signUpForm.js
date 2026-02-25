@@ -84,7 +84,7 @@ export  default function SignUpForm(){
 
 
     } catch (err) {
-        console.log('Sign up failed:', err);
+        //console.log('Sign up failed:', err);
 
     }
     };
