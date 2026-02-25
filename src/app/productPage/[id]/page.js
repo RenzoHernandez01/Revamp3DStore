@@ -35,7 +35,6 @@ export  default function productPage({params}){
     let [expanded, setExpanded] = useState(false)
     let author = seller.find(s => s.id === product.sellerId);
     let authorProducts = products.filter(p => author.id === p.sellerId);
-    console.log(authorProducts.length);
     let totalRate =  Object.values(product.ratingsBreakdown).reduce((sum, count) => sum + count,0);
     let weightedSum = Object.entries(product.ratingsBreakdown).reduce( (sum, [score, count]) => sum + Number(score) * count,  0);
     let averageRating = totalRate === 0 ? 0 : (weightedSum / totalRate).toFixed(1);

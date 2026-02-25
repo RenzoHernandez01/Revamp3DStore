@@ -6,7 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { createRoot } from "react-dom/client";
 import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
 export function modelViewer({modelLink}){
-console.log("beingcalled");
+//console.log("beingcalled");
 let productWindow = document.getElementById('threeDViewContainer');
 let existingCanvas = productWindow.querySelector("canvas");
 if (existingCanvas) {

@@ -76,13 +76,13 @@ let handleTextChange = (e) => {
 };
 
 useEffect(() => {
-  console.log('Fetching products...');
+  //console.log('Fetching products...');
   setLoading(true);
   const timer = setTimeout(() => {
     fetch('/api/products')
       .then(res => res.json())
       .then(data => {
-        console.log("Fetched data:", data);
+        //console.log("Fetched data:", data);
         setProducts(Array.isArray(data) ? data : data.products);
       })
       .catch(err => {
@@ -123,7 +123,7 @@ let matchesCategory =
 });
 
 let sortedFiltered = [...filtered];
-console.log(sortedFiltered.length);
+//console.log(sortedFiltered.length);
 if (sortMode === "bestSelling") {
   sortedFiltered.sort((a, b) => {
     let totalA = Object.values(a.ratingsBreakdown || {}).reduce((sum, count) => sum + count, 0);
@@ -453,46 +453,4 @@ let isFiltered = tag !== null || priceFilterActive;
 
 
 
- {/*  <Stack sx={{justifyContent:"center", alignItems:"center", display:"flex", gap:2,height:400}}>
-              <Typography variant="h5"  sx={{color:"black"}}>Your Wishlist is empty
-              </Typography>
-              <Typography  sx={{color:"black"}}>
-              When you save a product, it will appear here.
-              </Typography>
-                <Button variant="outlined" disableElevation 
-              sx={{ borderColor:"black", borderWidth:1.5, color:"black",width: 180,height: 40, whiteSpace:"nowrap",  textTransform: "none",
-                "&:hover": {backgroundColor: "#313131ff", color:"white"}}}
-              onClick={() => router.push('/categoryPages/marketplace?tag=staffPick')}
-              >
-                  View All Staff Picks
-              </Button>
-        </Stack>
-       <ProductCards
-            products={sortedFiltered}
-            filterMode={sellerFilterActive ? "seller" : normalized === "marketplace" ? selectedCategory : category}
-            sellerName={sellerFilterActive ? normalized : null}
-            categoryFilter={selectedCategory} 
-            loading={loading}
-          />*/}
-
- {/*useEffect(() => {
-  console.log('Fetching products...');
-  fetch('/api/products')
-    .then(res => res.json())
-    .then(data => {
-      console.log("Fetched data:", data);
-      setProducts(Array.isArray(data) ? data : data.products);
-    });
-}, []);
-
-useEffect(() => {
-  const timeout = setTimeout(() => {
-    router.push(
-      `/categoryPages/${name}?tag=${tag || ''}&price-to=${tempPriceTo}`,
-      undefined,
-      { scroll: false }
-    );
-  }, 300);
-
-  return () => clearTimeout(timeout);
-}, [tempPriceTo, hasInteracted]);*/}
+ 
